@@ -1,0 +1,13 @@
+/lib
+/classes
+*.jar
+.DS_Store
+pom.xml
+*.pyc
+*.db
+*.pid
+*.swp
+*.log
+
+
+
