@@ -1,7 +1,18 @@
 # Django settings for s4s project.
 
+#
+# pip install 'geopy >= 0.95'
+# pip install django-easy-maps
+#
+#
+EASY_MAPS_CENTER=(-41.3,32)
+
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -124,7 +135,8 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'vetbiz'
+    'vetbiz',
+    'easy_maps'
 )
 
 # A sample logging configuration. The only tangible logging

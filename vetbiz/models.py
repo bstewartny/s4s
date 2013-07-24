@@ -1,5 +1,10 @@
 from django.db import models
 from django.forms import ValidationError
+from django import forms
+from easy_maps.widgets import AddressWithMapWidget
+
+
+
 
 class User(models.Model):
     name=models.CharField(max_length=200)
@@ -20,7 +25,8 @@ class Category(models.Model):
 
 class Business(models.Model):
     name=models.CharField(max_length=200)
-    category=models.ForeignKey(Category)
+    category=models.ForeignKey(Category,null=True,blank=True)
+    address=models.CharField(max_length=200,default='')
     lat=models.FloatField(default=0)
     lon=models.FloatField(default=0)
     veteran_owned=models.BooleanField(default=False)

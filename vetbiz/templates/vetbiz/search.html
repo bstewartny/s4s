@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <style type="text/css">
+        
+        #map-canvas { height:100% }
+
+        #map-canvas img { 
+          max-width: none;
+      }
+
+      #map-canvas label { 
+            width: auto; display:inline; 
+        } 
+
+
+        /** FIX for Bootstrap and Google Maps Info window styes problem **/
+        img[src*="gstatic.com/"], img[src*="googleapis.com/"] {
+            max-width: none;
+        }
+        
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <!-- <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+    <link type="text/css" href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+
+    <script type="text/javascript">
+
+        function getUserLocation(fn){
+            if(navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(function(position){
+                       fn(position.coords.latitude,position.coords.longitude); 
+                        });
+                
+            }
+            else
+            {
+                fn(-34.397, 150.644);
+            }
+
+        }
+
+        function setUserPosition(position){
+            map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+        }
+
+        function initialize() {
+            getUserLocation(createMap);
+
+        }
+    
+        var map=null;
+
+        function createMap(lat,lng)
+        {  
+            var center= new google.maps.LatLng(lat,lng);
+            var mapOptions = {
+                center:center,
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+
+            $(window).resize(function () {
+                var h = $(window).height(),
+                    offsetTop = 60; // Calculate the top offset
+
+                $('#map-canvas').css('height', (h - offsetTop));
+            }).resize();
+            
+            //getNearbyPlaces(center,'2500');
+            getNearbyBusinesses(center,'2500');
+        }
+
+
+        function getNearbyPlaces(center,radius)
+        {
+            getNearbyBusinesses(center,radius);
+            var request={
+                location:center,
+                radius:radius,
+                types:['store']
+            };
+
+            service=new google.maps.places.PlacesService(map);
+            service.nearbySearch(request,nearbySearchCallback);
+        }
+
+        var places={};
+
+        function nearbySearchCallback(results,status){
+            if(status==google.maps.places.PlacesServiceStatus.OK)
+            {
+                
+                for(var i=0;i<results.length;i++)
+                {
+                    var place=results[i];
+                    var obj=googlePlaceToBusinessObject(place);
+                    createMarker(obj);
+                    places[place.id]=obj;
+                }
+            }
+        }
+        
+        function googlePlaceToBusinessObject(place)
+        {
+            return {
+                'name':place.name,
+                'id':place.id,
+                'veteran_disounts':false,
+                'veteran_owned':false,
+                'lat':place.geometry.location.lat(),
+                'lon':place.geometry.location.lng()
+            };
+        }
+
+        function getNearbyBusinesses(center,radius)
+        {
+            $.ajax(
+                {
+                    type:'GET',
+                    url:'/vetbiz/api/searchbiz/',
+                    dataType:'json',
+                    data:{
+                        lat:center.lat(),
+                        lon:center.lng(),
+                        radius:radius},
+                    success:function(data){
+                        var results=data; //$.parseJSON(data);
+                        for(var i=0;i<results.length;i++)
+                        {
+                            var biz=results[i];
+                            places[biz['pk']]=biz['fields'];
+                            createMarker(biz['fields']);
+                        }
+                    }
+                }        
+                );
+        }
+
+        function setVeteranOwned(id,input){
+            place=places[id];
+            place['veteran_owned']=true;
+            $.ajax(
+                {
+                    type:'POST',
+                    url:'/vetbiz/api/updatebiz/',
+                    date:place                
+                    }        
+                ).done(function(msg){ });
+        }
+
+        function setVeteranDiscounts(id,input){
+            place=places[id];
+            place['veteran_discounts']=true;
+            $.ajax(
+                {
+                    type:'POST',
+                    url:'/vetbiz/api/updatebiz/',
+                    data:place
+                }        
+                ).done(function(msg){ });
+        }
+        
+        function createInfoWindow(biz){
+            var content="<div><b>"+biz['name']+"</b><br><br>"+
+                "<input type='checkbox' onclick='setVeteranOwned(\""+biz['id']+"\",this);'>Veteran Owned<br>"+
+                "<input type='checkbox' onclick='setVeteranDiscounts(\""+biz['id']+"\",this);'>Veteran Discounts</div>";
+            return new google.maps.InfoWindow({content:content}); 
+        }
+
+        function createMarker(biz){
+            
+            var icon='http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            var veteran_owned=biz['veteran_owned'];
+            var veteran_discounts=biz['veteran_discounts'];
+            if (veteran_owned || veteran_discounts)
+            {
+                if (veteran_owned && veteran_discounts)
+                {
+                    // purple marker
+                    icon='http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+                }
+                else
+                {
+                    if(veteran_owned)
+                    {
+                        // blue marker 
+                        icon='http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                    }
+                    if(veteran_discounts)
+                    {
+                        // red marker 
+                        icon='http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                    }
+                }
+            }            
+            
+            var marker=new google.maps.Marker({
+                        map:map,
+                        icon:icon,
+                        position:new google.maps.LatLng(biz['lat'],biz['lon']),
+                        title:biz['name']
+                        });
+            
+
+            // create side bar nav box for this biz
+            $('<div>').addClass('well').addClass('muted').html("<b>"+biz['name']+"</b>").appendTo("#sidebar");
+
+
+
+
+            google.maps.event.addListener(marker,'click',function(){
+                        createInfoWindow(biz).open(map,marker);
+                    });
+        }
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+          <div class="container-fluid">
+
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#">Stars-4-Stripes</a>
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                    <a href="#" class="navbar-link">Login</a>
+                    </p>
+                    <ul class="nav">
+                    <li><a href="#">Veterans</a></li>
+                    <li><a href="#">Businesses</a></li>
+                    </ul>
+                    <form method="get" action="" style="padding-top:10px" class="form-inline">
+                          <div class="input-append">
+                        <input id="q" size="200" style="width:400px" name="q" value="{{query}}" type="text"  placeholder="Find veteran businesses...">
+                        <button class="btn btn-warning" type="submit">Search</button>
+                    </div>
+                    </form>
+                </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid"> 
+      <div class="row-fluid">
+        <div class="span3">
+            <div class="sidebar-nav" id="sidebar"> 
+          </div> 
+        </div>
+        <div class="span9">
+          <div class="row-fluid">
+              <div class="span12">
+                  <div id="map-canvas" class="well"></div>
+              </div>     
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

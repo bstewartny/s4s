@@ -1,5 +1,9 @@
 from django.contrib import admin
 from vetbiz.models import *
+from django import forms
+from easy_maps.widgets import AddressWithMapWidget
+
+
 
 class OfferInline(admin.TabularInline):
     model=Offer
@@ -10,7 +14,13 @@ class BusinessAdmin(admin.ModelAdmin):
     list_display=('name','category','veteran_owned','veteran_discounts','num_checkins','num_offers','num_redemptions')
     list_filter=['category','veteran_owned','veteran_discounts']
     inlines=[OfferInline]
-
+    
+    class form(forms.ModelForm):
+        class Meta:
+            widgets={
+                'address':AddressWithMapWidget({'class':'vTextField'})        
+                    
+            }
 
 class CategoryAdmin(admin.ModelAdmin):
     search_fields=['name']
