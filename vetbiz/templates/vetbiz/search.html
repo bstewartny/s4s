@@ -78,7 +78,7 @@
 
             $(window).resize(function () {
                 var h = $(window).height(),
-                    offsetTop = 60; // Calculate the top offset
+                    offsetTop = 0; // Calculate the top offset
 
                 $('#map-canvas').css('height', (h - offsetTop));
             }).resize();
@@ -90,7 +90,8 @@
 
         function getNearbyPlaces(center,radius)
         {
-            getNearbyBusinesses(center,radius);
+            clearMarkers();
+
             var request={
                 location:center,
                 radius:radius,
@@ -121,7 +122,7 @@
         {
             return {
                 'name':place.name,
-                'id':place.id,
+                'key':place.id,
                 'veteran_disounts':false,
                 'veteran_owned':false,
                 'lat':place.geometry.location.lat(),
@@ -131,6 +132,7 @@
 
         function getNearbyBusinesses(center,radius)
         {
+            clearMarkers();
             $.ajax(
                 {
                     type:'GET',
@@ -141,18 +143,70 @@
                         lon:center.lng(),
                         radius:radius},
                     success:function(data){
-                        var results=data; //$.parseJSON(data);
+                        var results=data;
                         for(var i=0;i<results.length;i++)
                         {
                             var biz=results[i];
-                            places[biz['pk']]=biz['fields'];
-                            createMarker(biz['fields']);
+                            var obj=biz['fields'];
+                            obj['key']=biz['pk'];
+                            places[obj['key']]=obj;
+                            createMarker(obj);
                         }
                     }
                 }        
                 );
         }
 
+
+        function searchVeteranOwned()
+        {
+            getUserLocation(function(lat,lng){
+                    var center=new google.maps.LatLng(lat,lng);
+
+                    getNearbyBusinesses(center,'2500');
+                    
+            });
+            
+        }
+
+
+        function searchVeteranDiscounts()
+        {
+            getUserLocation(function(lat,lng){
+                    var center=new google.maps.LatLng(lat,lng);
+
+                    getNearbyBusinesses(center,'2500');
+                    
+                    
+                    
+            });
+        
+        }
+
+        function searchAll(){
+            getUserLocation(function(lat,lng){
+                    var center=new google.maps.LatLng(lat,lng);
+
+                    getNearbyPlaces(center,'2500');
+                    
+                    
+                    
+            });
+        }
+
+
+        var markers=[];
+
+
+        function clearMarkers(){
+
+            $('#sidebar').html('');
+
+            for(var i=0;i<markers.length;i++){
+                markers[i].setMap(null);
+            }
+            markers=[];
+        }
         function setVeteranOwned(id,input){
             place=places[id];
             place['veteran_owned']=true;
@@ -179,8 +233,8 @@
         
         function createInfoWindow(biz){
             var content="<div><b>"+biz['name']+"</b><br><br>"+
-                "<input type='checkbox' onclick='setVeteranOwned(\""+biz['id']+"\",this);'>Veteran Owned<br>"+
-                "<input type='checkbox' onclick='setVeteranDiscounts(\""+biz['id']+"\",this);'>Veteran Discounts</div>";
+                "<input type='checkbox' onclick='setVeteranOwned(\""+biz['key']+"\",this);'>Veteran Owned<br>"+
+                "<input type='checkbox' onclick='setVeteranDiscounts(\""+biz['key']+"\",this);'>Veteran Discounts</div>";
             return new google.maps.InfoWindow({content:content}); 
         }
 
@@ -218,6 +272,7 @@
                         title:biz['name']
                         });
             
+            markers.push(marker);
 
             // create side bar nav box for this biz
             $('<div>').addClass('well').addClass('muted').html("<b>"+biz['name']+"</b>").appendTo("#sidebar");
@@ -248,15 +303,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <a class="brand" href="#">Stars-4-Stripes</a>
                 <div class="nav-collapse collapse">
                     <p class="navbar-text pull-right">
-                    <a href="#" class="navbar-link">Login</a>
+                    <button class="btn btn-primary">Log In</button>
+                    <button class="btn btn-success">Sign Up</button>
                     </p>
                     <ul class="nav">
-                    <li><a href="#">Veterans</a></li>
-                    <li><a href="#">Businesses</a></li>
+                    <li><a href="#">Features</a></li>
                     </ul>
                     <form method="get" action="" style="padding-top:10px" class="form-inline">
                           <div class="input-append">
                         <input id="q" size="200" style="width:400px" name="q" value="{{query}}" type="text"  placeholder="Find veteran businesses...">
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown"><span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:searchVeteranOwned();">Search Veteran Owned</a></li>
+                                <li><a href="javascript:searchVeteranDiscounts();">Search Veteran Discounts</a></li>
+                                <li><a href="javascript:searchAll();">Search All...</a></li>
+                            </ul>
+                        </div>
+                        
                         <button class="btn btn-warning" type="submit">Search</button>
                     </div>
                     </form>
