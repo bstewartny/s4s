@@ -35,25 +35,34 @@ def updatebiz(request):
     lat=request.REQUEST.get('lat',None)
     lon=request.REQUEST.get('lon',None)
     # TODO
-    address=None
+    address=request.REQUEST.get('address',None)
     points_per_checkin=10
     category=None
 
     if id is not None and Business.objects.filter(id=id).exists():
+        print 'update object with id: '+str(id)
         biz=Business.objects.filter(id=id)[0]
     else:
         if name is not None and Business.objects.filter(name=name).exists():
+            print 'update object with name: '+str(name)
             biz=Business.objects.filter(name=name)[0]
         else:
             if name is not None:
+                print 'create new object with name: '+str(name)
                 biz=Business.objects.create(name=name)
             else:
+                print 'no name, no update...'
                 return json([])
 
     if veteran_owned is not None:
-        biz.veteran_owned=(veteran_owned=='true')
+        biz.veteran_owned=(veteran_owned==True or veteran_owned=='true')
+        print 'set veteran_owned: '+str(biz.veteran_owned)
     if veteran_discounts is not None:
-        biz.veteran_discounts=(veteran_discounts=='true')
+        biz.veteran_discounts=(veteran_discounts==True or veteran_discounts=='true')
+        print 'set veteran_discounts: '+str(biz.veteran_discounts)
+    if address is not None:
+        print 'set address: '+str(address)
+        biz.address=address
     if lat is not None:
         biz.lat=float(lat)
     if lon is not None:
@@ -98,10 +107,12 @@ def searchbiz(request):
     veteran_discounts=False
    
     results=[]
+    offers=[]
     # TODO: filter on category, query, veteran criteria, etc.
     for biz in Business.objects.all():
         if in_radius(biz.lat,biz.lon,lat,lon,radius):
+            offers.extend(biz.offer_set.all())
             results.append(biz)
-
+    results.extend(offers)
     return json(results)
 

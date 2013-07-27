@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Stars4Stripes</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <style type="text/css">
         body{padding-top:60px;max-height:100%;overflow:hidden}
@@ -109,6 +110,7 @@
                 {
                     console.log('found same place, merging...');
                     p=mergePlace(p,place);
+                    places[k]=p
                     return p;
                 }
             }
@@ -125,7 +127,39 @@
         {
             console.log("merging place: "+a['name'] +" is same as "+b['name']);
 
-            return $.extend(a,b); 
+            console.log('object a:');
+            for(var k in a)
+            {
+                console.log(k+"="+a[k]);
+            }
+            console.log('object b:');
+            for(var k in b)
+            {
+                console.log(k+"="+b[k]);
+            }
+            if(a['veteran_discounts']==true)
+                b['veteran_discounts']=true;
+
+            if(a['veteran_owned']==true)
+                b['veteran_owned']=true;
+            
+            if(b['veteran_discounts']==true)
+                a['veteran_discounts']=true;
+
+            if(b['veteran_owned']==true)
+                a['veteran_owned']=true;
+
+            a['offers']=b['offers'];
+            console.log('merged object:');
+            for(var k in a)
+            {
+                console.log(k+"="+a[k]);
+            }
+
+
+            return a;
+            //return $.extend(a,b); 
+        
         }
 
         function getNearbyPlaces(center,radius)
@@ -164,13 +198,34 @@
                                                     radius:radius},
                                                 success:function(results){
                                                     console.log('got '+results.length+' places from current API');
+                                                    offers=[];
                                                     for(var i=0;i<results.length;i++)
                                                     {
                                                         var biz=results[i];
-                                                        var obj=biz['fields'];
-                                                        obj['key']=biz['pk'];
-                                                        addPlace(obj['key'],obj);
+                                                        if(biz['model']=='vetbiz.offer')
+                                                        {
+                                                            offers.push(biz);
+                                                        }
                                                     }
+                                                    for(var i=0;i<results.length;i++)
+                                                    {
+                                                        var biz=results[i];
+                                                        if(biz['model']=='vetbiz.business')
+                                                        {
+                                                            var obj=biz['fields'];
+                                                            obj['key']=biz['pk'];
+                                                            obj['offers']=[];
+                                                            for(var j=0;j<offers.length;j++)
+                                                            {
+                                                                var offer=offers[j];
+                                                                if(offer['fields']['business']==biz['pk']){
+                                                                    obj['offers'].push(offer);
+                                                                }
+                                                            }
+                                                            addPlace(obj['key'],obj);
+                                                        }
+                                                    }
+                                                    
                                                     // add markers for all the places
                                                     createMarkers();
                                                 }
@@ -184,12 +239,14 @@
             return {
                 'name':place.name,
                 'key':place.id,
-                'veteran_disounts':false,
+                'veteran_discounts':false,
                 'veteran_owned':false,
                 'lat':place.geometry.location.lat(),
                 'lon':place.geometry.location.lng(),
-                'address':place.formatted_address,
-                'phone':place.formatted_phone_number
+                'address':place.vicinity,
+                'phone':place.formatted_phone_number,
+                'icon':place.icon,
+                'types':places.types
             };
         }
 
@@ -338,7 +395,6 @@
             div.append($('<b>').html(place['name']));
             div.append($('<br>'));
             div.append($('<p>').html(place['address']));
-            div.append($('<p>').html(place['phone']));
                 
             if(place['veteran_owned'])
             {
@@ -348,7 +404,14 @@
             {
                 div.append($('<span>').addClass('label').addClass('label-success').html('Veteran Discounts'));        
             }
-
+            if(place['offers'])
+            {
+                if(place['offers'].length>0)
+                {
+                    div.append($('<br>'));
+                    div.append($('<p>').html(place['offers']['0']['fields']['title']));
+                }
+            }
             div.appendTo("#sidebar");
         }
 
@@ -365,25 +428,30 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="#">Stars-4-Stripes</a>
+                <a class="brand" href="#"><b>S</b>tars<i>4</i><b>S</b>tripes</a>
                 <div class="nav-collapse collapse">
 
                     <p class="navbar-text pull-right">
                     <button class="btn btn-primary">Log In</button>
                     <button class="btn btn-success">Sign Up</button>
                     </p>
-                    <ul class="nav">
-                    <li><a href="#">Features</a></li>
-                    </ul>
                     <form method="get" action="" style="padding-top:10px" class="form-inline">
                           <div class="input-append">
+                    <div class="btn-group">
+                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Features<span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:searchVeteranOwned();">Veteran Owned Businesses</a></li>
+                            <li><a href="javascript:searchVeteranDiscounts();">Discounts for Veterans</a></li>
+                            <li><a href="javascript:searchOffers();">Offers and Deals</a></li>
+                        </ul>
+                    </div>
                         <input id="q" size="200" style="width:400px" name="q" value="{{query}}" type="text"  placeholder="Find veteran businesses...">
                         <div class="btn-group">
                             <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown"><span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="javascript:searchVeteranOwned();">Search Veteran Owned</a></li>
-                                <li><a href="javascript:searchVeteranDiscounts();">Search Veteran Discounts</a></li>
-                                <li><a href="javascript:searchAll();">Search All...</a></li>
+                                <li><a href="javascript:searchVeteranOwned();">Find Veteran Owned Businesses</a></li>
+                                <li><a href="javascript:searchVeteranDiscounts();">Find Businesses with Veteran Discounts</a></li>
+                                <li><a href="javascript:searchAll();">Search All Businesses...</a></li>
                             </ul>
                         </div>
                         <button class="btn btn-warning" type="submit">Search</button>
