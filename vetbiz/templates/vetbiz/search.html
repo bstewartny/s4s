@@ -37,7 +37,6 @@
 
     <script type="text/javascript">
 
-
         function getUserLocation(fn){
             if(navigator.geolocation)
             {
@@ -61,7 +60,7 @@
 
         var RADIUS=5000;
         var map=null;
-        var places={};
+        var places=[];
         var markers=[];
 
         function createMap(center)
@@ -80,179 +79,129 @@
                     offsetTop = 40; // Calculate the top offset
                 $('#map-canvas').css('height', (h - offsetTop));
                 }).resize();
-*/
-            getNearbyBusinesses(center,RADIUS,false);
+ */
+            getNearbyPlaces('{{query}}',center,RADIUS);
         }
 
-        function getNearbyBusinesses(center,radius,veteran_only)
+        function addPlace(place)
         {
-            if(veteran_only)
-            {
-                // just get from our database         
-                getNearbyVeteranBusinesses(center,radius);
-            }
-            else
-            {
-                // first get google places, then augment with data from our system
+            console.log('addPlace: '+place.name);
 
-                getNearbyPlaces(center,radius);
-            }
-        }
-
-        function addPlace(key,place)
-        {
-            console.log('addPlace: '+key+', '+place['name']);
-        
-            for(var k in places)
+            for(var i=0;i<places.length;i++)
             {
-                p=places[k];
+                var p=places[i];
                 if(samePlace(p,place))
                 {
                     console.log('found same place, merging...');
                     p=mergePlace(p,place);
-                    places[k]=p
+                    places[i]=p
                     return p;
                 }
             }
-            places[key]=place;
+            places.push(place);
             return place;
+        }
+
+        function matchesQuery(query,place)
+        {   
+            console.log("matchesQuery: "+query +": "+place.name);    
+            if(!query)
+            {
+                console.log("query is !, return true");
+                return true;
+            }
+            if(query.length==0)
+            {
+                console.log("query is empty, return true");
+                return true;
+            }
+            if(!place.name)
+            {
+                return false;
+            }
+            // TODO: test if matches any keywords or category names for the place...
+            var b= place.name.toLowerCase().indexOf(query.toLowerCase())>-1;
+            console.log("matches: "+b);
+            return b;
         }
 
         function samePlace(a,b)
         {
-            return (a['name']==b['name']);
+            return (a.name==b.name);
         }
 
         function mergePlace(a,b)
         {
-            console.log("merging place: "+a['name'] +" is same as "+b['name']);
+            console.log("merging place: "+a.name +" is same as "+b.name);
+            if(a.veteran_discounts==true)
+                b.veteran_discounts=true;
 
-            console.log('object a:');
-            for(var k in a)
-            {
-                console.log(k+"="+a[k]);
-            }
-            console.log('object b:');
-            for(var k in b)
-            {
-                console.log(k+"="+b[k]);
-            }
-            if(a['veteran_discounts']==true)
-                b['veteran_discounts']=true;
-
-            if(a['veteran_owned']==true)
-                b['veteran_owned']=true;
+            if(a.veteran_owned==true)
+                b.veteran_owned=true;
             
-            if(b['veteran_discounts']==true)
-                a['veteran_discounts']=true;
+            if(b.veteran_discounts==true)
+                a.veteran_discounts=true;
 
-            if(b['veteran_owned']==true)
-                a['veteran_owned']=true;
+            if(b.veteran_owned==true)
+                a.veteran_owned=true;
 
-            a['offers']=b['offers'];
-            console.log('merged object:');
-            for(var k in a)
-            {
-                console.log(k+"="+a[k]);
-            }
-
+            a.offers=b.offers;
 
             return a;
-            //return $.extend(a,b); 
-        
         }
 
-        function getNearbyPlaces(center,radius)
+        function addPlaces(a)
         {
-            clearMarkers();
+            console.log('addPlaces: '+a.length);
+            for(var i=0;i<a.length;i++)
+            {
+                addPlace(a[i]);
+            }
+        }
 
-            var request={
-                location:center,
-                radius:radius,
-                types:['store']
-            };
+        function getNearbyPlaces(query,center,radius)
+        {   
+            console.log('getNearbyPlaces: '+query);
+            // we want to search google places API and our own web service in parallel
+            // we can use jQuery deferred objects to make it work...
+            clearMarkersAndPlaces();
 
+            $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius)).done(function(googlePlaces,veteranPlaces)
+                    {
+                        console.log('done called');
+                        addPlaces(googlePlaces);
+                        addPlaces(veteranPlaces);
+                        createMarkers();
+                    });
+        }
 
-
+        function getNearbyGooglePlaces(query,center,radius)
+        {
+            var d=$.Deferred();
             service=new google.maps.places.PlacesService(map);
-            service.nearbySearch(request,function (results,status){
-                                        if(status==google.maps.places.PlacesServiceStatus.OK)
-                                        {
-                                            console.log('got '+results.length+' places from google api');
-                                            for(var i=0;i<results.length;i++)
-                                            {
-                                                var place=results[i];
-                                                addPlace(place.id,googlePlaceToBusinessObject(place));
-                                            }
-                                        }
-
-                                        // now get veteran owned businesses
-                                        $.ajax(
-                                            {
-                                                type:'GET',
-                                                url:'/vetbiz/api/searchbiz/',
-                                                dataType:'json',
-                                                data:{
-                                                    lat:center.lat(),
-                                                    lon:center.lng(),
-                                                    radius:radius},
-                                                success:function(results){
-                                                    console.log('got '+results.length+' places from current API');
-                                                    offers=[];
-                                                    for(var i=0;i<results.length;i++)
-                                                    {
-                                                        var biz=results[i];
-                                                        if(biz['model']=='vetbiz.offer')
-                                                        {
-                                                            offers.push(biz);
-                                                        }
-                                                    }
-                                                    for(var i=0;i<results.length;i++)
-                                                    {
-                                                        var biz=results[i];
-                                                        if(biz['model']=='vetbiz.business')
-                                                        {
-                                                            var obj=biz['fields'];
-                                                            obj['key']=biz['pk'];
-                                                            obj['offers']=[];
-                                                            for(var j=0;j<offers.length;j++)
-                                                            {
-                                                                var offer=offers[j];
-                                                                if(offer['fields']['business']==biz['pk']){
-                                                                    obj['offers'].push(offer);
-                                                                }
-                                                            }
-                                                            addPlace(obj['key'],obj);
-                                                        }
-                                                    }
-                                                    
-                                                    // add markers for all the places
-                                                    createMarkers();
-                                                }
-                                            }        
-                                            );
-                                        });
-        }
-        
-        function googlePlaceToBusinessObject(place)
-        {
-            return {
-                'name':place.name,
-                'key':place.id,
-                'veteran_discounts':false,
-                'veteran_owned':false,
-                'lat':place.geometry.location.lat(),
-                'lon':place.geometry.location.lng(),
-                'address':place.vicinity,
-                'phone':place.formatted_phone_number,
-                'icon':place.icon,
-                'types':places.types
-            };
+            service.nearbySearch({location:center,radius:radius,types:['store']},function (results,status){
+                var businesses=[];
+                if(status==google.maps.places.PlacesServiceStatus.OK)
+                {
+                    for(var i=0;i<results.length;i++)
+                    {
+                        var business=googlePlaceToBusinessObject(results[i]);
+                        // TODO: perform this filtering on the server
+                        if(matchesQuery(query,business))
+                        {
+                           businesses.push(business);
+                        }
+                    }
+                }
+                console.log('resolve from getNearbyGooglePlaces');
+                d.resolve(businesses);
+                });
+            return d.promise();
         }
 
-        function getNearbyVeteranBusinesses(center,radius)
+        function getNearbyVeteranPlaces(query,center,radius)
         {
-            clearMarkers();
+            var d=$.Deferred();
             $.ajax(
                 {
                     type:'GET',
@@ -263,58 +212,64 @@
                         lon:center.lng(),
                         radius:radius},
                     success:function(results){
+                        var businesses=[];
                         for(var i=0;i<results.length;i++)
                         {
-                            var biz=results[i];
-                            var obj=biz['fields'];
-                            obj['key']=biz['pk'];
-                            addPlace(obj['key'],obj);
+                            var business=results[i].fields;
+                            // TODO: perform this filtering on the server
+                            if(matchesQuery(query,business))
+                            {
+                               businesses.push(business);
+                            }
                         }
-                        createMarkers();
+                        console.log('resolve from getNearbyVeteranPlaces');
+                        d.resolve(businesses);
                     }
                 }        
-                );
-
+            );
+           return d.promise(); 
         }
-
-        function searchVeteranOwned()
+        
+        function googlePlaceToBusinessObject(place)
         {
+            return {
+                name:place.name,
+                veteran_discounts:false,
+                veteran_owned:false,
+                lat:place.geometry.location.lat(),
+                lon:place.geometry.location.lng(),
+                address:place.vicinity,
+                phone:place.formatted_phone_number,
+                icon:place.icon,
+                types:places.types
+            };
+        }
+
+        function search(query){
+            console.log('query: '+query);
             getUserLocation(function(center){
-                    getNearbyBusinesses(center,RADIUS,true);
+                    getNearbyPlaces(query,center,RADIUS);
             });
         }
 
-        function searchVeteranDiscounts()
-        {
-            getUserLocation(function(center){
-                    getNearbyBusinesses(center,RADIUS,true);
-            });
-        }
-
-        function searchAll(){
-            getUserLocation(function(center){
-                    getNearbyBusinesses(center,RADIUS,false);
-            });
-        }
-
-        function clearMarkers(){
+        function clearMarkersAndPlaces(){
             $('#sidebar').html('');
             for(var i=0;i<markers.length;i++){
                 markers[i].setMap(null);
             }
+            places=[];
             markers=[];
         }
 
-
         function setVeteranOwned(id,input){
             place=places[id];
-            place['veteran_owned']=true;
+            place.veteran_owned=true;
             updateBusiness(place);
         }
 
         function setVeteranDiscounts(id,input){
             place=places[id];
-            place['veteran_discounts']=true;
+            place.veteran_discounts=true;
             updateBusiness(place);
         }
     
@@ -328,94 +283,103 @@
                 ).done(function(msg){ });
         }
 
-        function createInfoWindow(biz){
-            var content="<div><b>"+biz['name']+"</b><br><br>"+
-                "<input type='checkbox' onclick='setVeteranOwned(\""+biz['key']+"\",this);'>Veteran Owned<br>"+
-                "<input type='checkbox' onclick='setVeteranDiscounts(\""+biz['key']+"\",this);'>Veteran Discounts</div>";
+        function createInfoWindow(id,place){
+            var content="<div><b>"+place.name+"</b><br><br>"+
+                "<input type='checkbox' onclick='setVeteranOwned("+id+",this);'>Veteran Owned<br>"+
+                "<input type='checkbox' onclick='setVeteranDiscounts("+id+",this);'>Veteran Discounts</div>";
             return new google.maps.InfoWindow({content:content}); 
         }
 
         function createMarkers(){
-            console.log('create markers');
-
-            for(var key in places){
-                createMarker(places[key]);
+            console.log('createMarkers');
+            for(var i=0;i<places.length;i++){
+                createMarker(i,places[i]);
             }
         }
 
-        function createMarker(biz){
-            console.log('create marker: '+biz['name']);
-            var icon='http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-            var veteran_owned=biz['veteran_owned'];
-            var veteran_discounts=biz['veteran_discounts'];
-            if (veteran_owned || veteran_discounts)
+        function getIconForPlace(place)
+        {
+            if (place.veteran_owned || place.veteran_discounts)
             {
-                if (veteran_owned && veteran_discounts)
+                if (place.veteran_owned && place.veteran_discounts)
                 {
                     // purple marker
-                    icon='http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+                    return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
                 }
                 else
                 {
-                    if(veteran_owned)
+                    if(place.veteran_owned)
                     {
                         // blue marker 
-                        icon='http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                        return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
                     }
-                    if(veteran_discounts)
+                    if(place.veteran_discounts)
                     {
                         // red marker 
-                        icon='http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                        return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
                     }
                 }
             }            
+            //default
+            return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        }
+
+        function createMarker(id,place){
+            console.log('create marker: '+place.name);
             
             var marker=new google.maps.Marker({
                         map:map,
-                        icon:icon,
-                        position:new google.maps.LatLng(biz['lat'],biz['lon']),
-                        title:biz['name']
+                        icon:getIconForPlace(place),
+                        position:new google.maps.LatLng(place.lat,place.lon),
+                        title:place.name
                         });
             
             markers.push(marker);
             
-            createSideBarItem(biz);
+            createSideBarItem(id,place);
 
             // TODO: show info on hover, and make sidebar scroll entry to the top and highlight on click...
             google.maps.event.addListener(marker,'click',function(){
-                        createInfoWindow(biz).open(map,marker);
+                        createInfoWindow(id,place).open(map,marker);
                     });
         }
 
-        function createSideBarItem(place)
+        function createSideBarItem(id,place)
         {
-            // create side bar nav box for this biz
+            // TODO: set ID from id so we can scroll and highlight this div on click/hover over marker
+            // create side bar nav box for this place
+
             var div=$('<div>').addClass('sidebar-place').addClass('muted');
 
-            div.append($('<b>').html(place['name']));
+            div.append($('<b>').html(place.name));
             div.append($('<br>'));
-            div.append($('<p>').html(place['address']));
+            div.append($('<p>').html(place.address));
                 
-            if(place['veteran_owned'])
+            if(place.veteran_owned)
             {
                 div.append($('<span>').addClass('label').addClass('label-info').css('margin-right',4).html('Veteran Owned'));        
             }
-            if(place['veteran_discounts'])
+            if(place.veteran_discounts)
             {
                 div.append($('<span>').addClass('label').addClass('label-success').html('Veteran Discounts'));        
             }
-            if(place['offers'])
+            if(place.offers)
             {
-                if(place['offers'].length>0)
+                if(place.offers.length>0)
                 {
                     div.append($('<br>'));
-                    div.append($('<p>').html(place['offers']['0']['fields']['title']));
+                    div.append($('<p>').html(place.offers[0].fields.title));
                 }
             }
             div.appendTo("#sidebar");
         }
 
-        google.maps.event.addDomListener(window, 'load', initialize);
+        $(document).ready(function(){
+            
+                google.maps.event.addDomListener(window, 'load', initialize);
+                
+                $("#search-form").submit(function(){search($('#q').val());}  );
+        });
 
     </script>
 </head>
@@ -435,25 +399,9 @@
                     <button class="btn btn-primary">Log In</button>
                     <button class="btn btn-success">Sign Up</button>
                     </p>
-                    <form method="get" action="" style="padding-top:10px" class="form-inline">
-                          <div class="input-append">
-                    <div class="btn-group">
-                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Features<span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:searchVeteranOwned();">Veteran Owned Businesses</a></li>
-                            <li><a href="javascript:searchVeteranDiscounts();">Discounts for Veterans</a></li>
-                            <li><a href="javascript:searchOffers();">Offers and Deals</a></li>
-                        </ul>
-                    </div>
+                    <form id="search-form" method="get" action="" style="padding-top:10px" class="form-inline">
+                    <div class="input-append">
                         <input id="q" size="200" style="width:400px" name="q" value="{{query}}" type="text"  placeholder="Find veteran businesses...">
-                        <div class="btn-group">
-                            <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown"><span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:searchVeteranOwned();">Find Veteran Owned Businesses</a></li>
-                                <li><a href="javascript:searchVeteranDiscounts();">Find Businesses with Veteran Discounts</a></li>
-                                <li><a href="javascript:searchAll();">Search All Businesses...</a></li>
-                            </ul>
-                        </div>
                         <button class="btn btn-warning" type="submit">Search</button>
                     </div>
                     </form>

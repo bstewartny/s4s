@@ -5,4 +5,4 @@ import json
 from vetbiz.models import *
 
 def search(request):
-    return render_to_response('vetbiz/search.html',locals())
+    return render_to_response('vetbiz/search.html',{'query':request.GET.get('q',None)})
