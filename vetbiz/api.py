@@ -7,6 +7,8 @@ from vetbiz.models import *
 from math import *
 from django.views.decorators.csrf import requires_csrf_token
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 
 RADIUS=6371 # Earth's mean radius in km
 
@@ -25,7 +27,68 @@ def distance(a,b):
 def json(queryset):
     return HttpResponse(serializers.serialize('json',queryset),mimetype='application/json')
 
+def profile(request):
+    # return user profile info (username, id, # of points, last checkins, etc.)
+    pass
+
+def dologout(request):
+    logout(request)
+    return HttpResponse('ok')
+
+def dologin(request):
+    # login, and then return user ID, # of points, etc.
+    print 'dologin'
+    username=request.GET.get('username',None)
+    password=request.GET.get('password',None)
+    user=authenticate(username=username,password=password)
+    if user is not None:
+        if user.is_active:
+            # user is a ok
+            print 'user.is_active'
+            login(request,user)
+        else:
+            print 'user is not active'
+            # user is not ok
+    else:
+        # failed
+        print 'user auth failed'
+    return HttpResponse('ok')
+
+def signup(request):
+    # create user account
+    pass
+
+@login_required
+def checkin(request):
+    # checkin to business
+    print 'checkin'
+    if request.user.is_authenticated():
+        print 'user is auth: '+str(request.user)
+    else:
+        print 'user is not auth'
+    id=request.REQUEST.get('id',None)
     
+    return HttpResponse('ok')
+
+@login_required
+def checkins(request):
+    # get user checkin history
+    pass
+
+@login_required
+def redeemoffer(request):
+    # redeem offer 
+    # create redemption for biz
+    # deduct user points and record it
+    pass
+
+def bizinfo(request):
+    # get all info for a business including any offers
+    pass
+
+
+
+
 @csrf_exempt
 def updatebiz(request):
     id=request.REQUEST.get('id',None)
