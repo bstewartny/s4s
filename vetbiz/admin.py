@@ -2,7 +2,8 @@ from django.contrib import admin
 from vetbiz.models import *
 from django import forms
 from easy_maps.widgets import AddressWithMapWidget
-
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
 
 class OfferInline(admin.TabularInline):
@@ -33,15 +34,16 @@ class RedemptionInline(admin.TabularInline):
     model=Redemption
     extra=1
 
+class VetUserInline(admin.StackedInline):
+    model=VetUser
+    can_delete=False
+    verbose_name_plural='user'
 
-class UserAdmin(admin.ModelAdmin):
-    search_fields=['name']
-    list_display=('name','veteran','points','checkins','num_redemptions')
-    list_filter=['veteran']
-    inlines=[CheckinInline,RedemptionInline]
+class UserAdmin(UserAdmin):
+    inlines=(VetUserInline,)
 
 class CheckinsAdmin(admin.ModelAdmin):
-    search_fields=['user__name','business__name']
+    search_fields=['business__name']
     list_display=('user','business','date')
     list_filter=['date','business__category','business__veteran_owned','business__veteran_discounts','user__veteran']
 
@@ -52,9 +54,10 @@ class OffersAdmin(admin.ModelAdmin):
     inlines=[RedemptionInline]
 
 class RedemptionsAdmin(admin.ModelAdmin):
-    search_fields=['user__name','offer__title','offer__business__name']
-    list_display=('business','offer_title','user_name','date','offer_points')
+    search_fields=['offer__title','offer__business__name']
+    list_display=('business','offer_title','user','date','offer_points')
 
+admin.site.unregister(User)
 admin.site.register(User,UserAdmin)
 admin.site.register(Business,BusinessAdmin)
 admin.site.register(Category,CategoryAdmin)

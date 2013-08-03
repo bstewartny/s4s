@@ -2,12 +2,12 @@ from django.db import models
 from django.forms import ValidationError
 from django import forms
 from easy_maps.widgets import AddressWithMapWidget
+from django.contrib.auth.models import User
 
 
 
-
-class User(models.Model):
-    name=models.CharField(max_length=200)
+class VetUser(models.Model):
+    user=models.OneToOneField(User)
     veteran=models.BooleanField(default=False)
     points=models.IntegerField(default=0)
     checkins=models.IntegerField(default=0)
@@ -16,7 +16,7 @@ class User(models.Model):
         return Redemption.objects.filter(user=self).count()
 
     def __unicode__(self):
-        return self.name
+        return self.user.username
 
 class Category(models.Model):
     name=models.CharField(max_length=200)
@@ -41,12 +41,15 @@ class Business(models.Model):
     
     def num_redemptions(self):
         return Redemption.objects.filter(offer__business=self).count()
+    
+    def num_redemptions(self):
+        return Redemption.objects.filter(offer__business=self).count()
 
     def __unicode__(self):
         return self.name
 
 class Checkin(models.Model):
-    user=models.ForeignKey(User)
+    user=models.ForeignKey(VetUser)
     business=models.ForeignKey(Business)
     date=models.DateTimeField(auto_now=True)
 
@@ -79,11 +82,11 @@ class Offer(models.Model):
 
 class Redemption(models.Model):
     offer=models.ForeignKey(Offer)
-    user=models.ForeignKey(User)
+    user=models.ForeignKey(VetUser)
     date=models.DateTimeField(auto_now=True)
 
     def user_name(self):
-        return self.user.name
+        return self.user.user.username
     
     def business(self):
         return self.offer.business.name

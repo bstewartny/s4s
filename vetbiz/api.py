@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.core import serializers
 import json
@@ -9,6 +10,7 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 
 RADIUS=6371 # Earth's mean radius in km
 
@@ -35,28 +37,46 @@ def dologout(request):
     logout(request)
     return HttpResponse('ok')
 
-def dologin(request):
-    # login, and then return user ID, # of points, etc.
-    print 'dologin'
-    username=request.GET.get('username',None)
-    password=request.GET.get('password',None)
+def signin(request):
+    username=request.POST.get('username',None)
+    password=request.POST.get('password',None)
     user=authenticate(username=username,password=password)
     if user is not None:
         if user.is_active:
             # user is a ok
             print 'user.is_active'
             login(request,user)
+            return redirect('/vetbiz/')
         else:
             print 'user is not active'
+            return redirect('/vetbiz/signin/')
             # user is not ok
     else:
         # failed
         print 'user auth failed'
-    return HttpResponse('ok')
+        return redirect('/vetbiz/signin/')
 
 def signup(request):
+    print 'signup'
+    username=request.POST.get('username',None)
+    password=request.POST.get('password',None)
+    email=request.POST.get('email',None)
+    if username is None or len(username)==0:
+        return redirect('/vetbiz/signup/')
+    if password is None or len(password)==0:
+        return redirect('/vetbiz/signup/')
+    if email is None or len(email)==0:
+        return redirect('/vetbiz/signup/')
+
     # create user account
-    pass
+    if User.objects.filter(username=username).exists():
+        # such a user already exists
+        print 'user '+username +' already exists'
+        return redirect('/vetbiz/signup/')
+    else:
+        user=User.objects.create_user(username,email,password)
+        user.save()
+        return redirect('/vetbiz/')
 
 @login_required
 def checkin(request):
