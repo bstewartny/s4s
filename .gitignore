@@ -2,6 +2,8 @@
 /classes
 *.jar
 .DS_Store
+db
+/db
 pom.xml
 *.pyc
 *.db
