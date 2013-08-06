@@ -37,6 +37,18 @@ def dologout(request):
     logout(request)
     return HttpResponse('ok')
 
+def unique(request):
+    username=request.GET.get('username',None)
+    if username is not None:
+        # TODO: make sure we do case-insensitive compare, and trim any extra whitespace...
+        if User.objects.filter(username=username).exists():
+            # user already exists...
+            return HttpResponse('false');
+        else:
+            return HttpResponse('true');
+    else:
+        return HttpResponse('false');
+
 def signin(request):
     username=request.POST.get('username',None)
     password=request.POST.get('password',None)
@@ -57,15 +69,17 @@ def signin(request):
         return redirect('/vetbiz/signin/')
 
 def signup(request):
-    print 'signup'
     username=request.POST.get('username',None)
     password=request.POST.get('password',None)
+    password2=request.POST.get('password2',None)
     email=request.POST.get('email',None)
-    if username is None or len(username)==0:
+    if not username:
         return redirect('/vetbiz/signup/')
-    if password is None or len(password)==0:
+    if not password:
         return redirect('/vetbiz/signup/')
-    if email is None or len(email)==0:
+    if not password==password2:
+        return redirect('/vetbiz/signup/')
+    if not email:
         return redirect('/vetbiz/signup/')
 
     # create user account
@@ -76,6 +90,8 @@ def signup(request):
     else:
         user=User.objects.create_user(username,email,password)
         user.save()
+        user=authenticate(username=username,password=password)
+        login(request,user)
         return redirect('/vetbiz/')
 
 @login_required

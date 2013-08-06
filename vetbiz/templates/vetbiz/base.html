@@ -26,7 +26,7 @@
         img[src*="gstatic.com/"], img[src*="googleapis.com/"] {
             max-width: none;
         }
-
+        .error{color:red;}
 
 
     </style>
@@ -35,6 +35,7 @@
     <!--<link type="text/css" href="/static/css/typeahead.js-bootstrap.css" rel="stylesheet" />-->
     <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.scrollto.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.validate.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.js"></script>
     <!--<script type="text/javascript" src="/static/js/typeahead.js"></script>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
@@ -42,8 +43,10 @@
 
     <script type="text/javascript">
 
+        var defaultLocation=new google.maps.LatLng(-34.397, 150.644);
         var userLocation=null;
-
+        
+    
         function getUserLocation(fn){
             console.log('getUserLocation');
             if(userLocation){
@@ -56,12 +59,20 @@
                         console.log('getCurrentPosition returned');
                         userLocation=new google.maps.LatLng(position.coords.latitude,position.coords.longitude); 
                         fn(userLocation); 
-                        });
+                        },
+                        function(){
+                            console.log('failed to find user location');
+                            userLocation=defaultLocation;
+                            fn(userLocation);
+                            },
+                            {
+                                timeout:4000
+                            });
             }
             else
             {
                 console.log('navigator.geolocation is nothing');
-                userLocation=new google.maps.LatLng(-34.397, 150.644);
+                userLocation=defaultLocation;
                 fn(userLocation);
             }
         }
@@ -375,7 +386,9 @@
         }
 
         function createInfoDialog(id,place){
-            alert('Info dialog: '+place.name);
+            // center map on marker
+            map.setCenter(new google.maps.LatLng(place.lat,place.lon));
+            createInfoWindow(id,place).open(map,markers[id]);
         }
         function createSideBarItem(id,place)
         {
@@ -489,6 +502,17 @@
                     });
                         
                 });
+
+                $("#logout-button").click(function(){
+                    
+                    $.ajax({
+                        type:"GET",
+                        url:'/vetbiz/api/dologout/',
+                        success:function(){
+                            document.location='/vetbiz/';
+                            }});
+                });
+                
                 $("#signup-submit-button").click(function(){
                     
                     // validate
@@ -530,24 +554,23 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#"><b>S</b>tars<i>4</i><b>S</b>tripes</a>
-            <p class="navbar-text pull-right">
             {% if user.username %}
-                <a href="#">Hello {{ user.username }}</a>
-                <!--
-                <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Hello {{ user.username }}<span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">My Profile</a></li>
-                            <li><a href="#">Log Out</a></li>
-                        </ul>
-                    </div>-->
+                <div class="navbar-text btn-group pull-right">
+                    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Hello {{ user.username }}<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">My Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a id="logout-button" href="#">Log Out</a></li>
+                    </ul>
+                </div>
             {% else %}
-                <a href="/vetbiz/signin/" id="login-button" class="btn btn-primary" >Log In</a>
-                <a href="/vetbiz/signup/" id="signup-button" class="btn btn-success" >Sign Up</a>
+                <p class="navbar-text pull-right">
+                    <a href="/vetbiz/signin/" id="login-button" class="btn btn-primary" >Log In</a>
+                    <a href="/vetbiz/signup/" id="signup-button" class="btn btn-success" >Sign Up</a>
+                </p>
             {% endif %}    
-            </p>
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Map</a></li>
