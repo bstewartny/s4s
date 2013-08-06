@@ -26,27 +26,43 @@
         img[src*="gstatic.com/"], img[src*="googleapis.com/"] {
             max-width: none;
         }
+
+
+
     </style>
 
     <link type="text/css" href="/static/css/bootstrap.css" rel="stylesheet" />
+    <!--<link type="text/css" href="/static/css/typeahead.js-bootstrap.css" rel="stylesheet" />-->
     <script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.scrollto.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+    <!--<script type="text/javascript" src="/static/js/typeahead.js"></script>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
 
     <script type="text/javascript">
 
+        var userLocation=null;
+
         function getUserLocation(fn){
+            console.log('getUserLocation');
+            if(userLocation){
+                fn(userLocation);
+                return;
+            }
             if(navigator.geolocation)
             {
                 navigator.geolocation.getCurrentPosition(function(position){
-                       fn(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); 
+                        console.log('getCurrentPosition returned');
+                        userLocation=new google.maps.LatLng(position.coords.latitude,position.coords.longitude); 
+                        fn(userLocation); 
                         });
             }
             else
             {
-                fn(new google.maps.LatLng(-34.397, 150.644));
+                console.log('navigator.geolocation is nothing');
+                userLocation=new google.maps.LatLng(-34.397, 150.644);
+                fn(userLocation);
             }
         }
 
@@ -248,6 +264,7 @@
         function search(query){
             console.log('query: '+query);
             getUserLocation(function(center){
+                    console.log('got location');
                     getNearbyPlaces(query,center,RADIUS);
             });
         }
@@ -332,7 +349,6 @@
             //default
             return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
         }
-
         function createMarker(id,place){
             console.log('create marker: '+place.name);
             
@@ -354,7 +370,6 @@
                     });
         }
 
-
         function scrollSideBarItemToTop(sideBarItem){
             $('#sidebar').scrollTo(sideBarItem,{duration:250,margin:true});
         }
@@ -368,7 +383,6 @@
             // create side bar nav box for this place
 
             var div=$('<div>').addClass('sidebar-place').addClass('muted');
-
             div.append($('<b>').html(place.name));
             div.append($('<br>'));
             div.append($('<p>').html(place.address));
@@ -420,7 +434,6 @@
             alert('doLogon');
         }
 
-
         $(document).ready(function(){
             
                 google.maps.event.addDomListener(window, 'load', initialize);
@@ -439,7 +452,14 @@
                     
                     });
 
-                $("#search-form").submit(function(){search($('#q').val());}  );
+                $("#search-form").submit(function(){
+                    console.log('search-form.submit called');
+                    
+                    search($('#q').val());
+
+                    return false;
+                    
+                    }  );
 
                 $("#login-submit-button").click(function(){
                     
@@ -535,7 +555,7 @@
                     <li><a href="#">Places</a></li>
                 </ul>
                 <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
-                    <input id="q" size="200" style="width:400px" name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
+                    <input id="q" size="100" style="width:400px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Search</button>
             </form>
             </div>
