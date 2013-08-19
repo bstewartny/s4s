@@ -225,7 +225,45 @@
                 });
             return d.promise();
         }
+        
+        function getOffersForBusinessFromResults(results,business)
+        {
+            var offers=[];
+            
+            for(var i=0;i<results.length;i++)
+            {
+                var result=results[i];
+                if(result['model']=='vetbiz.offer')
+                {
+                    if(result['fields']['business']==business.id)
+                    {
+                        offers.push(result['fields']);
+                    }
+                }
+            }
 
+            return offers;
+        }
+        function getBusinessesFromResults(results,query)
+        {
+            var businesses=[];
+            for(var i=0;i<results.length;i++)
+            {
+                var result=results[i];
+                if(result['model']=='vetbiz.business')
+                {
+                    var business=result.fields;
+                    // TODO: perform this filtering on the server
+                    if(matchesQuery(query,business))
+                    {
+                        business['id']=result.pk;
+                        business['offers']=getOffersForBusinessFromResults(results,business);
+                        businesses.push(business);
+                    }
+                }
+            }
+            return businesses;
+        }
         function getNearbyVeteranPlaces(query,center,radius)
         {
             var d=$.Deferred();
@@ -239,17 +277,7 @@
                         lon:center.lng(),
                         radius:radius},
                     success:function(results){
-                        var businesses=[];
-                        for(var i=0;i<results.length;i++)
-                        {
-                            var business=results[i].fields;
-                            // TODO: perform this filtering on the server
-                            if(matchesQuery(query,business))
-                            {
-                               businesses.push(business);
-                            }
-                        }
-                        console.log('resolve from getNearbyVeteranPlaces');
+                        var businesses=getBusinessesFromResults(results,query);
                         d.resolve(businesses);
                     }
                 }        
@@ -263,6 +291,7 @@
                 name:place.name,
                 veteran_discounts:false,
                 veteran_owned:false,
+                num_checkins:0,
                 lat:place.geometry.location.lat(),
                 lon:place.geometry.location.lng(),
                 address:place.vicinity,
@@ -320,10 +349,10 @@
                 infoWindow.close();
                 infoWindow=null;
             }
-            var content="<div><b>"+place.name+"</b><br><br>"+
+            var content="<div class='muted' style='width:300px;min-height:300px'><b>"+place.name+"</b><br><br>"+
                 "<input type='checkbox' onclick='setVeteranOwned("+id+",this);'>Veteran Owned<br>"+
                 "<input type='checkbox' onclick='setVeteranDiscounts("+id+",this);'>Veteran Discounts</div>";
-            infoWindow=new google.maps.InfoWindow({content:content}); 
+            infoWindow=new google.maps.InfoWindow({content:createPlaceDiv(id,place)[0]}); 
             return infoWindow;
         }
 
@@ -390,12 +419,10 @@
             map.setCenter(new google.maps.LatLng(place.lat,place.lon));
             createInfoWindow(id,place).open(map,markers[id]);
         }
-        function createSideBarItem(id,place)
-        {
-            // TODO: set ID from id so we can scroll and highlight this div on click/hover over marker
-            // create side bar nav box for this place
 
-            var div=$('<div>').addClass('sidebar-place').addClass('muted');
+        function createPlaceDiv(id,place)
+        { 
+            var div=$('<div>').addClass('muted');
             div.append($('<b>').html(place.name));
             div.append($('<br>'));
             div.append($('<p>').html(place.address));
@@ -413,10 +440,20 @@
                 if(place.offers.length>0)
                 {
                     div.append($('<br>'));
-                    div.append($('<p>').html(place.offers[0].fields.title));
+                    div.append($('<p>').html(place.offers[0].title));
                 }
             }
 
+            return div;       
+            
+        }
+
+        function createSideBarItem(id,place)
+        {
+            // TODO: set ID from id so we can scroll and highlight this div on click/hover over marker
+            // create side bar nav box for this place
+            var div=createPlaceDiv(id,place);
+            div.addClass('sidebar-place')
             div.click(function(){
                         createInfoDialog(id,place);
                         });
