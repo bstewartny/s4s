@@ -1,6 +1,17 @@
 {% extends "vetbiz/base.html" %}
 {% block content %}
-    <div class="col-sm-6 col-sm-offset-3 well">
+    <style>
+    body {
+                    background: url(/static/img/soldier_life_bg.jpg) no-repeat center center fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+
+
+    </style>
+        <div class="col-sm-6 col-sm-offset-3 well" style="margin-top:50px">
         <h2>Sign Up</h2>
         <form id="login-form" class="form-horizontal" action="/vetbiz/api/signup/" method="POST">
             <div class="row">
@@ -25,10 +36,24 @@
                 <label for="password2" class="col col-sm-2 control-label">Confirm Password</label>
                 <div class="col col-sm-10">
                     <input type="password" name="password2" id="password2" minlength="6" placeholder="Confirm Password" required>
-                    <div class="checkbox">
-                        <label><input type="checkbox">I am a Veteran!</label> 
-                    </div>
-                    <button class="btn btn-primary" type="submit">Sign Up</button>
+                </div>
+            </div>
+            <div class="row">
+                <label for="service" class="col col-sm-2 control-label">Military Service</label>
+                <div class="col col-sm-4">
+                    <select class="form-control input-sm" name="service" id="service" required>
+                        <option value="none">None</option>
+                        <option value="army">U.S. Army</option>
+                        <option value="navy">U.S. Navy</option>
+                        <option value="usaf">U.S. Air Force</option>
+                        <option value="marines">U.S. Marines</option>
+                        <option value="coastgd">Coast Guard</option>
+                    </select>
+                    <br>
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                    <br>
+                    <br>
+                    <a href="/vetbiz/signin/">Already signed up?</a>
                 </div>
             </div>
             {% csrf_token %}

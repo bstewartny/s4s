@@ -1,0 +1,48 @@
+{% extends "vetbiz/base.html" %}
+{% block content %}
+    <style>
+    body {
+                    background: url(/static/img/bg_benefits_money.jpg) no-repeat center center fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+
+
+    </style>
+    <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Place
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Offer / Deal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>
+                {{offer.business.name}}
+            </td>
+            <td>
+                {{offer.business.address}}
+            </td>
+            <td>
+                {{offer.title}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

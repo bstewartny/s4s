@@ -82,6 +82,10 @@ def signup(request):
     if not email:
         return redirect('/vetbiz/signup/')
 
+    # TODO: get if user is veteran and what service branch...
+    # TODO: if vet, when they served and what capacity (what rank, what job/skills)
+    # TODO: if military: then what is status (vet, or active)
+
     # create user account
     if User.objects.filter(username=username).exists():
         # such a user already exists

@@ -1,6 +1,15 @@
 {% extends "vetbiz/base.html" %}
 {% block content %}
-    <div class="col col-sm-6 col-sm-offset-3 well">
+    <style>
+    body {
+                    background: url(/static/img/bg_benefits.jpg) no-repeat center center fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+                                                                        </style>
+    <div class="col col-sm-6 col-sm-offset-3 well" style="margin-top:50px">
         <h2>Log In</h2>
         <form id="login-form" class="form-horizontal" action="/vetbiz/api/signin/" method="POST">
             <div class="row">
@@ -16,7 +25,7 @@
                     <div class="checkbox">
                         <label><input type="checkbox">Remember me</label> 
                     </div>
-                    <button class="btn btn-primary" type="submit">Log In</button>
+                    <button class="btn btn-primary" type="submit">Log In</button> or <a href="/vetbiz/signup/">Sign up</a>
                 </div>
             </div>
             {% csrf_token %}

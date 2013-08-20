@@ -1,0 +1,56 @@
+{% extends "vetbiz/base.html" %}
+{% block content %}
+
+    <style>
+    body {
+                    background: url(/static/img/bg_careers_help.jpg) no-repeat center center fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+
+
+    </style>
+    <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Place
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs%}
+        <tr>
+            <td>
+                {{job.title}}
+            </td>
+            <td>
+                {{job.business.name}}
+            </td>
+            <td>
+                {{job.business.address}}
+            </td>
+            <td>
+                {{job.description}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+
+{% endblock %}

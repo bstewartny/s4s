@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Stars4Stripes</title>
+        <title>VETality</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <style type="text/css">
-        body{padding-top:60px;max-height:100%;overflow:hidden}
+        body{padding-top:60px;max-height:100%;overflow:hidden;background:transparent}
         .container{padding-right:0px;} 
         .row{padding-right:0px;} 
         .scrollable{overflow-y:scroll;height:800px}
@@ -45,10 +45,13 @@
 
         var defaultLocation=new google.maps.LatLng(-34.397, 150.644);
         var userLocation=null;
-        
     
         function getUserLocation(fn){
             console.log('getUserLocation');
+            // TODO: cache user location in database and use that on initial load until current position comes back from browser
+            // TODO: cache user location in HTML5 local storage and use that when current position does not return...
+            // TODO: render map and stuff on initial load, or show some background image, etc.
+            // TODO: show progress indicator when trying to fetch current location
             if(userLocation){
                 fn(userLocation);
                 return;
@@ -66,7 +69,7 @@
                             fn(userLocation);
                             },
                             {
-                                timeout:4000
+                                timeout:3000
                             });
             }
             else
@@ -85,7 +88,7 @@
             getUserLocation(createMap);
         }
 
-        var RADIUS=5000;
+        var RADIUS=5000;rl(/static/img/soldier_life_bg.jpg);background-repeat:no-repeat;background-attachment:fixed;
         var map=null;
         var places=[];
         var markers={};
@@ -257,7 +260,7 @@
                     if(matchesQuery(query,business))
                     {
                         business['id']=result.pk;
-                        business['offers']=getOffersForBusinessFromResults(results,business);
+                        business['offers']=getOffersForBusinessFromRetars<i>4</i><b>S</b>tripessults(results,business);
                         businesses.push(business);
                     }
                 }
@@ -299,7 +302,7 @@
                 icon:place.icon,
                 types:places.types
             };
-        }
+        }tars<i>4</i><b>S</b>tripes
 
         function search(query){
             console.log('query: '+query);
@@ -380,7 +383,7 @@
                         return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
                     }
                     if(place.veteran_discounts)
-                    {
+                    {tars<i>4</i><b>S</b>tripes
                         // red marker 
                         return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
                     }
@@ -440,7 +443,7 @@
                 if(place.offers.length>0)
                 {
                     div.append($('<br>'));
-                    div.append($('<p>').html(place.offers[0].title));
+                    div.append($('<p>').html(place.offers[0].title));tars<i>4</i><b>S</b>tripes
                 }
             }
 
@@ -590,9 +593,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><b>S</b>tars<i>4</i><b>S</b>tripes</a>
+            <a class="navbar-brand" href="#"><b>VET</b>ality</a>
             {% if user.username %}
-                <div class="navbar-text btn-group pull-right">
+                <div class="btn-group pull-right" style="margin-top:10px">
                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         Hello {{ user.username }}<span class="caret"></span>
                     </a>
@@ -603,26 +606,26 @@
                     </ul>
                 </div>
             {% else %}
-                <p class="navbar-text pull-right">
+                <span class="pull-right" style="margin-top:10px">
                     <a href="/vetbiz/signin/" id="login-button" class="btn btn-primary" >Log In</a>
                     <a href="/vetbiz/signup/" id="signup-button" class="btn btn-success" >Sign Up</a>
-                </p>
+                </span>
             {% endif %}    
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Map</a></li>
-                    <li><a href="#">Offers</a></li>
-                    <li><a href="#">Places</a></li>
+                    <li class="active"><a href="/vetbiz/">Nearby Places</a></li>
+                    <li><a href="/vetbiz/offers/">Offers and Deals</a></li>
+                    <li><a href="/vetbiz/jobs/">Jobs</a></li>
                 </ul>
-                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
+               <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
                     <input id="q" size="100" style="width:400px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Search</button>
-            </form>
+                </form>
             </div>
         </div>
     </div>
-    <div class="container" style="padding-right:0px;padding-left:0px"> 
-        <div class="row" style="padding-right:0px">
+    <div class="container" style="background:transparent;padding-right:0px;padding-left:0px"> 
+        <div class="row" style="background:transparent;padding-right:0px;">
             {% block content %}{% endblock %}
         </div>
     </div>
