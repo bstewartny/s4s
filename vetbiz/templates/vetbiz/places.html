@@ -1,0 +1,62 @@
+{% extends "vetbiz/base.html" %}
+{% block content %}
+
+    <style>
+    body {
+                    background: url(/static/img/bg_careers_help.jpg) no-repeat center center fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+
+
+    </style>
+    <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Place
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Vet Owned?
+            </th>
+            <th>
+                Offers?
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for place in places%}
+        <tr>
+            <td>
+                {{place.name}}
+            </td>
+            <td>
+                {{place.address}}
+            </td>
+            <td>
+                {{place.category}}
+            </td>
+            <td>
+                {{place.veteran_owned}}
+            </td>
+            <td>
+                {{place.veteran_discounts}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+
+{% endblock %}

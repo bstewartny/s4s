@@ -600,7 +600,7 @@
                         Hello {{ user.username }}<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">My Profile</a></li>
+                        <li><a href="/vetbiz/profile/">My Profile</a></li>
                         <li class="divider"></li>
                         <li><a id="logout-button" href="#">Log Out</a></li>
                     </ul>
@@ -613,12 +613,12 @@
             {% endif %}    
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/vetbiz/">Nearby Places</a></li>
-                    <li><a href="/vetbiz/offers/">Offers and Deals</a></li>
+                    <li class="active"><a href="/vetbiz/">Places</a></li>
+                    <li><a href="/vetbiz/offers/">Offers</a></li>
                     <li><a href="/vetbiz/jobs/">Jobs</a></li>
                 </ul>
                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
-                    <input id="q" size="100" style="width:400px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
+                    <input id="q" size="50" style="width:200px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Search</button>
                 </form>
             </div>
