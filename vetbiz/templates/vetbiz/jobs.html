@@ -20,13 +20,10 @@
                 Title
             </th>
             <th>
-                Place
+                Category
             </th>
             <th>
                 Address
-            </th>
-            <th>
-                Description
             </th>
         </tr>
     </thead>
@@ -37,13 +34,10 @@
                 {{job.title}}
             </td>
             <td>
-                {{job.business.name}}
+                {{job.category}}
             </td>
             <td>
-                {{job.business.address}}
-            </td>
-            <td>
-                {{job.description}}
+                {{job.address}}
             </td>
         </tr>
         {% endfor %}

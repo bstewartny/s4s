@@ -135,8 +135,7 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'vetbiz',
-    'easy_maps'
+    'vetbiz'
 )
 
 # A sample logging configuration. The only tangible logging

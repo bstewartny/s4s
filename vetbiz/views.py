@@ -9,7 +9,7 @@ def offers(request):
     return render_to_response('vetbiz/offers.html',{'query':request.GET.get('q',''),'user':request.user,'offers':Offer.objects.all()})
 
 def jobs(request):
-    return render_to_response('vetbiz/jobs.html',{'query':request.GET.get('q',''),'user':request.user,'jobs':[]})
+    return render_to_response('vetbiz/jobs.html',{'query':request.GET.get('q',''),'user':request.user,'jobs':Job.objects.all()})
 
 def search(request):
     return render_to_response('vetbiz/search.html',{'query':request.GET.get('q',''),'user':request.user})

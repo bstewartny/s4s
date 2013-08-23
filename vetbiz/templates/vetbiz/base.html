@@ -8,17 +8,17 @@
         .container{padding-right:0px;} 
         .row{padding-right:0px;} 
         .scrollable{overflow-y:scroll;height:800px}
-        .sidebar-nav{background-color:lightgray}
-        .sidebar-place{min-height:110px;vertical-align:top;background-color:white;padding:10px;margin:10px;
-            -moz-box-shadow: 4px 4px 2px #888;
-            -webkit-box-shadow: 4px 4px 2px #888;
-            box-shadow: 4px 4px 2px #888;
+        .sidebar-nav{background-color:transparent;}
+        .sidebar-place{min-height:110px;vertical-align:top;background-color:white;padding:10px;margin-bottom:10px;
+            -moz-box-shadow: 2px 2px 1px #888;
+            -webkit-box-shadow: 2px 2px 1px #888;
+            box-shadow: 2px 2px 1px #888;
         }
         #map-canvas { height:800px;padding:0;margin:0;padding-right:0px }
         #map-canvas img { 
           max-width: none;
       }
-      #sidebar{background-color:lightgray;}
+      #sidebar{background-color:transparent;}
        media="screen" #map-canvas label { 
             width: auto; display:inline; 
         }
@@ -43,7 +43,7 @@
 
     <script type="text/javascript">
 
-        var defaultLocation=new google.maps.LatLng(-34.397, 150.644);
+        var defaultLocation=new google.maps.LatLng(40.440807, -80.006561);
         var userLocation=null;
     
         function getUserLocation(fn){
@@ -88,18 +88,21 @@
             getUserLocation(createMap);
         }
 
-        var RADIUS=5000;rl(/static/img/soldier_life_bg.jpg);background-repeat:no-repeat;background-attachment:fixed;
+        var RADIUS=5000;
         var map=null;
         var places=[];
         var markers={};
 
         function createMap(center)
         {  
+		console.log('createMap');
             map = new google.maps.Map(document.getElementById("map-canvas"),
                     {
                         center:center,
                         panControl:true,
                         zoomControl:true,
+			panControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
+			zoomControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
                         zoom: 14,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
@@ -260,7 +263,7 @@
                     if(matchesQuery(query,business))
                     {
                         business['id']=result.pk;
-                        business['offers']=getOffersForBusinessFromRetars<i>4</i><b>S</b>tripessults(results,business);
+                        business['offers']=getOffersForBusinessFromResults(results,business);
                         businesses.push(business);
                     }
                 }
@@ -302,11 +305,22 @@
                 icon:place.icon,
                 types:places.types
             };
-        }tars<i>4</i><b>S</b>tripes
-
-        function search(query){
+        } 
+       function search(query){
             console.log('query: '+query);
-            getUserLocation(function(center){
+            
+	   //HACK: just a quick way to import local businesses into our database for testing
+           if(query==":import")
+	   {
+          	// import current places
+                for(var i=0;i<places.length;i++)
+	 	{
+			updateBusiness(places[i]);			
+		} 
+   	        return; 
+           }
+
+	    getUserLocation(function(center){
                     console.log('got location');
                     getNearbyPlaces(query,center,RADIUS);
             });
@@ -383,7 +397,7 @@
                         return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
                     }
                     if(place.veteran_discounts)
-                    {tars<i>4</i><b>S</b>tripes
+                    {
                         // red marker 
                         return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
                     }
@@ -443,7 +457,7 @@
                 if(place.offers.length>0)
                 {
                     div.append($('<br>'));
-                    div.append($('<p>').html(place.offers[0].title));tars<i>4</i><b>S</b>tripes
+                    div.append($('<p>').html(place.offers[0].title));
                 }
             }
 
@@ -613,12 +627,12 @@
             {% endif %}    
             <div class="nav-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/vetbiz/">Nearby Places</a></li>
-                    <li><a href="/vetbiz/offers/">Offers and Deals</a></li>
+                    <li class="active"><a href="/vetbiz/">Places</a></li>
+                    <li><a href="/vetbiz/offers/">Offers</a></li>
                     <li><a href="/vetbiz/jobs/">Jobs</a></li>
                 </ul>
                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
-                    <input id="q" size="100" style="width:400px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
+                    <input id="q" size="50" style="width:200px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Search</button>
                 </form>
             </div>
