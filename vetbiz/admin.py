@@ -14,8 +14,8 @@ class JobInline(admin.TabularInline):
     extra=1
 
 class BusinessAdmin(admin.ModelAdmin):
-    search_fields=['name']
-    list_display=('name','category','veteran_owned','veteran_discounts','num_checkins','num_offers','num_redemptions')
+    search_fields=['name','address']
+    list_display=('name','address','category','veteran_owned','veteran_discounts','num_checkins','num_offers','num_redemptions')
     list_filter=['category','veteran_owned','veteran_discounts']
     inlines=[OfferInline,JobInline]
     

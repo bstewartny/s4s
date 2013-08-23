@@ -1,4 +1,11 @@
 {% extends "vetbiz/base.html" %}
+{% block tabs %}
+    <ul class="nav navbar-nav">
+        <li><a href="/vetbiz/">Places</a></li>
+        <li class="active"><a href="/vetbiz/offers/">Offers</a></li>
+        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
     <style>
     body {
@@ -16,13 +23,13 @@
     <thead>
         <tr>
             <th>
-                Place
+                Offer
             </th>
             <th>
-                Address
+                Business
             </th>
             <th>
-                Offer / Deal
+                Address 
             </th>
         </tr>
     </thead>
@@ -30,13 +37,13 @@
         {% for offer in offers %}
         <tr>
             <td>
+                {{offer.title}}
+            </td>
+            <td>
                 {{offer.business.name}}
             </td>
             <td>
                 {{offer.business.address}}
-            </td>
-            <td>
-                {{offer.title}}
             </td>
         </tr>
         {% endfor %}

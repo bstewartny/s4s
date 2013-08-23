@@ -110,9 +110,12 @@
  */
 
 
-            google.maps.event.addListener(map,'center_changed',function(){
+            //google.maps.event.addListener(map,'center_changed',function(){
+            //google.maps.event.addListener(map,'idle',function(){
+            google.maps.event.addListener(map,'dragend',function(){
                 // get new set of places based on new center...        
                     var center=map.getCenter();
+                    // TODO: only do this if map moved by some minimum amount...?
                     getNearbyPlaces('',center,RADIUS); 
             });
             
@@ -301,21 +304,23 @@
             };
         } 
        function search(query){
-            
+           if(map==null)
+           {
+                // do something else
+               return;
+           }
 	   //HACK: just a quick way to import local businesses into our database for testing
            if(query==":import")
-	   {
+	       {
           	// import current places
                 for(var i=0;i<places.length;i++)
-	 	{
-			updateBusiness(places[i]);			
-		} 
-   	        return; 
+                {
+                    updateBusiness(places[i]);			
+                } 
+   	            return; 
            }
-
-	    getUserLocation(function(center){
-                    getNearbyPlaces(query,center,RADIUS);
-            });
+            var center=map.getCenter();
+            getNearbyPlaces(query,center,RADIUS);
         }
 
         function clearMarkersAndPlaces(){
@@ -493,7 +498,7 @@
 
         $(document).ready(function(){
             
-                google.maps.event.addDomListener(window, 'load', initialize);
+                //google.maps.event.addDomListener(window, 'load', initialize);
 
                 $(document).ajaxError(function(evt,request,settings){
                     
@@ -611,11 +616,14 @@
                 </span>
             {% endif %}    
             <div class="nav-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/vetbiz/">Places</a></li>
-                    <li><a href="/vetbiz/offers/">Offers</a></li>
-                    <li><a href="/vetbiz/jobs/">Jobs</a></li>
-                </ul>
+                {% block tabs %}
+                    <ul class="nav navbar-nav">
+                        <li><a href="/vetbiz/">Places</a></li>
+                        <li><a href="/vetbiz/offers/">Offers</a></li>
+                        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+                    </ul>
+
+                {% endblock %}
                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
                     <input id="q" size="50" style="width:200px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Search</button>
