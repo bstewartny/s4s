@@ -47,7 +47,6 @@
         var userLocation=null;
     
         function getUserLocation(fn){
-            console.log('getUserLocation');
             // TODO: cache user location in database and use that on initial load until current position comes back from browser
             // TODO: cache user location in HTML5 local storage and use that when current position does not return...
             // TODO: render map and stuff on initial load, or show some background image, etc.
@@ -59,12 +58,10 @@
             if(navigator.geolocation)
             {
                 navigator.geolocation.getCurrentPosition(function(position){
-                        console.log('getCurrentPosition returned');
                         userLocation=new google.maps.LatLng(position.coords.latitude,position.coords.longitude); 
                         fn(userLocation); 
                         },
                         function(){
-                            console.log('failed to find user location');
                             userLocation=defaultLocation;
                             fn(userLocation);
                             },
@@ -74,7 +71,6 @@
             }
             else
             {
-                console.log('navigator.geolocation is nothing');
                 userLocation=defaultLocation;
                 fn(userLocation);
             }
@@ -95,7 +91,6 @@
 
         function createMap(center)
         {  
-		console.log('createMap');
             map = new google.maps.Map(document.getElementById("map-canvas"),
                     {
                         center:center,
@@ -113,19 +108,25 @@
                 $('#map-canvas').css('height', (h - offsetTop));
                 }).resize();
  */
+
+
+            google.maps.event.addListener(map,'center_changed',function(){
+                // get new set of places based on new center...        
+                    var center=map.getCenter();
+                    getNearbyPlaces('',center,RADIUS); 
+            });
+            
             getNearbyPlaces('{{query}}',center,RADIUS);
         }
 
         function addPlace(place)
         {
-            console.log('addPlace: '+place.name);
 
             for(var i=0;i<places.length;i++)
             {
                 var p=places[i];
                 if(samePlace(p,place))
                 {
-                    console.log('found same place, merging...');
                     p=mergePlace(p,place);
                     places[i]=p
                     return p;
@@ -137,15 +138,12 @@
 
         function matchesQuery(query,place)
         {   
-            console.log("matchesQuery: "+query +": "+place.name);    
             if(!query)
             {
-                console.log("query is !, return true");
                 return true;
             }
             if(query.length==0)
             {
-                console.log("query is empty, return true");
                 return true;
             }
             if(!place.name)
@@ -154,7 +152,6 @@
             }
             // TODO: test if matches any keywords or category names for the place...
             var b= place.name.toLowerCase().indexOf(query.toLowerCase())>-1;
-            console.log("matches: "+b);
             return b;
         }
 
@@ -165,7 +162,6 @@
 
         function mergePlace(a,b)
         {
-            console.log("merging place: "+a.name +" is same as "+b.name);
             if(a.veteran_discounts==true)
                 b.veteran_discounts=true;
 
@@ -185,7 +181,6 @@
 
         function addPlaces(a)
         {
-            console.log('addPlaces: '+a.length);
             for(var i=0;i<a.length;i++)
             {
                 addPlace(a[i]);
@@ -194,14 +189,14 @@
 
         function getNearbyPlaces(query,center,radius)
         {   
-            console.log('getNearbyPlaces: '+query);
             // we want to search google places API and our own web service in parallel
             // we can use jQuery deferred objects to make it work...
             clearMarkersAndPlaces();
 
             $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius)).done(function(googlePlaces,veteranPlaces)
                     {
-                        console.log('done called');
+                        console.log("Got "+googlePlaces.length+" nearby places from Google");
+                        console.log("Got "+veteranPlaces.length+" nearby places from database");
                         addPlaces(googlePlaces);
                         addPlaces(veteranPlaces);
                         createMarkers();
@@ -226,7 +221,6 @@
                         }
                     }
                 }
-                console.log('resolve from getNearbyGooglePlaces');
                 d.resolve(businesses);
                 });
             return d.promise();
@@ -307,7 +301,6 @@
             };
         } 
        function search(query){
-            console.log('query: '+query);
             
 	   //HACK: just a quick way to import local businesses into our database for testing
            if(query==":import")
@@ -321,7 +314,6 @@
            }
 
 	    getUserLocation(function(center){
-                    console.log('got location');
                     getNearbyPlaces(query,center,RADIUS);
             });
         }
@@ -374,7 +366,6 @@
         }
 
         function createMarkers(){
-            console.log('createMarkers');
             for(var i=0;i<places.length;i++){
                 createMarker(i,places[i]);
             }
@@ -407,7 +398,6 @@
             return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
         }
         function createMarker(id,place){
-            console.log('create marker: '+place.name);
             
             var marker=new google.maps.Marker({
                         map:map,
@@ -520,7 +510,6 @@
                     });
 
                 $("#search-form").submit(function(){
-                    console.log('search-form.submit called');
                     
                     search($('#q').val());
 
@@ -548,10 +537,8 @@
                         dataType:'json',
                         data:{'username':username,'password':password},
                         success:function(){
-                            console.log('success from /vetbiz/login'); 
                         },
                         error:function(){
-                            console.log('error from /vetbiz/login'); 
                         }
                     });
                         
@@ -587,10 +574,8 @@
                         dataType:'json',
                         data:{'username':username,'password':password},
                         success:function(){
-                            console.log('success from /vetbiz/signup'); 
                         },
                         error:function(){
-                            console.log('error from /vetbiz/signup'); 
                         }
                     });
                         
