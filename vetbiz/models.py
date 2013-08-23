@@ -1,7 +1,6 @@
 from django.db import models
 from django.forms import ValidationError
 from django import forms
-from easy_maps.widgets import AddressWithMapWidget
 from django.contrib.auth.models import User
 
 
@@ -77,6 +76,20 @@ class Offer(models.Model):
     end_date=models.DateTimeField(null=True,blank=True)
     def num_redemptions(self):
         return Redemption.objects.filter(offer=self).count()
+    def __unicode__(self):
+        return self.title
+
+class Job(models.Model):
+    business=models.ForeignKey(Business)
+    title=models.CharField(max_length=200)
+    description=models.CharField(max_length=200,null=True,blank=True)
+    category=models.CharField(max_length=200,null=True,blank=True)
+    start_date=models.DateTimeField(auto_now_add=True)
+    end_date=models.DateTimeField(null=True,blank=True)
+
+    def address(self):
+        return self.business.address
+
     def __unicode__(self):
         return self.title
 

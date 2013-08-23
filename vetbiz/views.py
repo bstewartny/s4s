@@ -24,7 +24,7 @@ def place(request):
     return render_to_response('vetbiz/place.html',{'query':request.GET.get('q',''),'user':request.user,'place':{}})
 
 def jobs(request):
-    return render_to_response('vetbiz/jobs.html',{'query':request.GET.get('q',''),'user':request.user,'jobs':[]})
+    return render_to_response('vetbiz/jobs.html',{'query':request.GET.get('q',''),'user':request.user,'jobs':Job.objects.all()})
 
 def job(request):
     return render_to_response('vetbiz/job.html',{'query':request.GET.get('q',''),'user':request.user,'job':{}})
