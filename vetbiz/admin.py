@@ -31,18 +31,18 @@ class RedemptionInline(admin.TabularInline):
     model=Redemption
     extra=1
 
-class VetUserInline(admin.StackedInline):
-    model=VetUser
+class UserProfileInline(admin.StackedInline):
+    model=UserProfile
     can_delete=False
     verbose_name_plural='user'
 
 class UserAdmin(UserAdmin):
-    inlines=(VetUserInline,)
+    inlines=(UserProfileInline,)
 
 class CheckinsAdmin(admin.ModelAdmin):
     search_fields=['business__name']
     list_display=('user','business','date')
-    list_filter=['date','business__category','business__veteran_owned','business__veteran_discounts','user__veteran']
+    list_filter=['date','business__category','business__veteran_owned','business__veteran_discounts']
 
 class OffersAdmin(admin.ModelAdmin):
     search_fields=['title','description']

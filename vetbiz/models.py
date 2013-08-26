@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 
-class VetUser(models.Model):
+class UserProfile(models.Model):
     user=models.OneToOneField(User)
     veteran=models.BooleanField(default=False)
     points=models.IntegerField(default=0)
@@ -48,7 +48,7 @@ class Business(models.Model):
         return self.name
 
 class Checkin(models.Model):
-    user=models.ForeignKey(VetUser)
+    user=models.ForeignKey(User)
     business=models.ForeignKey(Business)
     date=models.DateTimeField(auto_now=True)
 
@@ -57,10 +57,11 @@ class Checkin(models.Model):
         super(Checkin,self).save(*args,**kwargs)
         # TODO: if user did not check in already today...
         #if not Checkin.objects.exists(user=self.user,business=self.business,date__date=self.date.date):
-        self.user.points=self.user.points+self.business.points_per_checkin
-        self.user.checkins=self.user.checkins+1
+        # TODO: get user profile
+        #self.user.points=self.user.points+self.business.points_per_checkin
+        #self.user.checkins=self.user.checkins+1
         
-        self.user.save()
+        #self.user.save()
         
 
     def __unicode__(self):
@@ -95,11 +96,11 @@ class Job(models.Model):
 
 class Redemption(models.Model):
     offer=models.ForeignKey(Offer)
-    user=models.ForeignKey(VetUser)
+    user=models.ForeignKey(User)
     date=models.DateTimeField(auto_now=True)
 
     def user_name(self):
-        return self.user.user.username
+        return self.user.username
     
     def business(self):
         return self.offer.business.name
@@ -114,16 +115,17 @@ class Redemption(models.Model):
         return self.offer.points
 
     def save(self,*args,**kwargs):
-        if self.user.points<self.offer.points:
-            raise ValidationError("User does not have enough points for this offer.")
-        if self.offer.veterans_only and not self.user.veteran:
-            raise ValidationError("User must be a veteran for this offer.")
+        # TODO: get user profile...
+        #if self.user.points<self.offer.points:
+        #    raise ValidationError("User does not have enough points for this offer.")
+        #if self.offer.veterans_only and not self.user.veteran:
+        #    raise ValidationError("User must be a veteran for this offer.")
         # TODO: make sure offer already started and is not expired...
 
         super(Redemption,self).save(*args,**kwargs)
         # TODO: if user did not check in already today...
         #if not Checkin.objects.exists(user=self.user,business=self.business,date__date=self.date.date):
-        self.user.points=self.user.points-self.offer.points
+        #self.user.points=self.user.points-self.offer.points
         
-        self.user.save()
+        #self.user.save()
     

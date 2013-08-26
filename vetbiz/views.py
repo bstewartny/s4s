@@ -6,7 +6,7 @@ import json
 from vetbiz.models import *
 
 def checkins(request):
-    return render_to_response('vetbiz/checkins.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.all()})
+    return render_to_response('vetbiz/checkins.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.filter(user=request.user)})
 
 def offers(request):
     query=request.GET.get('q','')
@@ -36,7 +36,9 @@ def places(request):
 
 def place(request,place_id):
     place=get_object_or_404(Business,pk=place_id)
-    return render_to_response('vetbiz/place.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place})
+    c=RequestContext(request)
+    print 'request context: '+str(c)
+    return render_to_response('vetbiz/place.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place},context_instance=RequestContext(request))
 
 def jobs(request):
     query=request.GET.get('q','')

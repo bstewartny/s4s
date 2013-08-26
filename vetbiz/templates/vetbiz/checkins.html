@@ -31,7 +31,7 @@
         {% for checkin in checkins%}
         <tr>
             <td>
-                {{checkin.business.name}}
+                <a href="/vetbiz/place/{{checkin.business.id}}">{{checkin.business.name}}</a>
             </td>
             <td>
                 {{checkin.business.address}}

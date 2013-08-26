@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,get_object_or_404
 from django.core import serializers
 import json
 from vetbiz.models import *
@@ -89,6 +89,9 @@ def signup(request):
     else:
         user=User.objects.create_user(username,email,password)
         user.save()
+        # TODO:create user profile with additional info from reg screen...
+
+    
         user=authenticate(username=username,password=password)
         login(request,user)
         return redirect('/vetbiz/')
@@ -96,8 +99,11 @@ def signup(request):
 @login_required
 def checkin(request):
     # checkin to business
-    id=request.REQUEST.get('id',None)
-    
+    business=get_object_or_404(Business,pk=request.REQUEST.get('id',None))
+
+    checkin=Checkin.objects.create(business=business,user=request.user)
+    checkin.save()
+        
     return HttpResponse('ok')
 
 @login_required

@@ -34,6 +34,17 @@
         {% for job in place.job_set.all %}
         <p><a href="/vetbiz/job/{{job.id}}">{{job.title}}</a></p>
         {% endfor %}
-    
+
+        <button id="checkin-button" class="btn">Check in!</button>
     </div>
+    
+    <script>
+    
+        $(document).ready(function(){
+
+            $('#checkin-button').click(function(){
+                checkin('{{place.id}}');
+            });
+            });
+    </script>
 {% endblock %}

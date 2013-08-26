@@ -366,7 +366,17 @@
             place.veteran_discounts=true;
             updateBusiness(place);
         }
-    
+
+        function checkin(placeid){
+            $.ajax(
+                    {
+                        type:'POST',
+                        url:'/vetbiz/api/checkin/',
+                        data:{'id':placeid,
+                        'csrfmiddlewaretoken':'{{ csrf_token }}'}
+                    }).done(function(msg){});
+        }
+
         function updateBusiness(place){
             $.ajax(
                 {
@@ -626,6 +636,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/vetbiz/profile/">My Profile</a></li>
+                        <li><a href="/vetbiz/checkins/">My Checkins</a></li>
                         <li class="divider"></li>
                         <li><a id="logout-button" href="#">Log Out</a></li>
                     </ul>
