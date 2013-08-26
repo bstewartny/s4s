@@ -1,7 +1,8 @@
 {% extends "vetbiz/base.html" %}
 {% block tabs %}
     <ul class="nav navbar-nav">
-        <li><a href="/vetbiz/">Places</a></li>
+        <li><a href="/vetbiz/">Map</a></li>
+        <li><a href="/vetbiz/places/">Places</a></li>
         <li class="active"><a href="/vetbiz/offers/">Offers</a></li>
         <li><a href="/vetbiz/jobs/">Jobs</a></li>
     </ul>
@@ -26,7 +27,7 @@
                 Offer
             </th>
             <th>
-                Business
+                Place
             </th>
             <th>
                 Address 
@@ -37,7 +38,7 @@
         {% for offer in offers %}
         <tr>
             <td>
-                {{offer.title}}
+                <a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a>
             </td>
             <td>
                 {{offer.business.name}}

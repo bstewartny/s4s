@@ -1,4 +1,12 @@
 {% extends "vetbiz/base.html" %}
+{% block tabs %}
+    <ul class="nav navbar-nav">
+        <li><a href="/vetbiz/">Map</a></li>
+        <li class="active"><a href="/vetbiz/places/">Places</a></li>
+        <li><a href="/vetbiz/offers/">Offers</a></li>
+        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
 
     <style>
@@ -26,10 +34,6 @@
                 Category
             </th>
             <th>
-                Vet Owned?
-            </th>
-            <th>
-                Offers?
             </th>
         </tr>
     </thead>
@@ -37,19 +41,23 @@
         {% for place in places%}
         <tr>
             <td>
-                {{place.name}}
+                <a href="/vetbiz/place/{{place.id}}">{{place.name}}</a>
             </td>
             <td>
                 {{place.address}}
             </td>
             <td>
-                {{place.category}}
+                {% if place.category %}
+                    {{place.category.name}}
+                {% endif %}
             </td>
             <td>
-                {{place.veteran_owned}}
-            </td>
-            <td>
-                {{place.veteran_discounts}}
+                {% if place.veteran_owned %}
+                    <span class="label label-info">Veteran Owned</span>
+                {% endif %}
+                {% if place.veteran_discounts %}
+                    <span class="label label-success">Veteran Discounts</span>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

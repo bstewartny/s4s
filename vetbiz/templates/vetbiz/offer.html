@@ -12,7 +12,12 @@
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
-        <h1>{{offer.title}}</h1>
+        <h1>{{offer.business.name}}</h1>
+        <address>
+            {{offer.business.address}}
+        </address>
+        <h2>{{offer.title}}</h2>
+
 </div>
 
 {% endblock %}

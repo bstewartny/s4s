@@ -4,7 +4,7 @@
         <title>VETality</title>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <style type="text/css">
-        body{padding-top:60px;max-height:100%;overflow:hidden;background:transparent}
+        body{padding-top:60px;max-height:100%;background:transparent}
         .container{padding-right:0px;} 
         .row{padding-right:0px;} 
         .scrollable{overflow-y:scroll;height:800px}
@@ -177,6 +177,7 @@
             if(b.veteran_owned==true)
                 a.veteran_owned=true;
 
+            a.id=b.id;
             a.offers=b.offers;
 
             return a;
@@ -304,12 +305,7 @@
             };
         } 
        function search(query){
-           if(map==null)
-           {
-                // do something else
-               return;
-           }
-	   //HACK: just a quick way to import local businesses into our database for testing
+	        //HACK: just a quick way to import local businesses into our database for testing
            if(query==":import")
 	       {
           	// import current places
@@ -319,9 +315,34 @@
                 } 
    	            return; 
            }
-            var center=map.getCenter();
-            getNearbyPlaces(query,center,RADIUS);
-        }
+            var context_type='{{context_type}}';
+            if(context_type=='') 
+                context_type='map';
+            console.log('context_type='+context_type);
+            ({'map':search_map,'places':search_places,'offers':search_offers,'jobs':search_jobs}[context_type])(query);
+       }
+
+       function search_map(query){
+            if(map!=null){
+                var center=map.getCenter();
+                getNearbyPlaces(query,center,RADIUS);
+            }   
+       }
+
+       function search_places(query){
+            var url='/vetbiz/places?q='+encodeURIComponent(query);
+            document.location=url;
+       }
+
+       function search_offers(query){
+            var url='/vetbiz/offers?q='+encodeURIComponent(query);
+            document.location=url;
+       }
+
+       function search_jobs(query){
+            var url='/vetbiz/jobs?q='+encodeURIComponent(query);
+            document.location=url;
+       }
 
         function clearMarkersAndPlaces(){
             $('#sidebar').html('');
@@ -363,9 +384,6 @@
                 infoWindow.close();
                 infoWindow=null;
             }
-            var content="<div class='muted' style='width:300px;min-height:300px'><b>"+place.name+"</b><br><br>"+
-                "<input type='checkbox' onclick='setVeteranOwned("+id+",this);'>Veteran Owned<br>"+
-                "<input type='checkbox' onclick='setVeteranDiscounts("+id+",this);'>Veteran Discounts</div>";
             infoWindow=new google.maps.InfoWindow({content:createPlaceDiv(id,place)[0]}); 
             return infoWindow;
         }
@@ -455,7 +473,10 @@
                     div.append($('<p>').html(place.offers[0].title));
                 }
             }
-
+            if(place.id)
+            {
+                div.append($('<div>').addClass('pull-right').append($('<a>').attr('href','/vetbiz/place/'+place.id).html("More info")));
+            }
             return div;       
             
         }
@@ -618,7 +639,8 @@
             <div class="nav-collapse collapse">
                 {% block tabs %}
                     <ul class="nav navbar-nav">
-                        <li><a href="/vetbiz/">Places</a></li>
+                        <li><a href="/vetbiz/">Map</a></li>
+                        <li><a href="/vetbiz/places/">Places</a></li>
                         <li><a href="/vetbiz/offers/">Offers</a></li>
                         <li><a href="/vetbiz/jobs/">Jobs</a></li>
                     </ul>

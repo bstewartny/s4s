@@ -1,7 +1,8 @@
 {% extends "vetbiz/base.html" %}
 {% block tabs %}
     <ul class="nav navbar-nav">
-        <li><a href="/vetbiz/">Places</a></li>
+        <li><a href="/vetbiz/">Map</a></li>
+        <li><a href="/vetbiz/places/">Places</a></li>
         <li><a href="/vetbiz/offers/">Offers</a></li>
         <li class="active"><a href="/vetbiz/jobs/">Jobs</a></li>
     </ul>
@@ -38,7 +39,7 @@
         {% for job in jobs%}
         <tr>
             <td>
-                {{job.title}}
+                <a href="/vetbiz/job/{{job.id}}">{{job.title}}</a>
             </td>
             <td>
                 {{job.category}}
