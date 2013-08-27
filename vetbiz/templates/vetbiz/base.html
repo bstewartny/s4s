@@ -367,14 +367,14 @@
             updateBusiness(place);
         }
 
-        function checkin(placeid){
+        function checkin(placeid,onsuccess){
             $.ajax(
                     {
                         type:'POST',
                         url:'/vetbiz/api/checkin/',
                         data:{'id':placeid,
                         'csrfmiddlewaretoken':'{{ csrf_token }}'}
-                    }).done(function(msg){});
+                    }).done(function(msg){onsuccess();});
         }
 
         function updateBusiness(place){
@@ -632,7 +632,7 @@
             {% if user.username %}
                 <div class="btn-group pull-right" style="margin-top:10px">
                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Hello {{ user.username }}<span class="caret"></span>
+                        Hi {{ user.username }}<span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/vetbiz/profile/">My Profile</a></li>
@@ -658,8 +658,8 @@
 
                 {% endblock %}
                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
-                    <input id="q" size="50" style="width:200px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
-                    <button class="btn btn-warning" type="submit">Search</button>
+                    <input id="q" size="40" style="width:180px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
+                    <button class="btn btn-warning" type="submit">Go</button>
                 </form>
             </div>
         </div>

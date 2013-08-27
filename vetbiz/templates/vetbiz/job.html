@@ -13,7 +13,12 @@
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
-        <h1>{{job.title}}</h1>
+        <h1><a href="/vetbiz/place/{{job.business.id}}">{{job.business.name}}</a></h1>
+        <address>
+            {{offer.business.address}}
+        </address>
+        <h2>{{job.title}}</h2>
+    	{{job.description}}
     </div>
 
 {% endblock %}
