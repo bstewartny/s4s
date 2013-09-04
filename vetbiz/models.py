@@ -83,10 +83,16 @@ class Offer(models.Model):
 class Job(models.Model):
     business=models.ForeignKey(Business)
     title=models.CharField(max_length=200)
-    description=models.CharField(max_length=200,null=True,blank=True)
+    description=models.TextField(null=True,blank=True)
     category=models.CharField(max_length=200,null=True,blank=True)
     start_date=models.DateTimeField(auto_now_add=True)
     end_date=models.DateTimeField(null=True,blank=True)
+    contact_phone=models.CharField(max_length=200,null=True,blank=True)
+    contact_email=models.CharField(max_length=200,null=True,blank=True)
+    contact_link=models.CharField(max_length=200,null=True,blank=True)
+    education_level=models.CharField(max_length=200,null=True,blank=True)
+    experience_years=models.CharField(max_length=200,null=True,blank=True)
+    reference_code=models.CharField(max_length=200,null=True,blank=True)
 
     def address(self):
         return self.business.address

@@ -13,12 +13,31 @@
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
-        <h1><a href="/vetbiz/place/{{job.business.id}}">{{job.business.name}}</a></h1>
-        <address>
-            {{offer.business.address}}
-        </address>
-        <h2>{{job.title}}</h2>
-    	{{job.description}}
+        <h2>Job Summary</h2>
+        <h3>{{job.title}}</h3>
+        <dl>
+           <dt>Business</dt>
+            <dd>
+                <a href="/vetbiz/place/{{job.business.id}}">{{job.business.name}}</a>
+            </dd>
+            <dt>Location</dt>
+            <dd>
+                <address>
+                    {{job.business.address}}
+                </address>
+            </dd>
+            <dt>Category</dt>
+            <dd>{{job.category}}</dd>
+            <dt>Description</dt>
+            <dd><pre>{{job.description}}</pre></dd>
+            <dt>Education Level</dt>
+            <dd>{{job.education_level}}</dd>
+            <dt>Job Reference Code</dt>
+            <dd>{{job.reference_code}}</dd>
+            <dt>Contact</dt>
+            <dd><address>{{job.contact_phone}}<br>
+                    {{job.contact_email}}</address></dd>
+            </dl>        
     </div>
 
 {% endblock %}
