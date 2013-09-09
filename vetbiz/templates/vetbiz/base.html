@@ -71,6 +71,9 @@
             }
             else
             {
+		// TODO: try google fall-back method...
+
+		// TODO: get users last location from database
                 userLocation=defaultLocation;
                 fn(userLocation);
             }
@@ -84,7 +87,7 @@
             getUserLocation(createMap);
         }
 
-        var RADIUS=5000;
+        var RADIUS=3000;
         var map=null;
         var places=[];
         var markers={};
@@ -98,7 +101,7 @@
                         zoomControl:true,
 			panControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
 			zoomControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
-                        zoom: 14,
+                        zoom: 16,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 /*
