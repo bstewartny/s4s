@@ -1,4 +1,12 @@
 {% extends "vetbiz/base.html" %}
+{% block tabs %}
+    <ul class="nav navbar-nav">
+        <li><a href="/vetbiz/">Map</a></li>
+        <li><a href="/vetbiz/places/">Places</a></li>
+        <li class="active"><a href="/vetbiz/offers/">Offers</a></li>
+        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
     <style>
     body {
@@ -17,7 +25,7 @@
             {{offer.business.address}}
         </address>
         <h2>{{offer.title}}</h2>
-
+	{{offer.description}}
 </div>
 
 {% endblock %}

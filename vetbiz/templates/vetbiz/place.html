@@ -1,4 +1,12 @@
 {% extends "vetbiz/base.html" %}
+{% block tabs %}
+    <ul class="nav navbar-nav">
+        <li><a href="/vetbiz/">Map</a></li>
+        <li class="active"><a href="/vetbiz/places/">Places</a></li>
+        <li><a href="/vetbiz/offers/">Offers</a></li>
+        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+    </ul>
+{% endblock %}
 {% block content %}
 
     <style>
@@ -9,7 +17,14 @@
                                 -o-background-size: cover;
                                 background-size: cover;
                                                                             }
-
+	
+	.googlemap{
+		border-style:solid;
+		border-width:1px;
+		border-color:#aaa;
+		margin-top:1px;
+		margin-bottom:10px;
+	}
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
@@ -17,8 +32,9 @@
         <address>
             {{place.address}}
         </address>
-
-        {% if place.veteran_owned %}
+	<img class="googlemap" width="400" height="300" src="http://maps.googleapis.com/maps/api/staticmap?center={{place.lat}},{{place.lon}}&maptype=roadmap&markers=color:blue%7C{{place.lat}},{{place.lon}}&sensor=false&zoom=13&size=400x300"/>
+        <br>
+	{% if place.veteran_owned %}
             <span class="label label-info">Veteran Owned</span>
         {% endif %}
         {% if place.veteran_discounts %}

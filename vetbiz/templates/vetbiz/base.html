@@ -47,7 +47,8 @@
         var userLocation=null;
     
         function getUserLocation(fn){
-            // TODO: cache user location in database and use that on initial load until current position comes back from browser
+            
+	     // TODO: cache user location in database and use that on initial load until current position comes back from browser
             // TODO: cache user location in HTML5 local storage and use that when current position does not return...
             // TODO: render map and stuff on initial load, or show some background image, etc.
             // TODO: show progress indicator when trying to fetch current location
@@ -55,6 +56,10 @@
                 fn(userLocation);
                 return;
             }
+	    // HACK: for testing and demo, just default to pgh for now...
+	    fn(defaultLocation);
+		return;
+
             if(navigator.geolocation)
             {
                 navigator.geolocation.getCurrentPosition(function(position){
@@ -87,7 +92,7 @@
             getUserLocation(createMap);
         }
 
-        var RADIUS=3000;
+        var RADIUS=7000;
         var map=null;
         var places=[];
         var markers={};
@@ -101,7 +106,7 @@
                         zoomControl:true,
 			panControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
 			zoomControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
-                        zoom: 16,
+                        zoom: 12,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 /*
@@ -200,12 +205,12 @@
             // we can use jQuery deferred objects to make it work...
             clearMarkersAndPlaces();
 
-            $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius)).done(function(googlePlaces,veteranPlaces)
+            $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius*10)).done(function(googlePlaces,veteranPlaces)
                     {
                         console.log("Got "+googlePlaces.length+" nearby places from Google");
                         console.log("Got "+veteranPlaces.length+" nearby places from database");
-                        addPlaces(googlePlaces);
                         addPlaces(veteranPlaces);
+                        addPlaces(googlePlaces);
                         createMarkers();
                     });
         }
