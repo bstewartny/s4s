@@ -36,7 +36,7 @@ class UserProfileInline(admin.StackedInline):
     can_delete=False
     verbose_name_plural='user'
 
-class UserAdmin(UserAdmin):
+class MyUserAdmin(UserAdmin):
     inlines=(UserProfileInline,)
 
 class CheckinsAdmin(admin.ModelAdmin):
@@ -60,7 +60,7 @@ class RedemptionsAdmin(admin.ModelAdmin):
     list_display=('business','offer_title','user','date','offer_points')
 
 admin.site.unregister(User)
-admin.site.register(User,UserAdmin)
+admin.site.register(User,MyUserAdmin)
 admin.site.register(Business,BusinessAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Offer,OffersAdmin)

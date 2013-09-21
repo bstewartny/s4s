@@ -1,4 +1,5 @@
 # Django settings for s4s project.
+from platform import node
 
 #
 # pip install 'geopy >= 0.95'
@@ -7,12 +8,14 @@
 #
 EASY_MAPS_CENTER=(-41.3,32)
 
+DEV_HOSTNAME='Roberts-MacBook-Pro.local'
 
-DEBUG = True
+DEBUG = False
+
+if node()==DEV_HOSTNAME:
+    DEBUG=True
+
 TEMPLATE_DEBUG = DEBUG
-
-
-
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -20,17 +23,20 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-    #    'NAME': 'db',                      # Or path to database file if using sqlite3.
-    #    # The following settings are not used with sqlite3:
-    #    'USER': '',
-    #    'PASSWORD': '',
-    #    'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-    #    'PORT': '',                      # Set to empty string for default.
-    #}
-    'default': {
+DATABASES = {}
+
+if node()==DEV_HOSTNAME:
+    DATABASES['default']={
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'db',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+    }
+else:
+    DATABASES['default']={
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 's4s',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
@@ -39,7 +45,7 @@ DATABASES = {
         'HOST': 's4s.c3qcqhxf6f6r.us-east-1.rds.amazonaws.com',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '3306',                      # Set to empty string for default.
     }
-}
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts

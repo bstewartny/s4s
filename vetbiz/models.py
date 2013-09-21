@@ -3,14 +3,14 @@ from django.forms import ValidationError
 from django import forms
 from django.contrib.auth.models import User
 
-
-
 class UserProfile(models.Model):
     user=models.OneToOneField(User)
     veteran=models.BooleanField(default=False)
+    branch=models.CharField(max_length=200)
     points=models.IntegerField(default=0)
     checkins=models.IntegerField(default=0)
-
+    last_lat=models.FloatField(default=0)
+    last_lon=models.FloatField(default=0)
     def num_redemptions(self):
         return Redemption.objects.filter(user=self).count()
 
@@ -30,7 +30,15 @@ class Business(models.Model):
     lon=models.FloatField(default=0)
     veteran_owned=models.BooleanField(default=False)
     veteran_discounts=models.BooleanField(default=False)
+    disabled_veteran=models.BooleanField(default=False)
     points_per_checkin=models.IntegerField(default=10)
+    description=models.TextField(null=True,blank=True)
+    image_url=models.URLField(null=True,blank=True)
+    logo_url=models.URLField(null=True,blank=True)
+    pin_url=models.URLField(null=True,blank=True)
+    phone=models.CharField(max_length=200,null=True,blank=True)
+    email=models.CharField(max_length=200,null=True,blank=True)
+    url=models.CharField(max_length=200,null=True,blank=True)
 
     def num_checkins(self):
         return Checkin.objects.filter(business=self).count()
