@@ -25,35 +25,80 @@
 		margin-top:1px;
 		margin-bottom:10px;
 	}
+	.place-image{
+		max-width:300px;
+		height:auto;
+		margin-bottom:20px;
+	}
+	.logo-image{
+		max-width:80px;
+		height:auto;
+	}
+	
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
-        <h1>{{place.name}}</h1>
-        <address>
+        <h2>{{place.name}}</h2>
+        {% if place.logo_url %}<img class="logo-image" src="{{place.logo_url}}">{% endif %}
+	<address>
             {{place.address}}
+	    {% if place.phone %}
+		<br>Phone: {{place.phone}}
+	    {% endif %}
+	    {% if place.email %}
+		<br>Email: {{place.email}}
+	    {% endif %}
+	{% if place.url %}
+		<br><a href="{{place.url}}">{{place.url}}</a>
+	{% endif %}
+	
         </address>
-	<img class="googlemap" width="400" height="300" src="http://maps.googleapis.com/maps/api/staticmap?center={{place.lat}},{{place.lon}}&maptype=roadmap&markers=color:blue%7C{{place.lat}},{{place.lon}}&sensor=false&zoom=13&size=400x300"/>
-        <br>
-	{% if place.veteran_owned %}
-            <span class="label label-info">Veteran Owned</span>
-        {% endif %}
-        {% if place.veteran_discounts %}
-            <span class="label label-success">Veteran Discounts</span>
-            {% endif %}
+	<div class="row">
+	<div class="col-sm-6" style="width:320px">
+		{% if place.image_url %}
+			<img class="place-image" src="{{place.image_url}}">
+		{% endif %}
+		<img class="googlemap" width="300" height="200" src="http://maps.googleapis.com/maps/api/staticmap?center={{place.lat}},{{place.lon}}&maptype=roadmap&markers=color:blue%7C{{place.lat}},{{place.lon}}&sensor=false&zoom=13&size=400x300"/>
+		<br>
+		{% if place.veteran_owned %}
+		    <span class="label label-info">Veteran Owned</span>
+		{% endif %}
+		{% if place.veteran_discounts %}
+		    <span class="label label-success">Veteran Discounts</span>
+		    {% endif %}
+		{% if place.disabled_veteran %}
+		    <span class="label label-success">Disabled Veteran</span>
+		    {% endif %}
+	</div>
+	<div class="col-sm-6" style="vertical-align:top;">
+		{% if place.description %}
+		{{place.description|safe}}
+		{% endif %}
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">	
+	{% if place.offer_set.all %}
+		<h2>Offers</h2>
+		{% for offer in place.offer_set.all %}
+		<p><a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a></p>
+		{% endfor %}
+	{% endif %}
 
-        <h2>Offers</h2>
-        {% for offer in place.offer_set.all %}
-        <p><a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a></p>
-        {% endfor %}
-
-        <h2>Jobs</h2>
-        {% for job in place.job_set.all %}
-        <p><a href="/vetbiz/job/{{job.id}}">{{job.title}}</a></p>
-        {% endfor %}
+	{% if place.job_set.all %}
+		<h2>Jobs</h2>
+		{% for job in place.job_set.all %}
+		<p><a href="/vetbiz/job/{{job.id}}">{{job.title}}</a></p>
+		{% endfor %}
+	{% endif %}
+	<br>
 	{% if user.username %}
-        <button id="checkin-button" class="btn btn-success">Check in!</button>
-    	{% endif %}
-
+        	<button id="checkin-button" class="btn btn-success">Check in!</button>
+    	{% else %}
+		Log In or Sign Up to use the Check-in feature!
+	{% endif %}
+	</div>
+	</div>
 	</div>
     
     <script>
