@@ -106,7 +106,7 @@
                         zoomControl:true,
 			panControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
 			zoomControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
-                        zoom: 12,
+                        zoom: 14,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     });
 /*
@@ -402,7 +402,7 @@
                 infoWindow.close();
                 infoWindow=null;
             }
-            infoWindow=new google.maps.InfoWindow({content:createPlaceDiv(id,place)[0]}); 
+            infoWindow=new google.maps.InfoWindow({content:createPlaceDiv(id,place)[0],disableAutoPan:true}); 
             return infoWindow;
         }
 
