@@ -54,7 +54,7 @@
 	
         </address>
 	<div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-6" style="width:320px">
 		{% if place.image_url %}
 			<img class="place-image" src="{{place.image_url}}">
 		{% endif %}
@@ -70,9 +70,9 @@
 		    <span class="label label-success">Disabled Veteran</span>
 		    {% endif %}
 	</div>
-	<div class="col-sm-6" style="padding:30px;vertical-align:top">
+	<div class="col-sm-6" style="vertical-align:top;">
 		{% if place.description %}
-		{{place.description}}
+		{{place.description|safe}}
 		{% endif %}
 	</div>
 	</div>
