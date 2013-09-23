@@ -423,6 +423,10 @@
 			
                         return '/static/img/mapiconscollection-monuments/statue-2.png';
 			}
+		if(place.category==2){
+			
+                        return '/static/img/mapiconscollection-culture/museum_war.png';
+		}
             if (place.veteran_owned || place.veteran_discounts)
             {
                 if (place.veteran_owned && place.veteran_discounts)
@@ -442,12 +446,14 @@
                     if(place.veteran_discounts)
                     {
                         // red marker 
-                        return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                        //return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                        return '/static/img/mapiconscollection-tourism/star-3.png';
                     }
                 }
             }            
             //default
-            return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+           // return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            return '/static/img/mapiconscollection-offices/townhouse.png';
         }
         function createMarker(id,place){
             
