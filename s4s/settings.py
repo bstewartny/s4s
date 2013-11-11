@@ -10,7 +10,7 @@ EASY_MAPS_CENTER=(-41.3,32)
 
 DEV_HOSTNAME='Roberts-MacBook-Pro.local'
 
-DEBUG = False
+DEBUG =True
 
 if node()==DEV_HOSTNAME:
     DEBUG=True
