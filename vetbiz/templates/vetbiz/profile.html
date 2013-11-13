@@ -16,9 +16,40 @@
         <h1>My Profile</h1>
 
         <h2>{{user.username}}</h2>
-    
+   	{% if checkins %} 
         <h2>Recent Checkins</h2>
-        
+        	<table class="table">
+		    <thead>
+			<tr>
+			    <th>
+				Place
+			    </th>
+			    <th>
+				Address
+			    </th>
+			    <th>
+				Date
+			    </th>
+			</tr>
+		    </thead>
+		    <tbody>
+			{% for checkin in checkins%}
+			<tr>
+			    <td>
+				<a href="/vetbiz/place/{{checkin.business.id}}">{{checkin.business.name}}</a>
+			    </td>
+			    <td>
+				{{checkin.business.address}}
+			    </td>
+			    <td>
+				{{checkin.date}}
+			    </td>
+			</tr>
+			{% endfor %}
+
+		    </tbody>
+		</table>
+       	{% endif %} 
     
     
     

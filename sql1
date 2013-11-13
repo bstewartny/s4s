@@ -1,0 +1,77 @@
+BEGIN;
+CREATE TABLE `vetbiz_userprofile` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `user_id` integer NOT NULL UNIQUE,
+    `veteran` bool NOT NULL,
+    `points` integer NOT NULL,
+    `checkins` integer NOT NULL
+)
+;
+ALTER TABLE `vetbiz_userprofile` ADD CONSTRAINT `user_id_refs_id_d09c4002` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+CREATE TABLE `vetbiz_category` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` varchar(200) NOT NULL
+)
+;
+CREATE TABLE `vetbiz_business` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `name` varchar(200) NOT NULL,
+    `category_id` integer,
+    `address` varchar(200) NOT NULL,
+    `lat` double precision NOT NULL,
+    `lon` double precision NOT NULL,
+    `veteran_owned` bool NOT NULL,
+    `veteran_discounts` bool NOT NULL,
+    `points_per_checkin` integer NOT NULL
+)
+;
+ALTER TABLE `vetbiz_business` ADD CONSTRAINT `category_id_refs_id_68f84caa` FOREIGN KEY (`category_id`) REFERENCES `vetbiz_category` (`id`);
+CREATE TABLE `vetbiz_checkin` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `user_id` integer NOT NULL,
+    `business_id` integer NOT NULL,
+    `date` datetime NOT NULL
+)
+;
+ALTER TABLE `vetbiz_checkin` ADD CONSTRAINT `user_id_refs_id_050de8bb` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+ALTER TABLE `vetbiz_checkin` ADD CONSTRAINT `business_id_refs_id_47e93bea` FOREIGN KEY (`business_id`) REFERENCES `vetbiz_business` (`id`);
+CREATE TABLE `vetbiz_offer` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `business_id` integer NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `description` varchar(200),
+    `points` integer NOT NULL,
+    `veterans_only` bool NOT NULL,
+    `start_date` datetime NOT NULL,
+    `end_date` datetime
+)
+;
+ALTER TABLE `vetbiz_offer` ADD CONSTRAINT `business_id_refs_id_d059ea97` FOREIGN KEY (`business_id`) REFERENCES `vetbiz_business` (`id`);
+CREATE TABLE `vetbiz_job` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `business_id` integer NOT NULL,
+    `title` varchar(200) NOT NULL,
+    `description` longtext,
+    `category` varchar(200),
+    `start_date` datetime NOT NULL,
+    `end_date` datetime,
+    `contact_phone` varchar(200),
+    `contact_email` varchar(200),
+    `contact_link` varchar(200),
+    `education_level` varchar(200),
+    `experience_years` varchar(200),
+    `reference_code` varchar(200)
+)
+;
+ALTER TABLE `vetbiz_job` ADD CONSTRAINT `business_id_refs_id_90410997` FOREIGN KEY (`business_id`) REFERENCES `vetbiz_business` (`id`);
+CREATE TABLE `vetbiz_redemption` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `offer_id` integer NOT NULL,
+    `user_id` integer NOT NULL,
+    `date` datetime NOT NULL
+)
+;
+ALTER TABLE `vetbiz_redemption` ADD CONSTRAINT `offer_id_refs_id_57fbcebc` FOREIGN KEY (`offer_id`) REFERENCES `vetbiz_offer` (`id`);
+ALTER TABLE `vetbiz_redemption` ADD CONSTRAINT `user_id_refs_id_2716a46e` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
+
+COMMIT;
