@@ -39,7 +39,7 @@
     <script type="text/javascript" src="/static/js/bootstrap.js"></script>
     <!--<script type="text/javascript" src="/static/js/typeahead.js"></script>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+<!--    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>-->
 
     <script type="text/javascript">
 
@@ -58,7 +58,8 @@
             }
 	    // HACK: for testing and demo, just default to pgh for now...
 	    fn(defaultLocation);
-		return;
+		
+	    return;
 
             if(navigator.geolocation)
             {
@@ -102,8 +103,9 @@
             map = new google.maps.Map(document.getElementById("map-canvas"),
                     {
                         center:center,
-                        panControl:true,
-                        zoomControl:true,
+                        panControl:false,
+                        zoomControl:false,
+			mapTypeControl:false,
 			panControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
 			zoomControlOptions:{position:google.maps.ControlPosition.TOP_RIGHT},
                         zoom: 14,
@@ -120,12 +122,12 @@
 
             //google.maps.event.addListener(map,'center_changed',function(){
             //google.maps.event.addListener(map,'idle',function(){
-            google.maps.event.addListener(map,'dragend',function(){
+            /*google.maps.event.addListener(map,'dragend',function(){
                 // get new set of places based on new center...        
                     var center=map.getCenter();
                     // TODO: only do this if map moved by some minimum amount...?
                     getNearbyPlaces('',center,RADIUS); 
-            });
+            });*/
             
             getNearbyPlaces('{{query}}',center,RADIUS);
         }
@@ -179,11 +181,17 @@
             if(a.veteran_owned==true)
                 b.veteran_owned=true;
             
+            if(a.disabled_veteran==true)
+                b.disabled_veteran=true;
+
             if(b.veteran_discounts==true)
                 a.veteran_discounts=true;
 
             if(b.veteran_owned==true)
                 a.veteran_owned=true;
+           
+	    if(b.disabled_veteran==true)
+                a.disabled_veteran=true;
 
             a.id=b.id;
             a.offers=b.offers;
@@ -204,13 +212,19 @@
             // we want to search google places API and our own web service in parallel
             // we can use jQuery deferred objects to make it work...
             clearMarkersAndPlaces();
-
+/*
             $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius*10)).done(function(googlePlaces,veteranPlaces)
                     {
                         console.log("Got "+googlePlaces.length+" nearby places from Google");
                         console.log("Got "+veteranPlaces.length+" nearby places from database");
                         addPlaces(veteranPlaces);
                         addPlaces(googlePlaces);
+                        createMarkers();
+                    });*/
+            $.when(getNearbyVeteranPlaces(query,center,radius*10)).done(function(veteranPlaces)
+                    {
+                        console.log("Got "+veteranPlaces.length+" nearby places from database");
+                        addPlaces(veteranPlaces);
                         createMarkers();
                     });
         }
@@ -303,7 +317,8 @@
                 name:place.name,
                 veteran_discounts:false,
                 veteran_owned:false,
-                num_checkins:0,
+                disabled_veteran:false,
+		num_checkins:0,
                 lat:place.geometry.location.lat(),
                 lon:place.geometry.location.lng(),
                 address:place.vicinity,
@@ -427,32 +442,29 @@
 			
                         return '/static/img/mapiconscollection-culture/museum_war.png';
 		}
-            if (place.veteran_owned || place.veteran_discounts)
+            if (place.veteran_owned || place.veteran_discounts || place.disable_veteran)
             {
+		if(place.disabled_veteran)
+		{
+			return '/static/img/mapiconscollection-industry/purple-army.png';
+		}
                 if (place.veteran_owned && place.veteran_discounts)
                 {
-                    // purple marker
-                        return '/static/img/mapiconscollection-industry/army.png';
-                    //return 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
+                	return '/static/img/mapiconscollection-industry/army.png';
                 }
                 else
                 {
                     if(place.veteran_owned)
                     {
-                        // blue marker 
                         return '/static/img/mapiconscollection-industry/army.png';
-			//return 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
                     }
                     if(place.veteran_discounts)
                     {
-                        // red marker 
-                        //return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
                         return '/static/img/mapiconscollection-tourism/star-3.png';
                     }
                 }
             }            
             //default
-           // return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
             return '/static/img/mapiconscollection-offices/townhouse.png';
         }
         function createMarker(id,place){
@@ -498,7 +510,11 @@
             }
             if(place.veteran_discounts)
             {
-                div.append($('<span>').addClass('label').addClass('label-success').html('Veteran Discounts'));        
+                div.append($('<span>').addClass('label').addClass('label-success').css('margin-right',4).html('Veteran Discounts'));        
+            }
+            if(place.disabled_veteran)
+            {
+                div.append($('<span>').addClass('label').addClass('label-primary').html('Disabled Veteran'));        
             }
             if(place.offers)
             {
@@ -510,8 +526,10 @@
             }
             if(place.id)
             {
-                div.append($('<div>').addClass('pull-right').append($('<a>').attr('href','/vetbiz/place/'+place.id).html("More info")));
+                    div.append($('<br>'));
+                div.append($('<p>').append($('<a>').attr('href','/vetbiz/place/'+place.id).html("More info")));
             }
+		div.append($('<p>'));
             return div;       
             
         }
@@ -554,8 +572,6 @@
 
         $(document).ready(function(){
             
-                //google.maps.event.addDomListener(window, 'load', initialize);
-
                 $(document).ajaxError(function(evt,request,settings){
                     
                         switch(request.status)
