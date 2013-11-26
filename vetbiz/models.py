@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ValidationError
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.admin import widgets
 
 class UserProfile(models.Model):
     user=models.OneToOneField(User)
@@ -56,6 +57,11 @@ class Business(models.Model):
     def __unicode__(self):
         return self.name
 
+class BusinessForm(forms.ModelForm):
+	class Meta:
+		model=Business
+		exclude=['admin']
+
 class Checkin(models.Model):
     user=models.ForeignKey(User)
     business=models.ForeignKey(Business)
@@ -88,6 +94,12 @@ class Offer(models.Model):
         return Redemption.objects.filter(offer=self).count()
     def __unicode__(self):
         return self.title
+
+class OfferForm(forms.ModelForm):
+	class Meta:
+		model=Offer
+		widgets={'business':forms.widgets.HiddenInput(),
+				'end_date':widgets.AdminDateWidget()}
 
 class Job(models.Model):
     business=models.ForeignKey(Business)

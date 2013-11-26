@@ -43,7 +43,7 @@
 		google.setOnLoadCallback(drawChart);
 		function drawChart(){
 			var data=google.visualization.arrayToDataTable([
-				['Day','Checkins','PageViews'],
+				['Day','Checkins','Page Views'],
 				['M',2,4],
 				['T',5,4],
 				['W',8,4],
@@ -73,9 +73,27 @@
 				['S',2,4],
 				['S',2,4]
 			]);
-			var options={title:'Checkin Stats'};
-			var chart=new google.visualization.LineChart(document.getElementById('chart_div'));
+			var monthly_data=google.visualization.arrayToDataTable([
+				['Month','Checkins','Page Views'],
+				['Jan',20,40],
+				['Feb',30,60],
+				['Mar',22,47],
+				['Apr',20,40],
+				['May',20,40],
+				['Jun',22,47],
+				['Jul',20,40],
+				['Aug',20,40],
+				['Sep',20,49],
+				['Oct',20,40],
+				['Nov',20,40],
+				['Dec',2,40]
+				]);
+			var options={title:'Daily Stats Over Last 30 Days'};
+			var monthly_options={title:'Monthly Stats Over Last Year'};
+			var chart=new google.visualization.LineChart(document.getElementById('daily_chart_div'));
 			chart.draw(data,options);
+			var monthly_chart=new google.visualization.ColumnChart(document.getElementById('monthly_chart_div'));
+			monthly_chart.draw(monthly_data,monthly_options);
 		}
 	</script>
     <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
@@ -93,11 +111,11 @@
 			{% endif %}
 			
 			</address>
-			<button class="btn btn-primary">Edit Info</button>
+			<a href="/vetbiz/placeedit/{{place.id}}" class="btn btn-primary">Edit Info</a>
 	<hr>
 			<h3>Checkin Stats</h3>
-			<div id="chart_div" style="width:600px; height:300px;"></div>	
-			<button class="btn btn-primary">View Checkins</button>
+			<div id="daily_chart_div" style="width:650px; height:300px;"></div>	
+			<div id="monthly_chart_div" style="width:650px; height:300px;"></div>	
 	<hr>
 			<h3>Offers</h3>
 <table class="table">
@@ -150,7 +168,7 @@
     </tbody>
 </table>
 		
-			<button class="btn btn-primary">Create Offer</button>
+			<a href="/vetbiz/createoffer/{{place.id}}" class="btn btn-primary">Create Offer</a>
 	<hr>
 			<h3>Jobs</h3>
 		
@@ -191,7 +209,7 @@
 
     </tbody>
 </table>
-			<button class="btn btn-primary">Create Job</button>
+			<a href="/vetbiz/createjob/{{place.id}}" class="btn btn-primary">Create Job</a>
 	</div>
     
 {% endblock %}

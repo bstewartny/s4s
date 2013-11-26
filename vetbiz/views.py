@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import render_to_response,get_object_or_404
 from django.template import RequestContext
@@ -36,14 +37,66 @@ def places(request):
 
 def place(request,place_id):
     place=get_object_or_404(Business,pk=place_id)
-    c=RequestContext(request)
-    print 'request context: '+str(c)
     return render_to_response('vetbiz/place.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place},context_instance=RequestContext(request))
+
+def saveplace(request,place_id):
+    	place=get_object_or_404(Business,pk=place_id)
+	if not place.admin==request.user:
+		raise 'Current user is not administrator for this business!'
+	if request.method=="POST":
+		form=BusinessForm(request.POST,instance=place)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/vetbiz/placeadmin/'+str(place.id))
+		else:
+			return HttpResponseRedirect('/vetbiz/placeedit/'+str(place.id))
+	else:
+		return HttpResponseRedirect('/vetbiz/placeedit/'+str(place.id))
+
+def saveoffer(request,place_id):
+    	place=get_object_or_404(Business,pk=place_id)
+	if not place.admin==request.user:
+		raise 'Current user is not administrator for this business!'
+	if request.method=="POST":
+		form=OfferForm(request.POST)
+		if form.is_valid():
+			print 'form is valid'
+			form.save()
+			return HttpResponseRedirect('/vetbiz/placeadmin/'+str(place.id))
+		else:
+			print 'form is NOT valid'
+			return HttpResponseRedirect('/vetbiz/createoffer/'+str(place.id))
+	else:
+		return HttpResponseRedirect('/vetbiz/createoffer/'+str(place.id))
+def placeedit(request,place_id):
+    place=get_object_or_404(Business,pk=place_id)
+    # verify user is admin for this business
+    if not place.admin==request.user:
+	raise 'Current user is not administrator for this business!'
+    form=BusinessForm(instance=place)
+    return render_to_response('vetbiz/placeedit.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place,'form':form},context_instance=RequestContext(request))
+
+def createjob(request,place_id):
+    place=get_object_or_404(Business,pk=place_id)
+    # verify user is admin for this business
+    if not place.admin==request.user:
+	raise 'Current user is not administrator for this business!'
+    form=JobForm()
+    return render_to_response('vetbiz/createjob.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place,'form':form},context_instance=RequestContext(request))
+
+
+
+def createoffer(request,place_id):
+    place=get_object_or_404(Business,pk=place_id)
+    # verify user is admin for this business
+    if not place.admin==request.user:
+	raise 'Current user is not administrator for this business!'
+    form=OfferForm()
+    return render_to_response('vetbiz/createoffer.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place,'form':form},context_instance=RequestContext(request))
+
 
 def placeadmin(request,place_id):
     place=get_object_or_404(Business,pk=place_id)
-    c=RequestContext(request)
-    print 'request context: '+str(c)
     # verify user is admin for this business
     if not place.admin==request.user:
 	raise 'Current user is not administrator for this business!'
