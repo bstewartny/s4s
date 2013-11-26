@@ -23,7 +23,7 @@ def offer(request,offer_id):
     return render_to_response('vetbiz/offer.html',{'context_type':'offers','query':request.GET.get('q',''),'user':request.user,'offer':offer})
 
 def profile(request):
-    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.filter(user=request.user)})
+    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.filter(user=request.user),'businesses':Business.objects.filter(admin=request.user)})
 
 def places(request):
     query=request.GET.get('q','')
@@ -39,6 +39,17 @@ def place(request,place_id):
     c=RequestContext(request)
     print 'request context: '+str(c)
     return render_to_response('vetbiz/place.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place},context_instance=RequestContext(request))
+
+def placeadmin(request,place_id):
+    place=get_object_or_404(Business,pk=place_id)
+    c=RequestContext(request)
+    print 'request context: '+str(c)
+    # verify user is admin for this business
+    if not place.admin==request.user:
+	raise 'Current user is not administrator for this business!'
+    offers=Offer.objects.filter(business=place)
+    jobs=Job.objects.filter(business=place)
+    return render_to_response('vetbiz/placeadmin.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place,'offers':offers,'jobs':jobs},context_instance=RequestContext(request))
 
 def jobs(request):
     query=request.GET.get('q','')

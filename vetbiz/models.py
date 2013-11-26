@@ -39,6 +39,7 @@ class Business(models.Model):
     phone=models.CharField(max_length=200,null=True,blank=True)
     email=models.CharField(max_length=200,null=True,blank=True)
     url=models.CharField(max_length=200,null=True,blank=True)
+    admin=models.ForeignKey(User,null=True,blank=True)
 
     def num_checkins(self):
         return Checkin.objects.filter(business=self).count()

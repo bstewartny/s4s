@@ -49,7 +49,34 @@
 
 		    </tbody>
 		</table>
-       	{% endif %} 
+       	{% endif %}
+	{% if businesses %}
+        <h2>My Businesses</h2>
+        	<table class="table">
+		    <thead>
+			<tr>
+			    <th>
+				Business
+			    </th>
+			    <th>
+				Address
+			    </th>
+			</tr>
+		    </thead>
+		    <tbody>
+			{% for business in businesses%}
+			<tr>
+			    <td>
+				<a href="/vetbiz/placeadmin/{{business.id}}">{{business.name}}</a>
+			    </td>
+			    <td>
+				{{business.address}}
+			    </td>
+			</tr>
+			{% endfor %}
+		    </tbody>
+		</table>
+	{% endif %} 
     
     
     
