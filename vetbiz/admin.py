@@ -44,6 +44,11 @@ class CheckinsAdmin(admin.ModelAdmin):
     list_display=('user','business','date')
     list_filter=['date','business__category','business__veteran_owned','business__veteran_discounts']
 
+class BusinessPageViewsAdmin(admin.ModelAdmin):
+    search_fields=['business__name']
+    list_display=('user','business','date')
+    list_filter=['date','business__category','business__veteran_owned','business__veteran_discounts']
+
 class OffersAdmin(admin.ModelAdmin):
     search_fields=['title','description']
     list_display=('business','title','start_date','end_date','points','veterans_only','num_redemptions')
@@ -66,6 +71,7 @@ admin.site.register(Category,CategoryAdmin)
 admin.site.register(Offer,OffersAdmin)
 admin.site.register(Job,JobsAdmin)
 admin.site.register(Checkin,CheckinsAdmin)
+admin.site.register(BusinessPageView,BusinessPageViewsAdmin)
 admin.site.register(Redemption,RedemptionsAdmin)
 
 

@@ -41,6 +41,7 @@ class Business(models.Model):
     email=models.CharField(max_length=200,null=True,blank=True)
     url=models.CharField(max_length=200,null=True,blank=True)
     admin=models.ForeignKey(User,null=True,blank=True)
+    page_views=models.IntegerField(default=0)
 
     def num_checkins(self):
         return Checkin.objects.filter(business=self).count()
@@ -60,8 +61,8 @@ class Business(models.Model):
 class BusinessForm(forms.ModelForm):
 	class Meta:
 		model=Business
-		exclude=['admin']
-
+		exclude=['admin','page_views']
+        
 class Checkin(models.Model):
     user=models.ForeignKey(User)
     business=models.ForeignKey(Business)
@@ -82,6 +83,14 @@ class Checkin(models.Model):
     def __unicode__(self):
         return self.business.name
 
+class BusinessPageView(models.Model):
+    user=models.ForeignKey(User)
+    business=models.ForeignKey(Business)
+    date=models.DateTimeField(auto_now=True)
+	
+    def __unicode__(self):
+        return self.business.name
+
 class Offer(models.Model):
     business=models.ForeignKey(Business)
     title=models.CharField(max_length=200)
@@ -90,16 +99,17 @@ class Offer(models.Model):
     veterans_only=models.BooleanField(default=False)
     start_date=models.DateTimeField(auto_now_add=True)
     end_date=models.DateTimeField(null=True,blank=True)
+    page_views=models.IntegerField(default=0)
     def num_redemptions(self):
         return Redemption.objects.filter(offer=self).count()
     def __unicode__(self):
         return self.title
 
 class OfferForm(forms.ModelForm):
-	class Meta:
-		model=Offer
-		widgets={'business':forms.widgets.HiddenInput(),
-				'end_date':widgets.AdminDateWidget()}
+    class Meta:
+        model=Offer
+        exclude=['page_views']
+        widgets={'business':forms.widgets.HiddenInput(),'end_date':widgets.AdminDateWidget()}
 
 class Job(models.Model):
     business=models.ForeignKey(Business)
@@ -114,12 +124,21 @@ class Job(models.Model):
     education_level=models.CharField(max_length=200,null=True,blank=True)
     experience_years=models.CharField(max_length=200,null=True,blank=True)
     reference_code=models.CharField(max_length=200,null=True,blank=True)
+    page_views=models.IntegerField(default=0)
 
     def address(self):
         return self.business.address
 
     def __unicode__(self):
         return self.title
+
+class JobForm(forms.ModelForm):
+	class Meta:
+		model=Job
+        exclude=['page_views','education_level','experience_years']
+        widgets={'business':forms.widgets.HiddenInput(),
+				'start_date':widgets.AdminDateWidget(),
+				'end_date':widgets.AdminDateWidget()}
 
 class Redemption(models.Model):
     offer=models.ForeignKey(Offer)

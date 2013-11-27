@@ -17,15 +17,35 @@
                                 background-size: cover;
                                                                             }
 
+  @media screen{
+     #printSection{ display:none;}}
+
+   @media print{
+      body * {visibility:hidden;}
+      #printSection, #printSection * {visibility:visible;}
+      #printSection { position:absolute; left:0;top:0;}}
 
     </style>
+    
     <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
-        <h1><a href="/vetbiz/place/{{offer.business.id}}">{{offer.business.name}}</a></h1>
+        <h2><a href="/vetbiz/place/{{offer.business.id}}">{{offer.business.name}}</a></h2>
         <address>
             {{offer.business.address}}
         </address>
         <h2>{{offer.title}}</h2>
 	{{offer.description}}
-</div>
+   	<br><br>
+        <a href="javascript:window.print()">Print Offer</a> 
+     </div>
+    <div class="printable" id="printSection">
+        <h2>{{offer.business.name}}</h2>
+        <address>
+            {{offer.business.address}}
+        </address>
+        <h2>{{offer.title}}</h2>
+	{{offer.description}}
+	<br><br>
+        www.StarsOnStripes.com
+    </div>
 
 {% endblock %}

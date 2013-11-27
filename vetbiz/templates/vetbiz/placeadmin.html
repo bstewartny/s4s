@@ -43,50 +43,16 @@
 		google.setOnLoadCallback(drawChart);
 		function drawChart(){
 			var data=google.visualization.arrayToDataTable([
-				['Day','Checkins','Page Views'],
-				['M',2,4],
-				['T',5,4],
-				['W',8,4],
-				['R',10,41],
-				['F',2,4],
-				['S',4,4],
-				['S',0,4],
-				['M',0,4],
-				['T',2,4],
-				['W',2,4],
-				['R',6,9],
-				['F',2,4],
-				['S',2,4],
-				['S',5,9],
-				['M',2,4],
-				['T',3,4],
-				['W',2,4],
-				['R',2,4],
-				['F',5,4],
-				['S',2,4],
-				['S',2,2],
-				['M',6,4],
-				['T',7,4],
-				['W',2,4],
-				['R',9,4],
-				['F',2,4],
-				['S',2,4],
-				['S',2,4]
+				['Day','Checkins','Page Views']
+                {% for d in last_month %}
+                    ,['{{d.0}}',{{d.1}},{{d.2}}]
+                {% endfor %}
 			]);
 			var monthly_data=google.visualization.arrayToDataTable([
-				['Month','Checkins','Page Views'],
-				['Jan',20,40],
-				['Feb',30,60],
-				['Mar',22,47],
-				['Apr',20,40],
-				['May',20,40],
-				['Jun',22,47],
-				['Jul',20,40],
-				['Aug',20,40],
-				['Sep',20,49],
-				['Oct',20,40],
-				['Nov',20,40],
-				['Dec',2,40]
+				['Month','Checkins','Page Views']
+                {% for m in last_year %}
+                    ,['{{m.0}}',{{m.1}},{{m.2}}]
+                {% endfor %}
 				]);
 			var options={title:'Daily Stats Over Last 30 Days'};
 			var monthly_options={title:'Monthly Stats Over Last Year'};
@@ -125,11 +91,8 @@
                 Offer
             </th>
 	    <th>
-		Points
-		</th>
-            <th>
-                Vets Only
-            </th>
+		Page Views
+	    </th>
             <th>
                 Redemptions
             </th>
@@ -148,11 +111,8 @@
                 <a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a>
             </td>
             <td>
-            	{{offer.points}}
-		</td>
-            <td>
-            	{{offer.veterans_only}}
-		</td>
+		{{offer.page_views}}
+            </td>
             <td>
                 {{offer.num_redemptions}}
             </td>
@@ -179,6 +139,9 @@
                 Title
             </th>
             <th>
+                Page Views
+ 	    </th>
+            <th>
                 Start Date
             </th>
             <th>
@@ -194,6 +157,9 @@
         <tr>
             <td>
                 <a href="/vetbiz/job/{{job.id}}">{{job.title}}</a>
+            </td>
+	    <td>
+                {{job.page_views}}
             </td>
             <td>
                 {{job.start_date}}
