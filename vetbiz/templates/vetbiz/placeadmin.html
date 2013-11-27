@@ -108,7 +108,7 @@
         {% for offer in offers %}
         <tr>
             <td>
-                <a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a>
+                <a href="/vetbiz/offeredit/{{offer.id}}">{{offer.title}}</a>
             </td>
             <td>
 		{{offer.page_views}}
@@ -156,7 +156,7 @@
         {% for job in jobs%}
         <tr>
             <td>
-                <a href="/vetbiz/job/{{job.id}}">{{job.title}}</a>
+                <a href="/vetbiz/jobedit/{{job.id}}">{{job.title}}</a>
             </td>
 	    <td>
                 {{job.page_views}}

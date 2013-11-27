@@ -32,9 +32,18 @@
         <address>
             {{offer.business.address}}
         </address>
-        <h2>{{offer.title}}</h2>
+        <h2>{{offer.title}}
+    {% if offer.veterans_only %}
+    *
+    {% endif %}
+        </h2>
 	{{offer.description}}
-   	<br><br>
+    {% if offer.veterans_only %}
+        <br>
+        <br>
+        <b>* Veterans Only</b>    
+    {% endif %}
+    <br><br>
         <a href="javascript:window.print()">Print Offer</a> 
      </div>
     <div class="printable" id="printSection">
@@ -42,8 +51,17 @@
         <address>
             {{offer.business.address}}
         </address>
-        <h2>{{offer.title}}</h2>
+        <h2>{{offer.title}}
+    {% if offer.veterans_only %}
+    *
+    {% endif %}
+</h2>
 	{{offer.description}}
+    {% if offer.veterans_only %}
+        <br>
+        <br>
+        <b>* Veterans Only</b>    
+    {% endif %}
 	<br><br>
         www.StarsOnStripes.com
     </div>

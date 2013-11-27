@@ -133,8 +133,8 @@ class Job(models.Model):
         return self.title
 
 class JobForm(forms.ModelForm):
-	class Meta:
-		model=Job
+    class Meta:
+        model=Job
         exclude=['page_views','education_level','experience_years']
         widgets={'business':forms.widgets.HiddenInput(),
 				'start_date':widgets.AdminDateWidget(),

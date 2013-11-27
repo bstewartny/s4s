@@ -38,8 +38,8 @@
     <script type="text/javascript" src="/static/js/jquery.validate.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.js"></script>
     <!--<script type="text/javascript" src="/static/js/typeahead.js"></script>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
-<!--    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDTZYjwE2l-IodYDfJRZkk5Xlu4u2dMbVQ&sensor=true"></script>
+ <!--  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>-->
 
     <script type="text/javascript">
 
@@ -212,7 +212,8 @@
             // we want to search google places API and our own web service in parallel
             // we can use jQuery deferred objects to make it work...
             clearMarkersAndPlaces();
-/*
+            if(query.length>0)
+            {
             $.when(getNearbyGooglePlaces(query,center,radius),getNearbyVeteranPlaces(query,center,radius*10)).done(function(googlePlaces,veteranPlaces)
                     {
                         console.log("Got "+googlePlaces.length+" nearby places from Google");
@@ -220,20 +221,32 @@
                         addPlaces(veteranPlaces);
                         addPlaces(googlePlaces);
                         createMarkers();
-                    });*/
+                        });
+            }
+            else
+            {
             $.when(getNearbyVeteranPlaces(query,center,radius*10)).done(function(veteranPlaces)
                     {
                         console.log("Got "+veteranPlaces.length+" nearby places from database");
                         addPlaces(veteranPlaces);
                         createMarkers();
-                    });
+                        });
+            }
         }
 
         function getNearbyGooglePlaces(query,center,radius)
         {
             var d=$.Deferred();
             service=new google.maps.places.PlacesService(map);
-            service.nearbySearch({location:center,radius:radius,types:['store']},function (results,status){
+            var options={location:center,radius:radius};
+            if(query){
+                options.keyword=query;
+            }else
+            {
+                options.types=['store'];
+            }
+            
+            service.nearbySearch(options,function (results,status){
                 var businesses=[];
                 if(status==google.maps.places.PlacesServiceStatus.OK)
                 {
@@ -241,10 +254,10 @@
                     {
                         var business=googlePlaceToBusinessObject(results[i]);
                         // TODO: perform this filtering on the server
-                        if(matchesQuery(query,business))
-                        {
+                        //if(matchesQuery(query,business))
+                        //{
                            businesses.push(business);
-                        }
+                        //}
                     }
                 }
                 d.resolve(businesses);
