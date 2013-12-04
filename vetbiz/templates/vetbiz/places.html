@@ -58,6 +58,9 @@
                 {% if place.veteran_discounts %}
                     <span class="label label-success">Veteran Discounts</span>
                 {% endif %}
+                {% if place.disabled_veteran %}
+                    <span class="label label-primary">Disabled Veteran</span>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

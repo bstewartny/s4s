@@ -1,0 +1,181 @@
+{% extends "vetbiz/base.html" %}
+{% block tabs %}
+    <ul class="nav navbar-nav">
+        <li><a href="/vetbiz/">Map</a></li>
+        <li class="active"><a href="/vetbiz/places/">Places</a></li>
+        <li><a href="/vetbiz/offers/">Offers</a></li>
+        <li><a href="/vetbiz/jobs/">Jobs</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+
+    <style>
+    body {
+                    background: url(/static/img/bg_careers_help.jpg) no-repeat left top fixed; 
+                                -webkit-background-size: cover;
+                                -moz-background-size: cover;
+                                -o-background-size: cover;
+                                background-size: cover;
+                                                                            }
+	
+	.googlemap{
+		border-style:solid;
+		border-width:1px;
+		border-color:#aaa;
+		margin-top:1px;
+		margin-bottom:10px;
+	}
+	.place-image{
+		max-width:300px;
+		height:auto;
+		margin-bottom:20px;
+	}
+	.logo-image{
+		max-width:80px;
+		height:auto;
+	}
+	
+
+    </style>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("visualization","1",{packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart(){
+			var data=google.visualization.arrayToDataTable([
+				['Day','Checkins','Page Views']
+                {% for d in last_month %}
+                    ,['{{d.0}}',{{d.1}},{{d.2}}]
+                {% endfor %}
+			]);
+			var monthly_data=google.visualization.arrayToDataTable([
+				['Month','Checkins','Page Views']
+                {% for m in last_year %}
+                    ,['{{m.0}}',{{m.1}},{{m.2}}]
+                {% endfor %}
+				]);
+			var options={title:'Daily Stats Over Last 30 Days'};
+			var monthly_options={title:'Monthly Stats Over Last Year'};
+			var chart=new google.visualization.LineChart(document.getElementById('daily_chart_div'));
+			chart.draw(data,options);
+			var monthly_chart=new google.visualization.ColumnChart(document.getElementById('monthly_chart_div'));
+			monthly_chart.draw(monthly_data,monthly_options);
+		}
+	</script>
+    <div class="col-sm-10 col-sm-offset-1 panel" style="margin-top:50px">
+			<h3>{{place.name}}</h3>
+			<address>
+			    {{place.address}}
+			    {% if place.phone %}
+				<br>Phone: {{place.phone}}
+			    {% endif %}
+			    {% if place.email %}
+				<br>Email: {{place.email}}
+			    {% endif %}
+			{% if place.url %}
+				<br><a href="{{place.url}}">{{place.url}}</a>
+			{% endif %}
+			
+			</address>
+			<a href="/vetbiz/placeedit/{{place.id}}" class="btn btn-primary">Edit Info</a>
+	<hr>
+			<h3>Checkin Stats</h3>
+			<div id="daily_chart_div" style="width:650px; height:300px;"></div>	
+			<div id="monthly_chart_div" style="width:650px; height:300px;"></div>	
+	<hr>
+			<h3>Offers</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Offer
+            </th>
+	    <th>
+		Page Views
+	    </th>
+            <th>
+                Redemptions
+            </th>
+            <th>
+		Start Date               
+            </th>
+            <th>
+		End Date               
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>
+                <a href="/vetbiz/offeredit/{{offer.id}}">{{offer.title}}</a>
+            </td>
+            <td>
+		{{offer.page_views}}
+            </td>
+            <td>
+                {{offer.num_redemptions}}
+            </td>
+            <td>
+                {{offer.start_date}}
+            </td>
+            <td>
+                {{offer.end_date}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+		
+			<a href="/vetbiz/createoffer/{{place.id}}" class="btn btn-primary">Create Offer</a>
+	<hr>
+			<h3>Jobs</h3>
+		
+        <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Page Views
+ 	    </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Ref. Code
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs%}
+        <tr>
+            <td>
+                <a href="/vetbiz/jobedit/{{job.id}}">{{job.title}}</a>
+            </td>
+	    <td>
+                {{job.page_views}}
+            </td>
+            <td>
+                {{job.start_date}}
+            </td>
+            <td>
+                {{job.end_date}}
+            </td>
+            <td>
+                {{job.reference_code}}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+			<a href="/vetbiz/createjob/{{place.id}}" class="btn btn-primary">Create Job</a>
+	</div>
+    
+{% endblock %}
