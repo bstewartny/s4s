@@ -38,8 +38,8 @@
     {% endif %}
         </h2>
 	{{offer.description}}
+<div id="qrcode" style="width:100px; height:100px; margin-top:20px;"></div>
     {% if offer.veterans_only %}
-        <br>
         <br>
         <b>* Veterans Only</b>    
     {% endif %}
@@ -56,14 +56,30 @@
     *
     {% endif %}
 </h2>
-	{{offer.description}}
+{{offer.description}}
+<div id="qrcodeprintable" style="width:100px; height:100px; margin-top:20px;"></div>
     {% if offer.veterans_only %}
-        <br>
         <br>
         <b>* Veterans Only</b>    
     {% endif %}
 	<br><br>
         www.StarsOnStripes.com
     </div>
+    <script type="text/javascript">
 
+        function makeQrCode(id,val)
+        {
+            var qrcode=new QRCode(document.getElementById(id),{
+width:100,
+height:100});
+
+            qrcode.makeCode(val);
+        }
+        $(document).ready(function(){
+                makeQrCode("qrcode","{{offer.business.id}}_{{offer.id}}");        
+                makeQrCode("qrcodeprintable","{{offer.business.id}}_{{offer.id}}");        
+                
+        });
+
+    </script>
 {% endblock %}

@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^vetbiz/',include('vetbiz.urls')),
+    url(r'^$',include('vetbiz.urls')),
     url(r'^accounts/login/$',login),
     url(r'^accounts/logout/$',logout)
 )
