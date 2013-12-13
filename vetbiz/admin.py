@@ -19,6 +19,9 @@ class BusinessAdmin(admin.ModelAdmin):
     list_filter=['category','veteran_owned','disabled_veteran','veteran_discounts']
     inlines=[OfferInline,JobInline]
     
+class CharityAdmin(admin.ModelAdmin):
+    search_fields=['name']
+    list_display=('name','donated_points')
 
 class CategoryAdmin(admin.ModelAdmin):
     search_fields=['name']
@@ -38,6 +41,7 @@ class UserProfileInline(admin.StackedInline):
 
 class MyUserAdmin(UserAdmin):
     inlines=(UserProfileInline,)
+    #list_display=('username','last_login','userprofile__checkins','userprofile__points')
 
 class CheckinsAdmin(admin.ModelAdmin):
     search_fields=['business__name']
@@ -67,6 +71,7 @@ class RedemptionsAdmin(admin.ModelAdmin):
 admin.site.unregister(User)
 admin.site.register(User,MyUserAdmin)
 admin.site.register(Business,BusinessAdmin)
+admin.site.register(Charity,CharityAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Offer,OffersAdmin)
 admin.site.register(Job,JobsAdmin)

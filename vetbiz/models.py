@@ -111,6 +111,17 @@ class OfferForm(forms.ModelForm):
         exclude=['page_views']
         widgets={'business':forms.widgets.HiddenInput(),'end_date':widgets.AdminDateWidget()}
 
+class Charity(models.Model):
+    name=models.CharField(max_length=200)
+    description=models.TextField(null=True,blank=True)
+    image_link=models.CharField(max_length=200,null=True,blank=True)
+    link=models.CharField(max_length=200,null=True,blank=True)
+    donated_points=models.IntegerField(default=0)     
+    
+    def __unicode__(self):
+        return self.name
+
+
 class Job(models.Model):
     business=models.ForeignKey(Business)
     title=models.CharField(max_length=200)

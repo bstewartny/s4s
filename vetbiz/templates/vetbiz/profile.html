@@ -15,7 +15,51 @@
     <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
         <h1>My Profile</h1>
 
-        <h2>{{user.username}}</h2>
+        	<table class="table">
+		    <thead>
+			<tr>
+			    <th>
+				Username
+			    </th>
+			    <th>
+				Email
+			    </th>
+			    <th>
+				Veteran
+                </th>
+			    <th>
+				Service Branch
+			    </th>
+			    <th>
+                Total Checkins				
+			    </th>
+			    <th>
+                Points 				
+			    </th>
+			</tr>
+		    </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{user.username}}
+                    </td>
+                    <td>
+                        {{user.email}}
+                    </td>
+                    <td>
+                        {{user.userprofile.veteran}}
+                    </td>
+                    <td>
+                        {{user.userprofile.branch}}
+                    </td>
+                    <td>
+                        {{user.userprofile.checkins}}
+                    </td>
+                    <td>
+                        {{user.userprofile.points}}
+                    </td>
+            </tbody>
+           </table>
    	{% if checkins %} 
         <h2>Recent Checkins</h2>
         	<table class="table">

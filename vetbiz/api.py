@@ -69,6 +69,7 @@ def signup(request):
     password=request.POST.get('password',None)
     password2=request.POST.get('password2',None)
     email=request.POST.get('email',None)
+    branch=request.POST.get('branch','none')
     if not username:
         return redirect('/vetbiz/signup/')
     if not password:
@@ -90,8 +91,14 @@ def signup(request):
         user=User.objects.create_user(username,email,password)
         user.save()
         # TODO:create user profile with additional info from reg screen...
-
-    
+        profile=UserProfile(user=user)
+        if not branch=='none': 
+            profile.veteran=True
+            profile.branch=branch
+        else:
+            profile.veteran=False
+            profile.branch=''
+        profile.save()
         user=authenticate(username=username,password=password)
         login(request,user)
         return redirect('/vetbiz/')
@@ -103,7 +110,20 @@ def checkin(request):
 
     checkin=Checkin.objects.create(business=business,user=request.user)
     checkin.save()
-        
+    
+    # add points to user
+    # TODO: prevent repeat checkins within same day
+   
+    try:
+        request.user.userprofile.points+=business.points_per_checkin
+        request.user.userprofile.checkins+=1
+        request.user.userprofile.save()
+    except:
+        profile=UserProfile(user=request.user)
+        profile.points=business.points_per_checkin
+        profile.checkins=1
+        profile.save()
+
     return HttpResponse('ok')
 
 @login_required

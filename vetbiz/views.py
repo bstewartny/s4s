@@ -28,7 +28,8 @@ def offer(request,offer_id):
     return render_to_response('vetbiz/offer.html',{'context_type':'offers','query':request.GET.get('q',''),'user':request.user,'offer':offer})
 
 def profile(request):
-    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.filter(user=request.user),'businesses':Business.objects.filter(admin=request.user)})
+    checkins=Checkin.objects.filter(user=request.user).order_by('-date')[:10]
+    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':checkins,'businesses':Business.objects.filter(admin=request.user)})
 
 def places(request):
     query=request.GET.get('q','')
