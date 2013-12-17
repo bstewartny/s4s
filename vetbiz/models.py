@@ -63,6 +63,7 @@ class BusinessForm(forms.ModelForm):
 		model=Business
 		exclude=['admin','page_views']
         
+
 class Checkin(models.Model):
     user=models.ForeignKey(User)
     business=models.ForeignKey(Business)
@@ -121,6 +122,14 @@ class Charity(models.Model):
     def __unicode__(self):
         return self.name
 
+class Donation(models.Model):
+    user=models.ForeignKey(User)
+    charity=models.ForeignKey(Charity)
+    points=models.IntegerField()
+    date=models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.charity.name
 
 class Job(models.Model):
     business=models.ForeignKey(Business)

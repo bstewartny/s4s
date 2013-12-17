@@ -113,18 +113,41 @@ def checkin(request):
     
     # add points to user
     # TODO: prevent repeat checkins within same day
-   
+  
+    points=0
     try:
         request.user.userprofile.points+=business.points_per_checkin
+        points=request.user.userprofile.points
         request.user.userprofile.checkins+=1
         request.user.userprofile.save()
     except:
         profile=UserProfile(user=request.user)
         profile.points=business.points_per_checkin
+        points=profile.points
         profile.checkins=1
         profile.save()
 
-    return HttpResponse('ok')
+    return HttpResponse(points)
+
+@login_required
+def donate(request):
+    points=int(request.REQUEST.get('points',0))
+    if points>request.user.userprofile.points:
+        raise 'User does not have enouph points'
+    print 'points = '+str(points)
+
+    charity=get_object_or_404(Charity,pk=request.REQUEST.get('id',None))
+    donation=Donation.objects.create(charity=charity,user=request.user,points=points)
+    donation.save()
+
+    charity.donated_points+=points
+    charity.save()
+
+    request.user.userprofile.points-=points
+    points=request.user.userprofile.points
+    request.user.userprofile.save()
+
+    return HttpResponse(points)
 
 @login_required
 def checkins(request):

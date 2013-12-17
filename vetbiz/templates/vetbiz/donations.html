@@ -1,17 +1,9 @@
 {% extends "vetbiz/base.html" %}
-{% block tabs %}
-    <ul class="nav navbar-nav">
-        <li><a href="/vetbiz/">Map</a></li>
-        <li><a href="/vetbiz/places/">Places</a></li>
-        <li class="active"><a href="/vetbiz/offers/">Offers</a></li>
-        <li><a href="/vetbiz/jobs/">Jobs</a></li>
-        <li><a href="/vetbiz/charities/">Charities</a></li>
-    </ul>
-{% endblock %}
 {% block content %}
+
     <style>
     body {
-                    background: url(/static/img/bg_benefits_money.jpg) no-repeat left top fixed; 
+                    background: url(/static/img/bg_careers_help.jpg) no-repeat left top fixed; 
                                 -webkit-background-size: cover;
                                 -moz-background-size: cover;
                                 -o-background-size: cover;
@@ -21,31 +13,31 @@
 
     </style>
     <div class="col-sm-10 col-sm-offset-1 well" style="margin-top:50px">
-<table class="table">
+        <table class="table">
     <thead>
         <tr>
             <th>
-                Offer
+                Charity
             </th>
             <th>
-                Place
+                Points
             </th>
             <th>
-                Address 
+                Date
             </th>
         </tr>
     </thead>
     <tbody>
-        {% for offer in offers %}
+        {% for donation in donations%}
         <tr>
             <td>
-                <a href="/vetbiz/offer/{{offer.id}}">{{offer.title}}</a>
+                <a href="/vetbiz/charity/{{donation.charity.id}}">{{donation.charity.name}}</a>
             </td>
             <td>
-                <a href="/vetbiz/place/{{offer.business.id}}">{{offer.business.name}}</a>
+                {{donation.points}}
             </td>
             <td>
-                {{offer.business.address}}
+                {{donation.date}}
             </td>
         </tr>
         {% endfor %}
@@ -53,5 +45,6 @@
     </tbody>
 </table>
 </div>
+
 
 {% endblock %}

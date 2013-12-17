@@ -411,7 +411,17 @@
                         url:'/vetbiz/api/checkin/',
                         data:{'id':placeid,
                         'csrfmiddlewaretoken':'{{ csrf_token }}'}
-                    }).done(function(msg){onsuccess();});
+                    }).done(function(msg){onsuccess(msg);});
+        }
+        function donate(charityid,points,onsuccess){
+            $.ajax(
+                    {
+                        type:'POST',
+                        url:'/vetbiz/api/donate/',
+                        data:{'id':charityid,
+                        'points':points,
+                        'csrfmiddlewaretoken':'{{ csrf_token }}'}
+                    }).done(function(msg){onsuccess(msg);});
         }
 
         function updateBusiness(place){
@@ -677,21 +687,28 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+        <div class="container">
+            <!--
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
+            </button>-->
             <a class="navbar-brand" href="#">StarsOnStripes</a>
             {% if user.username %}
                 <div class="btn-group pull-right" style="margin-top:10px">
                     <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Hi {{ user.username }}<span class="caret"></span>
+                        {% if user.userprofile.points > 0 %}
+                        {{ user.username }}&nbsp;<span class="badge" id="points-badge">{{user.userprofile.points}}</span>&nbsp;<span class="caret"></span>
+                        {% else %}
+
+                        {{ user.username }}&nbsp;<span class="caret"></span>
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/vetbiz/profile/">My Profile</a></li>
                         <li><a href="/vetbiz/checkins/">My Checkins</a></li>
+                        <li><a href="/vetbiz/donations/">My Donations</a></li>
                         <li class="divider"></li>
                         <li><a id="logout-button" href="#">Log Out</a></li>
                     </ul>
@@ -702,18 +719,20 @@
                     <a href="/vetbiz/signup/" id="signup-button" class="btn btn-success" >Sign Up</a>
                 </span>
             {% endif %}    
-            <div class="nav-collapse collapse">
+            <!--<div class="nav-collapse collapse">-->
+            <div>
                 {% block tabs %}
                     <ul class="nav navbar-nav">
                         <li><a href="/vetbiz/">Map</a></li>
                         <li><a href="/vetbiz/places/">Places</a></li>
                         <li><a href="/vetbiz/offers/">Offers</a></li>
                         <li><a href="/vetbiz/jobs/">Jobs</a></li>
+                        <li><a href="/vetbiz/charities/">Charities</a></li>
                     </ul>
 
                 {% endblock %}
                <form id="search-form" method="get" action="/vetbiz/search/" style="padding-top:10px" class="form-inline">
-                    <input id="q" size="40" style="width:180px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
+                    <input id="q" size="30" style="width:140px"  name="q" value="{{query}}" type="text"  placeholder="Find something..." class="form-control">
                     <button class="btn btn-warning" type="submit">Go</button>
                 </form>
             </div>

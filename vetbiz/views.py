@@ -11,6 +11,9 @@ from dateutil.relativedelta import relativedelta
 def checkins(request):
     return render_to_response('vetbiz/checkins.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':Checkin.objects.filter(user=request.user)})
 
+def donations(request):
+    return render_to_response('vetbiz/donations.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'donations':Donation.objects.filter(user=request.user)})
+
 def offers(request):
     query=request.GET.get('q','')
     offers=None
@@ -28,8 +31,9 @@ def offer(request,offer_id):
     return render_to_response('vetbiz/offer.html',{'context_type':'offers','query':request.GET.get('q',''),'user':request.user,'offer':offer})
 
 def profile(request):
-    checkins=Checkin.objects.filter(user=request.user).order_by('-date')[:10]
-    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':checkins,'businesses':Business.objects.filter(admin=request.user)})
+    checkins=Checkin.objects.filter(user=request.user).order_by('-date')[:5]
+    donations=Donation.objects.filter(user=request.user).order_by('-date')[:5]
+    return render_to_response('vetbiz/profile.html',{'context_type':'map','query':request.GET.get('q',''),'user':request.user,'checkins':checkins,'donations':donations,'businesses':Business.objects.filter(admin=request.user)})
 
 def places(request):
     query=request.GET.get('q','')
@@ -40,14 +44,30 @@ def places(request):
         places=Business.objects.all()
     return render_to_response('vetbiz/places.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'places':places})
 
+def charities(request):
+    query=request.GET.get('q','')
+    charities=None
+    if len(query)>0:
+        charities=Charity.objects.filter(name__icontains=query)
+    else:
+        charities=Charity.objects.all()
+    return render_to_response('vetbiz/charities.html',{'context_type':'charities','query':request.GET.get('q',''),'user':request.user,'charities':charities})
+
 def place(request,place_id):
     place=get_object_or_404(Business,pk=place_id)
     place.page_views=place.page_views+1
     place.save()
-    page_view=BusinessPageView(business=place,user=request.user)
-    page_view.save()
+    if request.user.is_authenticated():
+        print str(request.user)
+        page_view=BusinessPageView(business=place,user=request.user)
+        page_view.save()
  
     return render_to_response('vetbiz/place.html',{'context_type':'places','query':request.GET.get('q',''),'user':request.user,'place':place},context_instance=RequestContext(request))
+
+def charity(request,charity_id):
+    charity=get_object_or_404(Charity,pk=charity_id)
+ 
+    return render_to_response('vetbiz/charity.html',{'context_type':'charities','query':request.GET.get('q',''),'user':request.user,'charity':charity},context_instance=RequestContext(request))
 
 def saveplace(request,place_id):
     place=get_object_or_404(Business,pk=place_id)

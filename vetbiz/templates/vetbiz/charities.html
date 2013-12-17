@@ -2,10 +2,10 @@
 {% block tabs %}
     <ul class="nav navbar-nav">
         <li><a href="/vetbiz/">Map</a></li>
-        <li class="active"><a href="/vetbiz/places/">Places</a></li>
+        <li><a href="/vetbiz/places/">Places</a></li>
         <li><a href="/vetbiz/offers/">Offers</a></li>
         <li><a href="/vetbiz/jobs/">Jobs</a></li>
-        <li><a href="/vetbiz/charities/">Charities</a></li>
+        <li class="active"><a href="/vetbiz/charities/">Charities</a></li>
     </ul>
 {% endblock %}
 {% block content %}
@@ -26,42 +26,21 @@
     <thead>
         <tr>
             <th>
-                Place
+                Charity
             </th>
             <th>
-                Address
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
+                Donated Points
             </th>
         </tr>
     </thead>
     <tbody>
-        {% for place in places%}
+        {% for charity in charities%}
         <tr>
             <td>
-                <a href="/vetbiz/place/{{place.id}}">{{place.name}}</a>
+                <a href="/vetbiz/charity/{{charity.id}}">{{charity.name}}</a>
             </td>
             <td>
-                {{place.address}}
-            </td>
-            <td>
-                {% if place.category %}
-                    {{place.category.name}}
-                {% endif %}
-            </td>
-            <td>
-                {% if place.veteran_owned %}
-                    <span class="label label-info">Veteran Owned</span>
-                {% endif %}
-                {% if place.veteran_discounts %}
-                    <span class="label label-success">Veteran Discounts</span>
-                {% endif %}
-                {% if place.disabled_veteran %}
-                    <span class="label label-primary">Disabled Veteran</span>
-                {% endif %}
+                {{charity.donated_points}}
             </td>
         </tr>
         {% endfor %}
