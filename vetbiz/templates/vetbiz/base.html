@@ -193,10 +193,18 @@
            
 	    if(b.disabled_veteran==true)
                 a.disabled_veteran=true;
+            if(a.id)
+                b.id=a.id;
+            else
+                if(b.id)
+                    a.id=b.id;
+            if(a.offers)
+                b.offers=a.offers;
+            else
+                if(b.offers)
+                    a.offers=b.offers;
 
-            a.id=b.id;
-            a.offers=b.offers;
-	    a.pin_url=b.pin_url;
+	        a.pin_url=b.pin_url;
             return a;
         }
 

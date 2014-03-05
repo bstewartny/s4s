@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response,get_object_or_404
 from django.template import RequestContext
 import json
 from vetbiz.models import *
+from django.db.models import Q
 import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -18,7 +19,8 @@ def offers(request):
     query=request.GET.get('q','')
     offers=None
     if len(query)>0:
-        offers=Offer.objects.filter(title__icontains=query)
+        # search either offer title or business name
+        offers=Offer.objects.filter(Q(title__icontains=query) | Q(business__name__icontains=query))
     else:
         offers=Offer.objects.all()
     return render_to_response('vetbiz/offers.html',{'context_type':'offers','query':request.GET.get('q',''),'user':request.user,'offers':offers})
@@ -231,7 +233,7 @@ def jobs(request):
     query=request.GET.get('q','')
     jobs=None
     if len(query)>0:
-        jobs=Job.objects.filter(title__icontains=query)
+        jobs=Job.objects.filter(Q(title__icontains=query) | Q(category__icontains=query))
     else:
         jobs=Job.objects.all()
     return render_to_response('vetbiz/jobs.html',{'context_type':'jobs','query':request.GET.get('q',''),'user':request.user,'jobs':jobs})
