@@ -21,6 +21,35 @@
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyBBMDUkXGWZWDrf-hvMIJ8A4vnKdoKUVVo"></script>
 <script>
 
+    
+    function renderPlaces()
+    {
+        iui.showPageById('places');
+        // get places from api
+        $.ajax({
+            type:'GET',
+            url:'http://www.starsonstripes.com/vetbiz/api/places/',
+            dataType:'json',
+            data:{
+                lat:latitude,
+                lon:longitude,
+                radius:5000000},
+            success:function(results){
+                alert('got '+results.length+' places');
+                var places=$('#places-rows');
+                for(var i=0;i<results.length;i++)
+                {
+                    var result=results[i];
+                    var place=result.fields;
+                    $('<div>').addClass('r-row').text(place.name).appendTo(places);
+                }
+            }
+        });
+        // render into list
+    }
+
+
+
     var latitude=40.440807;
     var longitude=-80.006561;
     var mapObject=null;
@@ -146,7 +175,7 @@
     
     <div id="home" title="StarsOnStripes" selected="true">
         <button class="round-button" onclick="renderMap();">Map</button>
-        <button class="round-button"  onclick="iui.showPageById('places');">Places</button>
+        <button class="round-button"  onclick="renderPlaces();">Places</button>
         <button class="round-button"  onclick="iui.showPageById('offers');">Offers</button>
         <button class="round-button"  onclick="iui.showPageById('jobs');">Jobs</button>
         <button class="round-button"  onclick="iui.showPageById('charities');">Charity</button>
@@ -156,7 +185,7 @@
     </div>
 
     <div id="places" title="Places">
-        <div class="rows">
+        <div class="rows" id="places-rows">
             <div class="r-row">A place</div>
             <div class="r-row">A place</div>
             <div class="r-row">A place</div>
