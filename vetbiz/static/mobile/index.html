@@ -21,31 +21,63 @@
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyBBMDUkXGWZWDrf-hvMIJ8A4vnKdoKUVVo"></script>
 <script>
 
-    
     function renderPlaces()
     {
+        $('#places-rows').empty();
         iui.showPageById('places');
-        // get places from api
+        renderObjects('/vetbiz/api/places/',function(place){
+            $('<div>').addClass('r-row').text(place.name).appendTo(places);
+        });    
+    }
+
+    function renderObjects(api,rowFn)
+    {
         $.ajax({
             type:'GET',
-            url:'/vetbiz/api/places/',
+            url:api,
             dataType:'json',
             data:{
                 lat:latitude,
                 lon:longitude,
                 radius:5000000},
             success:function(results){
-                alert('got '+results.length+' places');
-                var places=$('#places-rows');
                 for(var i=0;i<results.length;i++)
                 {
                     var result=results[i];
-                    var place=result.fields;
-                    $('<div>').addClass('r-row').text(place.name).appendTo(places);
+                    rowFn(result.fields);
                 }
             }
         });
-        // render into list
+    }
+
+    function renderOffers()
+    {
+        var offers=$('#offers-rows');
+        offers.empty();
+        iui.showPageById('offers');
+        renderObjects('/vetbiz/api/offers/',function(offer){
+            $('<div>').addClass('r-row').text(offer.title).appendTo(offers);
+        });    
+    }
+
+    function renderJobs()
+    {
+        var jobs=$('#jobs-rows');
+        jobs.empty();
+        iui.showPageById('jobs');
+        renderObjects('/vetbiz/api/jobs/',function(job){
+            $('<div>').addClass('r-row').text(job.title).appendTo(jobs);
+        });    
+    }
+
+    function renderCharities()
+    {
+        var charities=$('#charities-rows');
+        charities.empty();
+        iui.showPageById('charities');
+        renderObjects('/vetbiz/api/charities/',function(charity){
+            $('<div>').addClass('r-row').text(charity.name).appendTo(charities);
+        });    
     }
 
 
@@ -113,15 +145,15 @@
     }
     #jobs
     {
-        background:url('images/bg1.png') no-repeat top left;background-size:320px auto;
+        background:url('images/bg2.png') no-repeat top left;background-size:320px auto;
     }
     #charities
     {
-        background:url('images/bg1.png') no-repeat top left;background-size:320px auto;
+        background:url('images/bg2.png') no-repeat top left;background-size:320px auto;
     }
     #places
     {
-        background:url('images/bg1.png') no-repeat top left;background-size:320px auto;
+        background:url('images/bg2.png') no-repeat top left;background-size:320px auto;
     }
     
     .round-button
@@ -176,9 +208,9 @@
     <div id="home" title="StarsOnStripes" selected="true">
         <button class="round-button" onclick="renderMap();">Map</button>
         <button class="round-button"  onclick="renderPlaces();">Places</button>
-        <button class="round-button"  onclick="iui.showPageById('offers');">Offers</button>
-        <button class="round-button"  onclick="iui.showPageById('jobs');">Jobs</button>
-        <button class="round-button"  onclick="iui.showPageById('charities');">Charity</button>
+        <button class="round-button"  onclick="renderOffers();">Offers</button>
+        <button class="round-button"  onclick="renderJobs();">Jobs</button>
+        <button class="round-button"  onclick="renderCharities();">Charity</button>
     </div>
 
     <div id="map" title="Places" >
@@ -186,18 +218,6 @@
 
     <div id="places" title="Places">
         <div class="rows" id="places-rows">
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
-            <div class="r-row">A place</div>
         </div>    
     </div>
 
@@ -206,73 +226,17 @@
     </div>
 
     <div id="offers" title="Offers">
-        <div class="rows">
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
-            <div class="r-row">An offer</div>
+        <div class="rows" id="offers-rows">
         </div>
     </div>
 
     <div id="jobs" title="Jobs">
-        <div class="rows">
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
-            <div class="r-row">A Job</div>
+        <div class="rows" id="jobs-rows">
         </div>
     </div>
 
     <div id="charities" title="Charities">
-        <div class="rows">
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
-            <div class="r-row">A Charity</div>
+        <div class="rows" id="charities-rows">
         </div>    
     </div>
     
