@@ -10,9 +10,9 @@
 #import <MapKit/MapKit.h>
 #import "SOSPlace.h"
 
-@interface SOSPlacesViewController : UIViewController<MKMapViewDelegate>
+@interface SOSPlacesViewController : UIViewController<MKMapViewDelegate,UISearchBarDelegate>
 
 @property(nonatomic,strong) MKMapView * mapView;
 @property(nonatomic,strong) NSArray * data;
-
+@property(nonatomic,strong) UISearchBar * searchBar;
 @end
