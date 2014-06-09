@@ -24,5 +24,7 @@
 @property(nonatomic,strong) SOSJob * job;
 
 - (id) initWithJob:(SOSJob*)job;
+- (IBAction)share:(id)sender;
+- (IBAction)getDirections:(id)sender;
 
 @end

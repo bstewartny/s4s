@@ -7,7 +7,7 @@
 //
 
 #import "SOSPlaceViewController.h"
-
+#import <MapKit/MapKit.h>
 @interface SOSPlaceViewController ()
 
 @end
@@ -47,5 +47,20 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (IBAction)getDirections:(id)sender
+{
+    CLLocationCoordinate2D latLng;
+    latLng.latitude=self.place.latitude;
+    latLng.longitude = self.place.longitude;
+    
+    MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: latLng addressDictionary: nil];
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
+    destination.name = self.place.name;
+    
+    NSArray* items = [[NSArray alloc] initWithObjects: destination, nil];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 MKLaunchOptionsDirectionsModeDriving, 
+                                 MKLaunchOptionsDirectionsModeKey, nil];
+    [MKMapItem openMapsWithItems: items launchOptions: options];
+}
 @end

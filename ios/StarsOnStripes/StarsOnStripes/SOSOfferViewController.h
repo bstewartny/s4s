@@ -20,4 +20,7 @@
 
 - (id) initWithOffer:(SOSOffer*)offer;
 
+- (IBAction)share:(id)sender;
+- (IBAction)getDirections:(id)sender;
+
 @end

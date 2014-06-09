@@ -7,6 +7,7 @@
 //
 
 #import "SOSJobViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface SOSJobViewController ()
 
@@ -31,6 +32,36 @@
     return self;
 }
 
+- (IBAction)share:(id)sender
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+
+    NSString * jobMessage=[NSString stringWithFormat:@"<html><body>Here is a great job from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.job.business.name,self.job.business.address,self.job.title,self.job.description];
+    
+    [sharingItems addObject:jobMessage];
+
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    
+    [activityController setValue:[NSString stringWithFormat:@"StarsOnStripes Job: %@: %@",self.job.business.name,self.job.title] forKey:@"Subject"];
+    
+    [self presentViewController:activityController animated:YES completion:nil];
+}
+- (IBAction)getDirections:(id)sender
+{
+    CLLocationCoordinate2D latLng;
+    latLng.latitude=self.job.business.latitude;
+    latLng.longitude = self.job.business.longitude;
+    
+    MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: latLng addressDictionary: nil];
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
+    destination.name = self.job.business.name;
+    
+    NSArray* items = [[NSArray alloc] initWithObjects: destination, nil];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 MKLaunchOptionsDirectionsModeDriving, 
+                                 MKLaunchOptionsDirectionsModeKey, nil];
+    [MKMapItem openMapsWithItems: items launchOptions: options];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

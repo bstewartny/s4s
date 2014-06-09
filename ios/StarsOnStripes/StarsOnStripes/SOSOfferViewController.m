@@ -7,6 +7,7 @@
 //
 
 #import "SOSOfferViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface SOSOfferViewController ()
 
@@ -31,6 +32,20 @@
     }
     return self;
 }
+- (IBAction)share:(id)sender
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+
+    NSString * offerMessage=[NSString stringWithFormat:@"<html><body>Here is a great offer from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.offer.business.name,self.offer.business.address,self.offer.title,self.offer.description];
+    
+    [sharingItems addObject:offerMessage];
+
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    
+    [activityController setValue:[NSString stringWithFormat:@"StarsOnStripes Offer: %@: %@",self.offer.business.name,self.offer.title] forKey:@"Subject"];
+    
+    [self presentViewController:activityController animated:YES completion:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -48,6 +63,23 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)getDirections:(id)sender
+{
+    CLLocationCoordinate2D latLng;
+    latLng.latitude=self.offer.business.latitude;
+    latLng.longitude = self.offer.business.longitude;
+    
+    MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate: latLng addressDictionary: nil];
+    MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
+    destination.name = self.offer.business.name;
+    
+    NSArray* items = [[NSArray alloc] initWithObjects: destination, nil];
+    NSDictionary* options = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 MKLaunchOptionsDirectionsModeDriving, 
+                                 MKLaunchOptionsDirectionsModeKey, nil];
+    [MKMapItem openMapsWithItems: items launchOptions: options];
 }
 
 @end

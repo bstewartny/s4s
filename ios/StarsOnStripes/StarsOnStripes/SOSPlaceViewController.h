@@ -19,4 +19,7 @@
 @property(nonatomic,strong) SOSPlace * place;
 
 - (id) initWithPlace:(SOSPlace*)place;
+
+- (IBAction)getDirections:(id)sender;
+
 @end
