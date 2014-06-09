@@ -263,22 +263,28 @@ def offers(request):
     lon=float(request.GET.get('lon'))
     radius=float(request.GET.get('radius'))
     offers=[]
+    results=[]
     # TODO: filter on category, query, veteran criteria, etc.
     for biz in businesses_in_radius(lat,lon,radius):
         offers.extend(biz.offer_set.all())
+        results.append(biz)
+    results.extend(offers)
     print 'found '+str(len(offers)) +' nearby offers'
-    return json(offers) 
+    return json(results) 
 
 def jobs(request):
     lat=float(request.GET.get('lat'))
     lon=float(request.GET.get('lon'))
     radius=float(request.GET.get('radius'))
     jobs=[]
+    results=[]
     # TODO: filter on category, query, veteran criteria, etc.
     for biz in businesses_in_radius(lat,lon,radius):
         jobs.extend(biz.job_set.all())
+        results.append(biz)
+    results.extend(jobs)
     print 'found '+str(len(jobs)) +' nearby jobs'
-    return json(jobs)
+    return json(results)
 
 def charities(request):
     return json(Charity.objects.all())
