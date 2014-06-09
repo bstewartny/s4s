@@ -9,6 +9,7 @@
 #import "SOSCharityViewController.h"
 #import <CoreLocation/CLLocation.h>
 #import "SOSAppDelegate.h"
+#import "SOSCharity.h"
 
 @interface SOSCharityViewController ()
 
@@ -25,7 +26,10 @@
     return self;
 }
 
-
+- (id) objectFromJson:(NSDictionary *)json
+{
+    return [[SOSCharity alloc] initFromJson:json];
+}
 - (NSString*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
@@ -41,9 +45,10 @@
    if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
     }
-    NSDictionary *tempDictionary= [[self.data objectAtIndex:indexPath.row] objectForKey:@"fields"];
+    
+    SOSCharity * charity=[self.data objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [tempDictionary objectForKey:@"name"];
+    cell.textLabel.text = charity.name;
 
     return cell;
 }

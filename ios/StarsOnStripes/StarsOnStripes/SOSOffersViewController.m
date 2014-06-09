@@ -42,13 +42,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell * cell=nil;//[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
+     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle   reuseIdentifier:nil];
     }
     SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
 
     cell.textLabel.text = offer.title;
+    cell.detailTextLabel.text=offer.description;
 
     return cell;
 }
@@ -57,6 +58,9 @@
 {
     SOSOfferViewController * offerView=[[SOSOfferViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
+    SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
+    
+    offerView.offer=offer;
     
     [self.navigationController  pushViewController:offerView animated:YES];
 }

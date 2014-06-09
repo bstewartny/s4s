@@ -9,6 +9,7 @@
 #import "SOSJobsViewController.h"
 #import <CoreLocation/CLLocation.h>
 #import "SOSAppDelegate.h"
+#import "SOSJob.h"
 @interface SOSJobsViewController ()
 
 @end
@@ -24,7 +25,10 @@
     return self;
 }
 
-
+- (id) objectFromJson:(NSDictionary *)json
+{
+    return [[SOSJob alloc] initFromJson:json];
+}
 - (NSString*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
@@ -36,14 +40,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = nil;//[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:nil];
     }
-    NSDictionary *tempDictionary= [[self.data objectAtIndex:indexPath.row] objectForKey:@"fields"];
+    
+    SOSJob * job=[self.data objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [tempDictionary objectForKey:@"title"];
-
+    cell.textLabel.text = job.title;
+    
     return cell;
 }
 

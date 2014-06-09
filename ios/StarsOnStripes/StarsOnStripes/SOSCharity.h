@@ -10,4 +10,12 @@
 
 @interface SOSCharity : NSObject
 
+@property(nonatomic,strong) NSString * name;
+@property(nonatomic,strong) NSString * description;
+@property(nonatomic,strong) NSString * link;
+@property(nonatomic,strong) NSString * image_link;
+@property(nonatomic) NSInteger donated_points;
+
+- (id) initFromJson:(NSDictionary*)json;
+
 @end

@@ -20,7 +20,6 @@
 		B02F9EC0194256F90088F0CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B02F9EBE194256F90088F0CA /* InfoPlist.strings */; };
 		B02F9EC2194256F90088F0CA /* StarsOnStripesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B02F9EC1194256F90088F0CA /* StarsOnStripesTests.m */; };
 		B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D101944FC51003511CE /* SOSDataViewController.m */; };
-		B0B30D141944FE42003511CE /* SOSOfferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D131944FE42003511CE /* SOSOfferViewController.m */; };
 		B0B30D171944FFF3003511CE /* SOSOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D161944FFF3003511CE /* SOSOffer.m */; };
 		B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D191944FFFF003511CE /* SOSJob.m */; };
 		B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D1C1945000E003511CE /* SOSCharity.m */; };
@@ -62,8 +61,6 @@
 		B02F9EC1194256F90088F0CA /* StarsOnStripesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarsOnStripesTests.m; sourceTree = "<group>"; };
 		B0B30D0F1944FC51003511CE /* SOSDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSDataViewController.h; sourceTree = "<group>"; };
 		B0B30D101944FC51003511CE /* SOSDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSDataViewController.m; sourceTree = "<group>"; };
-		B0B30D121944FE42003511CE /* SOSOfferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOfferViewController.h; sourceTree = "<group>"; };
-		B0B30D131944FE42003511CE /* SOSOfferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSOfferViewController.m; sourceTree = "<group>"; };
 		B0B30D151944FFF3003511CE /* SOSOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOffer.h; sourceTree = "<group>"; };
 		B0B30D161944FFF3003511CE /* SOSOffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSOffer.m; sourceTree = "<group>"; };
 		B0B30D181944FFFF003511CE /* SOSJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSJob.h; sourceTree = "<group>"; };
@@ -196,8 +193,6 @@
 				B0D4A3BD1943884F00FAA159 /* SOSCharityViewController.m */,
 				B0B30D0F1944FC51003511CE /* SOSDataViewController.h */,
 				B0B30D101944FC51003511CE /* SOSDataViewController.m */,
-				B0B30D121944FE42003511CE /* SOSOfferViewController.h */,
-				B0B30D131944FE42003511CE /* SOSOfferViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -323,7 +318,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */,
-				B0B30D141944FE42003511CE /* SOSOfferViewController.m in Sources */,
 				B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */,
 				B02F9EAD194256F90088F0CA /* SOSAppDelegate.m in Sources */,
 				B0D4A3BE1943884F00FAA159 /* SOSCharityViewController.m in Sources */,
