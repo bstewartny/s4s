@@ -10,6 +10,7 @@
 #import <CoreLocation/CLLocation.h>
 #import "SOSAppDelegate.h"
 #import "SOSCharity.h"
+#import "SOSCharityDetailViewController.h"
 
 @interface SOSCharityViewController ()
 
@@ -51,5 +52,13 @@
     cell.textLabel.text = charity.name;
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SOSCharity * charity=[self.data objectAtIndex:indexPath.row];
+    SOSCharityDetailViewController * offerView=[[SOSCharityDetailViewController alloc] initWithCharity:charity];
+    
+    [self.navigationController  pushViewController:offerView animated:YES];
 }
 @end

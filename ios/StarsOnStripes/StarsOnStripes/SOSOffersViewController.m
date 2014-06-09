@@ -11,6 +11,7 @@
 #import "SOSAppDelegate.h"
 #import "SOSOfferViewController.h"
 #import "SOSOffer.h"
+#import "NSDictionary+NSDictionary_NSNullHandling.h"
 
 @interface SOSOffersViewController ()
 
@@ -39,6 +40,46 @@
     SOSOffer * offer=[[SOSOffer alloc] initFromJson:json];
     return offer;
 }
+
+- (NSArray*) parseJsonResults:(NSData*)data error:(NSError**)error
+{
+    NSError *localError = nil;
+    
+    NSArray *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+    
+    if (localError != nil) {
+        *error = localError;
+        return nil;
+    }
+    
+    NSMutableArray * objects=[[NSMutableArray alloc] init];
+    
+    NSMutableDictionary * businesses=[[NSMutableDictionary alloc] init];
+    for(NSDictionary * json in results)
+    {
+        if([[json objectForKey:@"model"] isEqualToString:@"vetbiz.business"])
+        {
+            [businesses setObject:[[SOSPlace alloc] initFromJson:json] forKey:[json objectForKey:@"pk"]];
+        }
+    }
+    for(NSDictionary * json in results)
+    {
+        if([[json objectForKey:@"model"] isEqualToString:@"vetbiz.offer"])
+        {
+            SOSOffer * offer=[self objectFromJson:json];
+        
+            offer.business=[businesses objectForKey:[[json objectForKey:@"fields"] objectForKey:@"business" ]];
+        
+            if(offer.business==nil)
+            {
+                NSLog(@"Failed to find business for key: %@",[[json objectForKey:@"fields"] objectForKey:@"business" ]);
+            }
+            [objects addObject:offer];
+        }
+    }
+    return objects;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -48,19 +89,16 @@
     }
     SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = offer.title;
-    cell.detailTextLabel.text=offer.description;
+    cell.textLabel.text = offer.business.name;
+    cell.detailTextLabel.text=offer.title;
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SOSOfferViewController * offerView=[[SOSOfferViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    
     SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
-    
-    offerView.offer=offer;
+    SOSOfferViewController * offerView=[[SOSOfferViewController alloc] initWithOffer:offer];
     
     [self.navigationController  pushViewController:offerView animated:YES];
 }

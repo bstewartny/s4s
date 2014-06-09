@@ -21,6 +21,7 @@
         _subtitle=place.address;
         _coordinate.longitude=place.longitude;
         _coordinate.latitude =place.latitude;
+        self.place=place;
     }
     return self;
 

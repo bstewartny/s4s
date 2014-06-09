@@ -7,6 +7,7 @@
 //
 
 #import "SOSOffer.h"
+#import "NSDictionary+NSDictionary_NSNullHandling.h"
 
 @implementation SOSOffer
 
@@ -15,10 +16,8 @@
     self=[self init];
     if(self)
     {
-        self.title=[[json objectForKey:@"fields"] objectForKey:@"title"];
-        self.description=[[json objectForKey:@"fields" ]objectForKey:@"description"];
-        //self.business=[[json objectForKey:@"fields"] objectForKey:@"business"];
-        
+        self.title=[[json objectForKey:@"fields"] stringForKey:@"title"];
+        self.description=[[json objectForKey:@"fields" ]stringForKey:@"description"];
     }
     return self;
 }

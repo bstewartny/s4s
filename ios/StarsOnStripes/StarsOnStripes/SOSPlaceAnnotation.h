@@ -18,6 +18,7 @@
 // Title and subtitle for use by selection UI.
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic, readonly, copy) NSString *subtitle;
+@property(nonatomic,strong) SOSPlace * place;
 - (id) initWithPlace:(SOSPlace*)place;
 
 

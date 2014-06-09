@@ -10,6 +10,8 @@
 #import <CoreLocation/CLLocation.h>
 #import "SOSAppDelegate.h"
 #import "SOSJob.h"
+#import "SOSJobViewController.h"
+
 @interface SOSJobsViewController ()
 
 @end
@@ -36,7 +38,44 @@
     NSLog(@"url: %@",urlAsString);
     return urlAsString;
 }
-
+- (NSArray*) parseJsonResults:(NSData*)data error:(NSError**)error
+{
+    NSError *localError = nil;
+    
+    NSArray *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+    
+    if (localError != nil) {
+        *error = localError;
+        return nil;
+    }
+    
+    NSMutableArray * objects=[[NSMutableArray alloc] init];
+    
+    NSMutableDictionary * businesses=[[NSMutableDictionary alloc] init];
+    for(NSDictionary * json in results)
+    {
+        if([[json objectForKey:@"model"] isEqualToString:@"vetbiz.business"])
+        {
+            [businesses setObject:[[SOSPlace alloc] initFromJson:json] forKey:[json objectForKey:@"pk"]];
+        }
+    }
+    for(NSDictionary * json in results)
+    {
+        if([[json objectForKey:@"model"] isEqualToString:@"vetbiz.job"])
+        {
+            SOSJob * job=[self objectFromJson:json];
+        
+            job.business=[businesses objectForKey:[[json objectForKey:@"fields"] objectForKey:@"business" ]];
+        
+            if(job.business==nil)
+            {
+                NSLog(@"Failed to find business for key: %@",[[json objectForKey:@"fields"] objectForKey:@"business" ]);
+            }
+            [objects addObject:job];
+        }
+    }
+    return objects;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -47,9 +86,18 @@
     
     SOSJob * job=[self.data objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = job.title;
+    cell.textLabel.text=job.business.name;
+    cell.detailTextLabel.text = job.title;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SOSJob * job=[self.data objectAtIndex:indexPath.row];
+    SOSJobViewController * offerView=[[SOSJobViewController alloc] initWithJob:job];
+    
+    [self.navigationController  pushViewController:offerView animated:YES];
 }
 
 @end

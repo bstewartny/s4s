@@ -22,8 +22,9 @@
     // Override point for customization after application launch.
     UITabBarController * rootController=[[UITabBarController alloc] init];
 
-    SOSPlacesViewController * mapsView=[[SOSPlacesViewController alloc] init];
-    [mapsView setTitle:@"Places"];
+    SOSPlacesViewController * mapView=[[SOSPlacesViewController alloc] init];
+    [mapView setTitle:@"Places"];
+    UINavigationController * mapsView=[[UINavigationController alloc] initWithRootViewController:mapView];
     mapsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Places" image:Nil tag:0];
    
     SOSOffersViewController * offersTable=[[SOSOffersViewController alloc] initWithStyle:UITableViewStylePlain];

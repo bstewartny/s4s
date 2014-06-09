@@ -12,6 +12,7 @@
 #import <MapKit/MKAnnotation.h>
 #import "SOSAppDelegate.h"
 #import "SOSPlaceAnnotation.h"
+#import "SOSPlaceViewController.h"
 
 @interface SOSPlacesViewController ()
 
@@ -123,6 +124,27 @@
 
     [self.mapView addAnnotation:[[SOSPlaceAnnotation alloc] initWithPlace:place]];
 }
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
+    annotationView.canShowCallout = YES;
+    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+
+    return annotationView;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    
+    SOSPlace * place=((SOSPlaceAnnotation*)view.annotation).place;
+    
+    NSLog(@"place: %@",place.name);
+    SOSPlaceViewController * placeView=[[SOSPlaceViewController alloc] initWithPlace:place];
+    
+    [self.navigationController  pushViewController:placeView animated:YES];
+}
+    
+
 
 - (void)didReceiveMemoryWarning
 {

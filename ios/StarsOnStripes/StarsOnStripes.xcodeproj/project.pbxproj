@@ -24,6 +24,15 @@
 		B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D191944FFFF003511CE /* SOSJob.m */; };
 		B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D1C1945000E003511CE /* SOSCharity.m */; };
 		B0B30D20194601B0003511CE /* SOSPlaceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D1F194601B0003511CE /* SOSPlaceAnnotation.m */; };
+		B0B30D2419461CB4003511CE /* SOSOfferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D2219461CB4003511CE /* SOSOfferViewController.m */; };
+		B0B30D2519461CB4003511CE /* SOSOfferViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D2319461CB4003511CE /* SOSOfferViewController.xib */; };
+		B0B30D29194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */; };
+		B0B30D2D194628E9003511CE /* SOSJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D2B194628E9003511CE /* SOSJobViewController.m */; };
+		B0B30D2E194628E9003511CE /* SOSJobViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D2C194628E9003511CE /* SOSJobViewController.xib */; };
+		B0B30D3219462BB6003511CE /* SOSCharityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D3019462BB6003511CE /* SOSCharityDetailViewController.m */; };
+		B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3119462BB6003511CE /* SOSCharityDetailViewController.xib */; };
+		B0B30D3719462F38003511CE /* SOSPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D3519462F38003511CE /* SOSPlaceViewController.m */; };
+		B0B30D3819462F38003511CE /* SOSPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */; };
 		B0D4A3B11943830700FAA159 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D4A3B01943830700FAA159 /* MapKit.framework */; };
 		B0D4A3B51943881100FAA159 /* SOSPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */; };
 		B0D4A3B81943883000FAA159 /* SOSOffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B71943883000FAA159 /* SOSOffersViewController.m */; };
@@ -69,6 +78,20 @@
 		B0B30D1C1945000E003511CE /* SOSCharity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSCharity.m; sourceTree = "<group>"; };
 		B0B30D1E194601B0003511CE /* SOSPlaceAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlaceAnnotation.h; sourceTree = "<group>"; };
 		B0B30D1F194601B0003511CE /* SOSPlaceAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlaceAnnotation.m; sourceTree = "<group>"; };
+		B0B30D2119461CB4003511CE /* SOSOfferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOfferViewController.h; sourceTree = "<group>"; };
+		B0B30D2219461CB4003511CE /* SOSOfferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSOfferViewController.m; sourceTree = "<group>"; };
+		B0B30D2319461CB4003511CE /* SOSOfferViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSOfferViewController.xib; sourceTree = "<group>"; };
+		B0B30D27194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NSDictionary_NSNullHandling.h"; sourceTree = "<group>"; };
+		B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NSDictionary_NSNullHandling.m"; sourceTree = "<group>"; };
+		B0B30D2A194628E9003511CE /* SOSJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSJobViewController.h; sourceTree = "<group>"; };
+		B0B30D2B194628E9003511CE /* SOSJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSJobViewController.m; sourceTree = "<group>"; };
+		B0B30D2C194628E9003511CE /* SOSJobViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSJobViewController.xib; sourceTree = "<group>"; };
+		B0B30D2F19462BB6003511CE /* SOSCharityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSCharityDetailViewController.h; sourceTree = "<group>"; };
+		B0B30D3019462BB6003511CE /* SOSCharityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSCharityDetailViewController.m; sourceTree = "<group>"; };
+		B0B30D3119462BB6003511CE /* SOSCharityDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSCharityDetailViewController.xib; sourceTree = "<group>"; };
+		B0B30D3419462F38003511CE /* SOSPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlaceViewController.h; sourceTree = "<group>"; };
+		B0B30D3519462F38003511CE /* SOSPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlaceViewController.m; sourceTree = "<group>"; };
+		B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSPlaceViewController.xib; sourceTree = "<group>"; };
 		B0D4A3B01943830700FAA159 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B0D4A3B31943881000FAA159 /* SOSPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlacesViewController.h; sourceTree = "<group>"; };
 		B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlacesViewController.m; sourceTree = "<group>"; };
@@ -141,6 +164,7 @@
 		B02F9EA2194256F90088F0CA /* StarsOnStripes */ = {
 			isa = PBXGroup;
 			children = (
+				B0B30D261946259E003511CE /* Utils */,
 				B0D4A3BF19438BB900FAA159 /* Models */,
 				B0D4A3B2194387DF00FAA159 /* ViewControllers */,
 				B02F9EAB194256F90088F0CA /* SOSAppDelegate.h */,
@@ -180,6 +204,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B0B30D261946259E003511CE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B0B30D27194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.h */,
+				B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		B0D4A3B2194387DF00FAA159 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +226,18 @@
 				B0D4A3BD1943884F00FAA159 /* SOSCharityViewController.m */,
 				B0B30D0F1944FC51003511CE /* SOSDataViewController.h */,
 				B0B30D101944FC51003511CE /* SOSDataViewController.m */,
+				B0B30D2119461CB4003511CE /* SOSOfferViewController.h */,
+				B0B30D2219461CB4003511CE /* SOSOfferViewController.m */,
+				B0B30D2319461CB4003511CE /* SOSOfferViewController.xib */,
+				B0B30D2A194628E9003511CE /* SOSJobViewController.h */,
+				B0B30D2B194628E9003511CE /* SOSJobViewController.m */,
+				B0B30D2C194628E9003511CE /* SOSJobViewController.xib */,
+				B0B30D2F19462BB6003511CE /* SOSCharityDetailViewController.h */,
+				B0B30D3019462BB6003511CE /* SOSCharityDetailViewController.m */,
+				B0B30D3119462BB6003511CE /* SOSCharityDetailViewController.xib */,
+				B0B30D3419462F38003511CE /* SOSPlaceViewController.h */,
+				B0B30D3519462F38003511CE /* SOSPlaceViewController.m */,
+				B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -297,7 +342,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B30D2E194628E9003511CE /* SOSJobViewController.xib in Resources */,
+				B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */,
+				B0B30D2519461CB4003511CE /* SOSOfferViewController.xib in Resources */,
 				B02F9EA7194256F90088F0CA /* InfoPlist.strings in Resources */,
+				B0B30D3819462F38003511CE /* SOSPlaceViewController.xib in Resources */,
 				B02F9EAF194256F90088F0CA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B30D2D194628E9003511CE /* SOSJobViewController.m in Sources */,
 				B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */,
 				B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */,
 				B02F9EAD194256F90088F0CA /* SOSAppDelegate.m in Sources */,
@@ -325,9 +375,13 @@
 				B0D4A3B81943883000FAA159 /* SOSOffersViewController.m in Sources */,
 				B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */,
 				B02F9EA9194256F90088F0CA /* main.m in Sources */,
+				B0B30D2419461CB4003511CE /* SOSOfferViewController.m in Sources */,
 				B0D4A3C219438C5700FAA159 /* SOSPlace.m in Sources */,
+				B0B30D29194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m in Sources */,
+				B0B30D3219462BB6003511CE /* SOSCharityDetailViewController.m in Sources */,
 				B0D4A3BB1943884100FAA159 /* SOSJobsViewController.m in Sources */,
 				B0D4A3B51943881100FAA159 /* SOSPlacesViewController.m in Sources */,
+				B0B30D3719462F38003511CE /* SOSPlaceViewController.m in Sources */,
 				B0B30D20194601B0003511CE /* SOSPlaceAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
