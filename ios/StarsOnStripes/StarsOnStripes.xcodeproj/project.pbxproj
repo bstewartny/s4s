@@ -33,6 +33,16 @@
 		B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3119462BB6003511CE /* SOSCharityDetailViewController.xib */; };
 		B0B30D3719462F38003511CE /* SOSPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D3519462F38003511CE /* SOSPlaceViewController.m */; };
 		B0B30D3819462F38003511CE /* SOSPlaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */; };
+		B0B30D3C19464B83003511CE /* Anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3A19464B83003511CE /* Anchor.png */; };
+		B0B30D3D19464B83003511CE /* Dollar.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3B19464B83003511CE /* Dollar.png */; };
+		B0B30D4019464BEF003511CE /* Anchor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3E19464BEF003511CE /* Anchor@2x.png */; };
+		B0B30D4119464BEF003511CE /* Dollar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D3F19464BEF003511CE /* Dollar@2x.png */; };
+		B0B30D4319464C7E003511CE /* World_Times@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4219464C7E003511CE /* World_Times@2x.png */; };
+		B0B30D4519464C92003511CE /* World_Times.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4419464C92003511CE /* World_Times.png */; };
+		B0B30D4719464CE0003511CE /* Favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4619464CE0003511CE /* Favorites.png */; };
+		B0B30D4919464CE9003511CE /* Favorites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4819464CE9003511CE /* Favorites@2x.png */; };
+		B0B30D4B19464D43003511CE /* Office_Chair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4A19464D43003511CE /* Office_Chair@2x.png */; };
+		B0B30D4D19464D4D003511CE /* Office_Chair.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4C19464D4D003511CE /* Office_Chair.png */; };
 		B0D4A3B11943830700FAA159 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D4A3B01943830700FAA159 /* MapKit.framework */; };
 		B0D4A3B51943881100FAA159 /* SOSPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */; };
 		B0D4A3B81943883000FAA159 /* SOSOffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B71943883000FAA159 /* SOSOffersViewController.m */; };
@@ -92,6 +102,16 @@
 		B0B30D3419462F38003511CE /* SOSPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlaceViewController.h; sourceTree = "<group>"; };
 		B0B30D3519462F38003511CE /* SOSPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlaceViewController.m; sourceTree = "<group>"; };
 		B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSPlaceViewController.xib; sourceTree = "<group>"; };
+		B0B30D3A19464B83003511CE /* Anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Anchor.png; sourceTree = "<group>"; };
+		B0B30D3B19464B83003511CE /* Dollar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dollar.png; sourceTree = "<group>"; };
+		B0B30D3E19464BEF003511CE /* Anchor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anchor@2x.png"; sourceTree = "<group>"; };
+		B0B30D3F19464BEF003511CE /* Dollar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dollar@2x.png"; sourceTree = "<group>"; };
+		B0B30D4219464C7E003511CE /* World_Times@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "World_Times@2x.png"; sourceTree = "<group>"; };
+		B0B30D4419464C92003511CE /* World_Times.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = World_Times.png; sourceTree = "<group>"; };
+		B0B30D4619464CE0003511CE /* Favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Favorites.png; sourceTree = "<group>"; };
+		B0B30D4819464CE9003511CE /* Favorites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Favorites@2x.png"; sourceTree = "<group>"; };
+		B0B30D4A19464D43003511CE /* Office_Chair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Office_Chair@2x.png"; sourceTree = "<group>"; };
+		B0B30D4C19464D4D003511CE /* Office_Chair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Office_Chair.png; sourceTree = "<group>"; };
 		B0D4A3B01943830700FAA159 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B0D4A3B31943881000FAA159 /* SOSPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlacesViewController.h; sourceTree = "<group>"; };
 		B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlacesViewController.m; sourceTree = "<group>"; };
@@ -164,6 +184,7 @@
 		B02F9EA2194256F90088F0CA /* StarsOnStripes */ = {
 			isa = PBXGroup;
 			children = (
+				B0B30D3919464B6C003511CE /* Images */,
 				B0B30D261946259E003511CE /* Utils */,
 				B0D4A3BF19438BB900FAA159 /* Models */,
 				B0D4A3B2194387DF00FAA159 /* ViewControllers */,
@@ -211,6 +232,23 @@
 				B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		B0B30D3919464B6C003511CE /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B0B30D4C19464D4D003511CE /* Office_Chair.png */,
+				B0B30D4A19464D43003511CE /* Office_Chair@2x.png */,
+				B0B30D4819464CE9003511CE /* Favorites@2x.png */,
+				B0B30D4619464CE0003511CE /* Favorites.png */,
+				B0B30D4419464C92003511CE /* World_Times.png */,
+				B0B30D4219464C7E003511CE /* World_Times@2x.png */,
+				B0B30D3E19464BEF003511CE /* Anchor@2x.png */,
+				B0B30D3F19464BEF003511CE /* Dollar@2x.png */,
+				B0B30D3A19464B83003511CE /* Anchor.png */,
+				B0B30D3B19464B83003511CE /* Dollar.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		B0D4A3B2194387DF00FAA159 /* ViewControllers */ = {
@@ -342,12 +380,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B30D4319464C7E003511CE /* World_Times@2x.png in Resources */,
 				B0B30D2E194628E9003511CE /* SOSJobViewController.xib in Resources */,
+				B0B30D4B19464D43003511CE /* Office_Chair@2x.png in Resources */,
 				B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */,
+				B0B30D4019464BEF003511CE /* Anchor@2x.png in Resources */,
+				B0B30D4D19464D4D003511CE /* Office_Chair.png in Resources */,
+				B0B30D4919464CE9003511CE /* Favorites@2x.png in Resources */,
+				B0B30D4719464CE0003511CE /* Favorites.png in Resources */,
 				B0B30D2519461CB4003511CE /* SOSOfferViewController.xib in Resources */,
+				B0B30D4119464BEF003511CE /* Dollar@2x.png in Resources */,
+				B0B30D3D19464B83003511CE /* Dollar.png in Resources */,
 				B02F9EA7194256F90088F0CA /* InfoPlist.strings in Resources */,
 				B0B30D3819462F38003511CE /* SOSPlaceViewController.xib in Resources */,
+				B0B30D3C19464B83003511CE /* Anchor.png in Resources */,
 				B02F9EAF194256F90088F0CA /* Images.xcassets in Resources */,
+				B0B30D4519464C92003511CE /* World_Times.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

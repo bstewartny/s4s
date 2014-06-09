@@ -25,22 +25,22 @@
     SOSPlacesViewController * mapView=[[SOSPlacesViewController alloc] init];
     [mapView setTitle:@"Places"];
     UINavigationController * mapsView=[[UINavigationController alloc] initWithRootViewController:mapView];
-    mapsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Places" image:Nil tag:0];
+    mapsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Places" image:[UIImage imageNamed:@"World_Times.png"] tag:0];
    
     SOSOffersViewController * offersTable=[[SOSOffersViewController alloc] initWithStyle:UITableViewStylePlain];
     [offersTable setTitle:@"Offers"];
     UINavigationController * offersView=[[UINavigationController alloc] initWithRootViewController:offersTable];
-    offersView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Offers" image:Nil tag:0];
+    offersView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Offers" image:[UIImage imageNamed:@"Dollar.png"] tag:0];
 
     SOSJobsViewController * jobsTable=[[SOSJobsViewController alloc] initWithStyle:UITableViewStylePlain];
     [jobsTable setTitle:@"Jobs"];
     UINavigationController * jobsView=[[UINavigationController alloc] initWithRootViewController:jobsTable];
-    jobsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Jobs" image:Nil tag:0];
+    jobsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Jobs" image:[UIImage imageNamed:@"Office_Chair.png"] tag:0];
 
     SOSCharityViewController * charityTable=[[SOSCharityViewController alloc] initWithStyle:UITableViewStylePlain];
     [charityTable setTitle:@"Charities"];
     UINavigationController * charityView=[[UINavigationController alloc] initWithRootViewController:charityTable];
-    charityView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Charity" image:Nil tag:0];
+    charityView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Charity" image:[UIImage imageNamed:@"Favorites.png"] tag:0];
     
     rootController.viewControllers=@[mapsView,offersView,jobsView,charityView ];
     

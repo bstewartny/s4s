@@ -78,6 +78,11 @@
     }
     else
         self.urlLabel.text=self.job.business.url;
+    
+        UIBarButtonItem * shareButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share:)];
+    
+    self.navigationItem.rightBarButtonItem = shareButton;
+    
 }
 
 - (void)didReceiveMemoryWarning

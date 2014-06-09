@@ -59,7 +59,9 @@
 {
     NSURL *url = [[NSURL alloc] initWithString:[self dataUrl]];
     
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (error) {
             NSLog(@"error: %@",[error description]);
         } else {

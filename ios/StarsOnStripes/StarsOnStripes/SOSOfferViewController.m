@@ -57,6 +57,11 @@
         self.addressLabel.text=self.offer.business.address;
         self.urlLabel.text=self.offer.business.url;
         // Do any additional setup after loading the view from its nib.
+    
+    
+        UIBarButtonItem * shareButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share:)];
+    
+    self.navigationItem.rightBarButtonItem = shareButton;
 }
 
 - (void)didReceiveMemoryWarning

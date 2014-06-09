@@ -53,7 +53,7 @@
 {
     
     [self getData];
-    [self.refreshControl endRefreshing];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -72,8 +72,11 @@
 - (void) getData
 {
     NSURL *url = [[NSURL alloc] initWithString:[self dataUrl]];
-    
+   
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (error) {
             NSLog(@"error: %@",[error description]);
         } else {
@@ -87,7 +90,7 @@
                 NSLog(@"Got %d results",[self.data count]);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     // do work here
-                    
+                    [self.refreshControl endRefreshing];
                     [self.tableView reloadData];
                 });
             }
