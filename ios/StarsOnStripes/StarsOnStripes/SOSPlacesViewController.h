@@ -10,8 +10,9 @@
 #import <MapKit/MapKit.h>
 #import "SOSPlace.h"
 
-@interface SOSPlacesViewController : UIViewController
+@interface SOSPlacesViewController : UIViewController<MKMapViewDelegate>
 
 @property(nonatomic,strong) MKMapView * mapView;
+@property(nonatomic,strong) NSArray * data;
 
 @end

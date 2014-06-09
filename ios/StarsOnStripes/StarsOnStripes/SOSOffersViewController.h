@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SOSDataViewController.h"
 
-@interface SOSOffersViewController : UITableViewController
+@interface SOSOffersViewController : SOSDataViewController
+
+
 
 @end

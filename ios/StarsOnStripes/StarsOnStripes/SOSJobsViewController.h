@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SOSDataViewController.h"
 
-@interface SOSJobsViewController : UITableViewController
+@interface SOSJobsViewController : SOSDataViewController
 
 @end

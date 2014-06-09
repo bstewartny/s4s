@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SOSCharityViewController : UITableViewController
+#import "SOSDataViewController.h"
+@interface SOSCharityViewController : SOSDataViewController
 
 @end

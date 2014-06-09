@@ -13,6 +13,7 @@
 #import "SOSCharityViewController.h"
 #import "SOSPlacesViewController.h"
 
+
 @implementation SOSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -75,6 +76,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (CLLocationCoordinate2D) currentCoordinate
+{
+    CLLocationCoordinate2D coord;
+    coord.latitude=40.440807;
+    coord.longitude=-80.006561;
+    return coord;
 }
 
 @end
