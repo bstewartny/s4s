@@ -21,13 +21,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     UITabBarController * rootController=[[UITabBarController alloc] init];
-
+    
     SOSPlacesViewController * mapView=[[SOSPlacesViewController alloc] init];
     [mapView setTitle:@"Places"];
     UINavigationController * mapsView=[[UINavigationController alloc] initWithRootViewController:mapView];
     mapsView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Places" image:[UIImage imageNamed:@"World_Times.png"] tag:0];
-   
+    
     SOSOffersViewController * offersTable=[[SOSOffersViewController alloc] initWithStyle:UITableViewStylePlain];
+    
     [offersTable setTitle:@"Offers"];
     UINavigationController * offersView=[[UINavigationController alloc] initWithRootViewController:offersTable];
     offersView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Offers" image:[UIImage imageNamed:@"Dollar.png"] tag:0];
@@ -47,6 +48,7 @@
     [self.window setRootViewController:rootController];
 
     self.window.backgroundColor = [UIColor whiteColor];
+    
     [self.window makeKeyAndVisible];
     
     return YES;

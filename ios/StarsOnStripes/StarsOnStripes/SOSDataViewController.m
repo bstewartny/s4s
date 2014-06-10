@@ -9,6 +9,7 @@
 #import "SOSDataViewController.h"
 #import <CoreLocation/CLLocation.h>
 #import "SOSAppDelegate.h"
+#import "ProgressHUD.h"
 
 @interface SOSDataViewController ()
 
@@ -29,16 +30,50 @@
 {
     return json;
 }
-
+- (NSString*) backgroundImage
+{
+    return @"Jets.png";
+}
+- (void) viewWillDisappear:(BOOL)animated
+{
+    self.blurView.alpha=0.0;
+}
+- (void) viewDidAppear:(BOOL)animated
+{
+    if([self.data count]>0)
+    {
+        if(self.blurView.alpha==0.0)
+        {
+        [UIView animateWithDuration:0.7 animations:^{
+                            [self.blurView setAlpha:1.0];
+                        }];
+        }
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    //self.tableView.separatorColor=[UIColor clearColor];
+    self.tableView.separatorInset=UIEdgeInsetsMake(0, 20, 0, 20);
+   
+    UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:[self backgroundImage]]];
+    self.tableView.backgroundView=iv;
     self.refreshControl=[[UIRefreshControl alloc] init];
+   self.refreshControl.tintColor=[UIColor whiteColor];
     [self.tableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refreshTarget) forControlEvents:UIControlEventValueChanged];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
- 
+    self.tableView.backgroundView.layer.zPosition -= 1;
+    
+    self.blurView=[[UIToolbar alloc] initWithFrame:CGRectMake(10, 0, 300, 1136)];
+    self.blurView.barStyle=UIBarStyleBlackTranslucent;
+    self.blurView.alpha=0.0;
+    self.blurView.hidden=NO;
+    [self.tableView.backgroundView addSubview:self.blurView];
+    //[self.tableView addSubview:self.blurView];
+    //self.blurView.layer.zPosition-=1;
+    
     UIBarButtonItem * searchButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
     self.navigationItem.rightBarButtonItem = searchButton;
     self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
@@ -107,6 +142,8 @@
 {
     if(!self.isSearching)
     {
+        //self.data=nil;
+        //[self.tableView reloadData];
         [self getData];
     }
 }
@@ -127,26 +164,43 @@
 - (void) getData
 {
     NSURL *url = [[NSURL alloc] initWithString:[self dataUrl]];
-   
+    //self.blurView.alpha=0.0;
+    [ProgressHUD show:@"Loading..."];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [ProgressHUD dismiss];
+        });
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (error) {
             NSLog(@"error: %@",[error description]);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [ProgressHUD showError:[error description]];
+            });
         } else {
             NSError * jsonError=NULL;
             self.data=[self parseJsonResults:data error:&jsonError];
             if(error)
             {
                 NSLog(@"json error: %@",[jsonError description]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [ProgressHUD showError:[jsonError description]];
+                });
             }
             else{
                 NSLog(@"Got %d results",[self.data count]);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     // do work here
                     [self.refreshControl endRefreshing];
+                    
                     [self.tableView reloadData];
+                    
+                    if(self.blurView.alpha==0.0)
+                    {
+                        [UIView animateWithDuration:0.3 animations:^{
+                            [self.blurView setAlpha:1.0];
+                        }];
+                    }
                 });
             }
         }
@@ -206,6 +260,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
+    cell.backgroundColor=[UIColor clearColor];
     }
     NSDictionary *tempDictionary;
     

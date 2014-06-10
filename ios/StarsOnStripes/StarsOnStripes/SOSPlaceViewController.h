@@ -17,7 +17,7 @@
 @property(nonatomic,strong) IBOutlet UILabel * urlLabel;
 @property(nonatomic,strong) IBOutlet UITextView * descriptionTextView;
 @property(nonatomic,strong) SOSPlace * place;
-
+@property(nonatomic,strong) UIToolbar * blurView;
 - (id) initWithPlace:(SOSPlace*)place;
 
 - (IBAction)getDirections:(id)sender;

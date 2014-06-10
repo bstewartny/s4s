@@ -35,7 +35,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+  UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"FemaleSoldier.jpg"]];
+    [self.view addSubview:iv];
    
+    UIToolbar * tb=[[UIToolbar alloc] initWithFrame:self.view.bounds];
+    tb.barStyle=UIBarStyleBlackTranslucent;
+
+    [self.view addSubview:tb];
+   [self.view sendSubviewToBack:tb];
+    [self.view sendSubviewToBack:iv];
     self.nameLabel.text=self.charity.name;
     self.descriptionTextView.text=self.charity.description;
     self.pointsLabel.text=[NSString stringWithFormat:@"%d",self.charity.donated_points];

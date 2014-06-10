@@ -50,7 +50,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+   
+    UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Jets.jpg"]];
+    [self.view addSubview:iv];
+   
+    UIToolbar * tb=[[UIToolbar alloc] initWithFrame:self.view.bounds];
+    tb.barStyle=UIBarStyleBlackTranslucent;
+
+    [self.view addSubview:tb];
+   [self.view sendSubviewToBack:tb];
+    [self.view sendSubviewToBack:iv];
+   
         self.titleLabel.text=self.offer.title;
         self.descriptionTextView.text=self.offer.description;
         self.businessLabel.text=self.offer.business.name;

@@ -30,10 +30,33 @@
     }
     return self;
 }
-
+- (void) viewDidAppear:(BOOL)animated
+{
+    if(self.blurView.alpha==0.0)
+        {
+        [UIView animateWithDuration:0.4 animations:^{
+                            [self.blurView setAlpha:1.0];
+                        }];
+        }
+}
+- (void) viewDidDisappear:(BOOL)animated
+{
+    self.blurView.alpha=0.0;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TransportPlanes.jpg"]];
+    [self.view addSubview:iv];
+   
+    self.blurView=[[UIToolbar alloc] initWithFrame:self.view.bounds];
+    self.blurView.barStyle=UIBarStyleBlackTranslucent;
+    self.blurView.alpha=0.0;
+    self.blurView.hidden=NO;
+    [self.view addSubview:self.blurView];
+   [self.view sendSubviewToBack:self.blurView];
+    [self.view sendSubviewToBack:iv];
+    
     // Do any additional setup after loading the view from its nib.
     self.nameLabel.text=self.place.name;
     self.addressLabel.text=self.place.address;

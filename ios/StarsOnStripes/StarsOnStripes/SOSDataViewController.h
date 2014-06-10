@@ -16,7 +16,7 @@
 @property(nonatomic,strong) NSArray *searchData;
 @property(nonatomic,strong) UISearchBar *searchBar;
 @property(nonatomic,strong) UISearchDisplayController *searchController;
-
+@property(nonatomic,strong) UIToolbar * blurView;
 - (NSString*) dataUrl;
 
 - (id) objectFromJson:(NSDictionary*)json;

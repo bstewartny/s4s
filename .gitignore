@@ -1,3 +1,4 @@
+/deploy
 /lib
 /classes
 *.jar
@@ -11,6 +12,7 @@ pom.xml
 *.swp
 *.log
 _Store
+*/deploy/*
 */build/*
 .DS_Store
 build/

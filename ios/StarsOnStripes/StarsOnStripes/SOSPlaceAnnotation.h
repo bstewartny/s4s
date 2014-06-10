@@ -21,5 +21,6 @@
 @property(nonatomic,strong) SOSPlace * place;
 - (id) initWithPlace:(SOSPlace*)place;
 
+- (NSString*) imageNameForPin;
 
 @end

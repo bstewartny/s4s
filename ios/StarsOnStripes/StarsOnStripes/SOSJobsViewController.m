@@ -38,6 +38,10 @@
     NSLog(@"url: %@",urlAsString);
     return urlAsString;
 }
+- (NSString*) backgroundImage
+{
+    return @"NavyFleet.jpg";
+}
 -(void) doSearch:(NSString*)text
 {
     self.isSearching=YES;
@@ -88,6 +92,13 @@
     UITableViewCell *cell = nil;//[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:nil];
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+     cell.backgroundColor=[UIColor clearColor];
+      
+        cell.textLabel.textColor=[UIColor whiteColor];
+        cell.textLabel.font=[UIFont boldSystemFontOfSize:18.0];
+        cell.detailTextLabel.textColor=[UIColor whiteColor];
+        cell.detailTextLabel.font=[UIFont boldSystemFontOfSize:14.0];
     }
     
     SOSJob * job;

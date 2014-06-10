@@ -43,6 +43,31 @@
 		B0B30D4919464CE9003511CE /* Favorites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4819464CE9003511CE /* Favorites@2x.png */; };
 		B0B30D4B19464D43003511CE /* Office_Chair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4A19464D43003511CE /* Office_Chair@2x.png */; };
 		B0B30D4D19464D4D003511CE /* Office_Chair.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4C19464D4D003511CE /* Office_Chair.png */; };
+		B0B30D4F19475C1C003511CE /* icon2_256.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D4E19475C1C003511CE /* icon2_256.png */; };
+		B0B30D5219475E8C003511CE /* icon2_60.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5019475E8C003511CE /* icon2_60.png */; };
+		B0B30D5319475E8C003511CE /* icon2_120.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5119475E8C003511CE /* icon2_120.png */; };
+		B0B30D5F19476099003511CE /* Carrier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5419476099003511CE /* Carrier.jpg */; };
+		B0B30D6019476099003511CE /* Tank.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5519476099003511CE /* Tank.jpg */; };
+		B0B30D6119476099003511CE /* TransportPlanes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5619476099003511CE /* TransportPlanes.jpg */; };
+		B0B30D6219476099003511CE /* NavyFleet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5719476099003511CE /* NavyFleet.jpg */; };
+		B0B30D6319476099003511CE /* FemaleSoldier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5819476099003511CE /* FemaleSoldier.jpg */; };
+		B0B30D6419476099003511CE /* Camo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5919476099003511CE /* Camo.jpg */; };
+		B0B30D6519476099003511CE /* IwoJima.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5A19476099003511CE /* IwoJima.jpg */; };
+		B0B30D6619476099003511CE /* Soldier.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5B19476099003511CE /* Soldier.jpg */; };
+		B0B30D6719476099003511CE /* Jets.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5C19476099003511CE /* Jets.jpg */; };
+		B0B30D6819476099003511CE /* Heavy-Artillery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5D19476099003511CE /* Heavy-Artillery.jpg */; };
+		B0B30D6919476099003511CE /* Army-Sniper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D5E19476099003511CE /* Army-Sniper.jpg */; };
+		B0B30D6B19476A84003511CE /* Army-Sniper@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D6A19476A84003511CE /* Army-Sniper@2x.jpg */; };
+		B0B30D6D19476E8B003511CE /* NavyFleet@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D6C19476E8B003511CE /* NavyFleet@2x.jpg */; };
+		B0B30D6F194775AA003511CE /* FemaleSoldier@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D6E194775AA003511CE /* FemaleSoldier@2x.jpg */; };
+		B0B30D71194778D2003511CE /* TransportPlanes@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D70194778D2003511CE /* TransportPlanes@2x.jpg */; };
+		B0B30D74194779FD003511CE /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D73194779FD003511CE /* ProgressHUD.m */; };
+		B0B30D7619477BF9003511CE /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D7519477BF9003511CE /* ProgressHUD.bundle */; };
+		B0B30D78194781B7003511CE /* army.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D77194781B7003511CE /* army.png */; };
+		B0B30D7A194785ED003511CE /* purple-army.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D79194785ED003511CE /* purple-army.png */; };
+		B0B30D7C1947861C003511CE /* museum_war.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D7B1947861C003511CE /* museum_war.png */; };
+		B0B30D7E19478639003511CE /* statue-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D7D19478639003511CE /* statue-2.png */; };
+		B0B30D8019478653003511CE /* townhouse.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B30D7F19478653003511CE /* townhouse.png */; };
 		B0D4A3B11943830700FAA159 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D4A3B01943830700FAA159 /* MapKit.framework */; };
 		B0D4A3B51943881100FAA159 /* SOSPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */; };
 		B0D4A3B81943883000FAA159 /* SOSOffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A3B71943883000FAA159 /* SOSOffersViewController.m */; };
@@ -112,6 +137,32 @@
 		B0B30D4819464CE9003511CE /* Favorites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Favorites@2x.png"; sourceTree = "<group>"; };
 		B0B30D4A19464D43003511CE /* Office_Chair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Office_Chair@2x.png"; sourceTree = "<group>"; };
 		B0B30D4C19464D4D003511CE /* Office_Chair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Office_Chair.png; sourceTree = "<group>"; };
+		B0B30D4E19475C1C003511CE /* icon2_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2_256.png; sourceTree = "<group>"; };
+		B0B30D5019475E8C003511CE /* icon2_60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2_60.png; sourceTree = "<group>"; };
+		B0B30D5119475E8C003511CE /* icon2_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2_120.png; sourceTree = "<group>"; };
+		B0B30D5419476099003511CE /* Carrier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Carrier.jpg; sourceTree = "<group>"; };
+		B0B30D5519476099003511CE /* Tank.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tank.jpg; sourceTree = "<group>"; };
+		B0B30D5619476099003511CE /* TransportPlanes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TransportPlanes.jpg; sourceTree = "<group>"; };
+		B0B30D5719476099003511CE /* NavyFleet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NavyFleet.jpg; sourceTree = "<group>"; };
+		B0B30D5819476099003511CE /* FemaleSoldier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FemaleSoldier.jpg; sourceTree = "<group>"; };
+		B0B30D5919476099003511CE /* Camo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Camo.jpg; sourceTree = "<group>"; };
+		B0B30D5A19476099003511CE /* IwoJima.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IwoJima.jpg; sourceTree = "<group>"; };
+		B0B30D5B19476099003511CE /* Soldier.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Soldier.jpg; sourceTree = "<group>"; };
+		B0B30D5C19476099003511CE /* Jets.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Jets.jpg; sourceTree = "<group>"; };
+		B0B30D5D19476099003511CE /* Heavy-Artillery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Heavy-Artillery.jpg"; sourceTree = "<group>"; };
+		B0B30D5E19476099003511CE /* Army-Sniper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Army-Sniper.jpg"; sourceTree = "<group>"; };
+		B0B30D6A19476A84003511CE /* Army-Sniper@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Army-Sniper@2x.jpg"; sourceTree = "<group>"; };
+		B0B30D6C19476E8B003511CE /* NavyFleet@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "NavyFleet@2x.jpg"; sourceTree = "<group>"; };
+		B0B30D6E194775AA003511CE /* FemaleSoldier@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "FemaleSoldier@2x.jpg"; sourceTree = "<group>"; };
+		B0B30D70194778D2003511CE /* TransportPlanes@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "TransportPlanes@2x.jpg"; sourceTree = "<group>"; };
+		B0B30D72194779FD003511CE /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		B0B30D73194779FD003511CE /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		B0B30D7519477BF9003511CE /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		B0B30D77194781B7003511CE /* army.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = army.png; sourceTree = "<group>"; };
+		B0B30D79194785ED003511CE /* purple-army.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purple-army.png"; sourceTree = "<group>"; };
+		B0B30D7B1947861C003511CE /* museum_war.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = museum_war.png; sourceTree = "<group>"; };
+		B0B30D7D19478639003511CE /* statue-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statue-2.png"; sourceTree = "<group>"; };
+		B0B30D7F19478653003511CE /* townhouse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = townhouse.png; sourceTree = "<group>"; };
 		B0D4A3B01943830700FAA159 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B0D4A3B31943881000FAA159 /* SOSPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSPlacesViewController.h; sourceTree = "<group>"; };
 		B0D4A3B41943881000FAA159 /* SOSPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSPlacesViewController.m; sourceTree = "<group>"; };
@@ -228,6 +279,9 @@
 		B0B30D261946259E003511CE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B0B30D7519477BF9003511CE /* ProgressHUD.bundle */,
+				B0B30D72194779FD003511CE /* ProgressHUD.h */,
+				B0B30D73194779FD003511CE /* ProgressHUD.m */,
 				B0B30D27194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.h */,
 				B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */,
 			);
@@ -237,10 +291,33 @@
 		B0B30D3919464B6C003511CE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B0B30D5419476099003511CE /* Carrier.jpg */,
+				B0B30D5519476099003511CE /* Tank.jpg */,
+				B0B30D5619476099003511CE /* TransportPlanes.jpg */,
+				B0B30D5719476099003511CE /* NavyFleet.jpg */,
+				B0B30D5819476099003511CE /* FemaleSoldier.jpg */,
+				B0B30D79194785ED003511CE /* purple-army.png */,
+				B0B30D70194778D2003511CE /* TransportPlanes@2x.jpg */,
+				B0B30D7D19478639003511CE /* statue-2.png */,
+				B0B30D5919476099003511CE /* Camo.jpg */,
+				B0B30D5A19476099003511CE /* IwoJima.jpg */,
+				B0B30D5B19476099003511CE /* Soldier.jpg */,
+				B0B30D6E194775AA003511CE /* FemaleSoldier@2x.jpg */,
+				B0B30D7B1947861C003511CE /* museum_war.png */,
+				B0B30D7F19478653003511CE /* townhouse.png */,
+				B0B30D5C19476099003511CE /* Jets.jpg */,
+				B0B30D5D19476099003511CE /* Heavy-Artillery.jpg */,
+				B0B30D5E19476099003511CE /* Army-Sniper.jpg */,
+				B0B30D6A19476A84003511CE /* Army-Sniper@2x.jpg */,
+				B0B30D5019475E8C003511CE /* icon2_60.png */,
+				B0B30D5119475E8C003511CE /* icon2_120.png */,
+				B0B30D6C19476E8B003511CE /* NavyFleet@2x.jpg */,
+				B0B30D4E19475C1C003511CE /* icon2_256.png */,
 				B0B30D4C19464D4D003511CE /* Office_Chair.png */,
 				B0B30D4A19464D43003511CE /* Office_Chair@2x.png */,
 				B0B30D4819464CE9003511CE /* Favorites@2x.png */,
 				B0B30D4619464CE0003511CE /* Favorites.png */,
+				B0B30D77194781B7003511CE /* army.png */,
 				B0B30D4419464C92003511CE /* World_Times.png */,
 				B0B30D4219464C7E003511CE /* World_Times@2x.png */,
 				B0B30D3E19464BEF003511CE /* Anchor@2x.png */,
@@ -380,18 +457,42 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B30D6619476099003511CE /* Soldier.jpg in Resources */,
+				B0B30D6819476099003511CE /* Heavy-Artillery.jpg in Resources */,
 				B0B30D4319464C7E003511CE /* World_Times@2x.png in Resources */,
+				B0B30D7E19478639003511CE /* statue-2.png in Resources */,
+				B0B30D71194778D2003511CE /* TransportPlanes@2x.jpg in Resources */,
 				B0B30D2E194628E9003511CE /* SOSJobViewController.xib in Resources */,
+				B0B30D6419476099003511CE /* Camo.jpg in Resources */,
+				B0B30D6B19476A84003511CE /* Army-Sniper@2x.jpg in Resources */,
+				B0B30D6019476099003511CE /* Tank.jpg in Resources */,
+				B0B30D5F19476099003511CE /* Carrier.jpg in Resources */,
+				B0B30D6319476099003511CE /* FemaleSoldier.jpg in Resources */,
 				B0B30D4B19464D43003511CE /* Office_Chair@2x.png in Resources */,
+				B0B30D6F194775AA003511CE /* FemaleSoldier@2x.jpg in Resources */,
+				B0B30D7A194785ED003511CE /* purple-army.png in Resources */,
+				B0B30D6919476099003511CE /* Army-Sniper.jpg in Resources */,
 				B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */,
 				B0B30D4019464BEF003511CE /* Anchor@2x.png in Resources */,
 				B0B30D4D19464D4D003511CE /* Office_Chair.png in Resources */,
+				B0B30D6519476099003511CE /* IwoJima.jpg in Resources */,
 				B0B30D4919464CE9003511CE /* Favorites@2x.png in Resources */,
+				B0B30D6719476099003511CE /* Jets.jpg in Resources */,
 				B0B30D4719464CE0003511CE /* Favorites.png in Resources */,
+				B0B30D78194781B7003511CE /* army.png in Resources */,
+				B0B30D6219476099003511CE /* NavyFleet.jpg in Resources */,
+				B0B30D4F19475C1C003511CE /* icon2_256.png in Resources */,
 				B0B30D2519461CB4003511CE /* SOSOfferViewController.xib in Resources */,
+				B0B30D7619477BF9003511CE /* ProgressHUD.bundle in Resources */,
+				B0B30D5319475E8C003511CE /* icon2_120.png in Resources */,
+				B0B30D8019478653003511CE /* townhouse.png in Resources */,
 				B0B30D4119464BEF003511CE /* Dollar@2x.png in Resources */,
+				B0B30D6D19476E8B003511CE /* NavyFleet@2x.jpg in Resources */,
 				B0B30D3D19464B83003511CE /* Dollar.png in Resources */,
 				B02F9EA7194256F90088F0CA /* InfoPlist.strings in Resources */,
+				B0B30D6119476099003511CE /* TransportPlanes.jpg in Resources */,
+				B0B30D7C1947861C003511CE /* museum_war.png in Resources */,
+				B0B30D5219475E8C003511CE /* icon2_60.png in Resources */,
 				B0B30D3819462F38003511CE /* SOSPlaceViewController.xib in Resources */,
 				B0B30D3C19464B83003511CE /* Anchor.png in Resources */,
 				B02F9EAF194256F90088F0CA /* Images.xcassets in Resources */,
@@ -414,6 +515,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0B30D74194779FD003511CE /* ProgressHUD.m in Sources */,
 				B0B30D2D194628E9003511CE /* SOSJobViewController.m in Sources */,
 				B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */,
 				B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */,
@@ -562,6 +664,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: robert stewart (4KX3933V48)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StarsOnStripes/StarsOnStripes-Prefix.pch";
 				INFOPLIST_FILE = "StarsOnStripes/StarsOnStripes-Info.plist";

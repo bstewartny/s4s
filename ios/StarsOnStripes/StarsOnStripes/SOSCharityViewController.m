@@ -31,6 +31,10 @@
 {
     return [[SOSCharity alloc] initFromJson:json];
 }
+- (NSString*) backgroundImage
+{
+    return @"FemaleSoldier.jpg";
+}
 - (NSString*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
@@ -41,9 +45,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = nil; //[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:nil];
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+     cell.backgroundColor=[UIColor clearColor];
+      
+        cell.textLabel.textColor=[UIColor whiteColor];
+        cell.textLabel.font=[UIFont boldSystemFontOfSize:18.0];
+        cell.detailTextLabel.textColor=[UIColor whiteColor];
+        cell.detailTextLabel.font=[UIFont boldSystemFontOfSize:14.0];
     }
     
     SOSCharity * charity;

@@ -13,6 +13,7 @@
 #import "SOSAppDelegate.h"
 #import "SOSPlaceAnnotation.h"
 #import "SOSPlaceViewController.h"
+#import "ProgressHUD.h"
 
 @interface SOSPlacesViewController ()
 
@@ -37,6 +38,12 @@
 
     self.mapView.delegate=self;
 
+
+    UIBarButtonItem * refreshButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh:)];
+    
+    self.navigationItem.leftBarButtonItem = refreshButton;
+
+
     UIBarButtonItem * searchButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
     
     self.navigationItem.rightBarButtonItem = searchButton;
@@ -49,6 +56,15 @@
     
     [self getData];
     
+}
+
+- (void)refresh:(id)sender
+{
+    [self clearPlaces];
+    CLLocationCoordinate2D startCoord = [((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
+    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(startCoord, 2500, 2500)];
+    [self.mapView setRegion:adjustedRegion animated:YES];
+    [self getData];
 }
 
 - (void)search:(id)sender
@@ -107,18 +123,27 @@
 - (void) getData
 {
     NSURL *url = [[NSURL alloc] initWithString:[self dataUrl]];
-    
+    [ProgressHUD show:@"Loading..."];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [ProgressHUD dismiss];
+        });
         if (error) {
             NSLog(@"error: %@",[error description]);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [ProgressHUD showError:[error description]];
+            });
         } else {
             NSError * jsonError=NULL;
             self.data=[self parseJsonResults:data error:&jsonError];
             if(error)
             {
                 NSLog(@"json error: %@",[jsonError description]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                [ProgressHUD showError:[jsonError description]];
+            });
             }
             else{
                 NSLog(@"Got %d results",[self.data count]);
@@ -216,7 +241,9 @@
     MKAnnotationView *annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"loc"];
     annotationView.canShowCallout = YES;
     annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-
+    
+    annotationView.image=[UIImage imageNamed:[((SOSPlaceAnnotation*)annotation) imageNameForPin]];
+    
     return annotationView;
 }
 
