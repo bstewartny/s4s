@@ -33,13 +33,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    UISearchBar * searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 38)];
+    
+    
+    [self.searchDisplayController setDisplaysSearchBarInNavigationBar:YES];
     
     self.refreshControl=[[UIRefreshControl alloc] init];
     [self.tableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refreshTarget) forControlEvents:UIControlEventValueChanged];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+ 
+    UIBarButtonItem * searchButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
+    
+    self.navigationItem.rightBarButtonItem = searchButton;
+    
 
+    self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
+    self.searchBar.delegate=self;
+    //[self.navigationItem setTitleView:self.searchBar];
+    //self.searchController=[[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    //self.searchController.delegate=self;
+    //self.searchController.searchResultsDataSource=self;
+    [self.searchBar setShowsCancelButton:NO];
+    //self.tableView.tableHeaderView=searchBar;
+    //[self.searchController setDisplaysSearchBarInNavigationBar:YES];
+    //self.searchController.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(search:)];
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.delegate=self;
@@ -49,6 +71,24 @@
     [self getData];
 }
 
+- (void)search:(id)sender
+{
+    self.navigationItem.title=nil;
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.searchBar] animated:YES];
+    //[self.searchController setActive:YES animated:YES];
+    [self.searchBar becomeFirstResponder];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch:)];
+
+}
+- (void)cancelSearch:(id)sender
+{
+    [self.searchBar resignFirstResponder];
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    UIBarButtonItem * searchButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
+    self.navigationItem.title=@"Offers";
+    self.navigationItem.rightBarButtonItem = searchButton;
+    self.searchBar.text=nil;
+}
 - (void) refreshTarget
 {
     
