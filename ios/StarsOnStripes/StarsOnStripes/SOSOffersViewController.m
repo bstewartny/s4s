@@ -40,7 +40,12 @@
     SOSOffer * offer=[[SOSOffer alloc] initFromJson:json];
     return offer;
 }
-
+-(void) doSearch:(NSString*)text
+{
+    self.isSearching=YES;
+    self.searchData=[self.data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(title contains[cd] %@) or (business.name contains[cd] %@)",text,text]];
+    [self.tableView reloadData];
+}
 - (NSArray*) parseJsonResults:(NSData*)data error:(NSError**)error
 {
     NSError *localError = nil;
@@ -87,8 +92,15 @@
    if (cell == nil) {
      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle   reuseIdentifier:nil];
     }
-    SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
-
+    SOSOffer * offer;
+    if(self.isSearching)
+    {
+        offer=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        offer=[self.data objectAtIndex:indexPath.row];
+    }
     cell.textLabel.text = offer.business.name;
     cell.detailTextLabel.text=offer.title;
 
@@ -97,7 +109,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SOSOffer * offer=[self.data objectAtIndex:indexPath.row];
+    SOSOffer * offer;
+    
+    if(self.isSearching)
+    {
+        offer=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        offer=[self.data objectAtIndex:indexPath.row];
+    }
     SOSOfferViewController * offerView=[[SOSOfferViewController alloc] initWithOffer:offer];
     
     [self.navigationController  pushViewController:offerView animated:YES];

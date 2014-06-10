@@ -38,6 +38,12 @@
     NSLog(@"url: %@",urlAsString);
     return urlAsString;
 }
+-(void) doSearch:(NSString*)text
+{
+    self.isSearching=YES;
+    self.searchData=[self.data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(title contains[cd] %@) or (business.name contains[cd] %@)",text,text]];
+    [self.tableView reloadData];
+}
 - (NSArray*) parseJsonResults:(NSData*)data error:(NSError**)error
 {
     NSError *localError = nil;
@@ -84,8 +90,15 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle  reuseIdentifier:nil];
     }
     
-    SOSJob * job=[self.data objectAtIndex:indexPath.row];
-
+    SOSJob * job;
+    if(self.isSearching)
+    {
+        job=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        job=[self.data objectAtIndex:indexPath.row];
+    }
     cell.textLabel.text=job.business.name;
     cell.detailTextLabel.text = job.title;
     
@@ -94,7 +107,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SOSJob * job=[self.data objectAtIndex:indexPath.row];
+    SOSJob * job;
+    if(self.isSearching)
+    {
+        job=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        job=[self.data objectAtIndex:indexPath.row];
+    }
     SOSJobViewController * offerView=[[SOSJobViewController alloc] initWithJob:job];
     
     [self.navigationController  pushViewController:offerView animated:YES];

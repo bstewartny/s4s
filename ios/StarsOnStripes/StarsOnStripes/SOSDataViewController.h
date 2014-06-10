@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SOSDataViewController : UITableViewController<UISearchBarDelegate, UISearchDisplayDelegate>
+@interface SOSDataViewController : UITableViewController<UISearchBarDelegate>
 
+@property(nonatomic) BOOL isSearching;
 @property(nonatomic,strong) NSArray * data;
 @property(nonatomic,strong) UIRefreshControl * refreshControl;
-@property(nonatomic,strong) NSMutableArray *searchData;
+@property(nonatomic,strong) NSArray *searchData;
 @property(nonatomic,strong) UISearchBar *searchBar;
 @property(nonatomic,strong) UISearchDisplayController *searchController;
 

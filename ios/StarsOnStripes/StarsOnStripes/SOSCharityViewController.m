@@ -38,7 +38,6 @@
     NSLog(@"url: %@",urlAsString);
     return urlAsString;
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -47,8 +46,15 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
     }
     
-    SOSCharity * charity=[self.data objectAtIndex:indexPath.row];
-
+    SOSCharity * charity;
+    if(self.isSearching)
+    {
+        charity=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        charity=[self.data objectAtIndex:indexPath.row];
+    }
     cell.textLabel.text = charity.name;
 
     return cell;
@@ -56,7 +62,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SOSCharity * charity=[self.data objectAtIndex:indexPath.row];
+    SOSCharity * charity;
+    if(self.isSearching)
+    {
+        charity=[self.searchData objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        charity=[self.data objectAtIndex:indexPath.row];
+    }
     SOSCharityDetailViewController * offerView=[[SOSCharityDetailViewController alloc] initWithCharity:charity];
     
     [self.navigationController  pushViewController:offerView animated:YES];

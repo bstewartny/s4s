@@ -34,40 +34,18 @@
 {
     [super viewDidLoad];
 
-    UISearchBar * searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 38)];
-    
-    
-    [self.searchDisplayController setDisplaysSearchBarInNavigationBar:YES];
-    
     self.refreshControl=[[UIRefreshControl alloc] init];
     [self.tableView addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refreshTarget) forControlEvents:UIControlEventValueChanged];
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
  
     UIBarButtonItem * searchButton=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
-    
     self.navigationItem.rightBarButtonItem = searchButton;
-    
-
     self.searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 220, 44)];
     self.searchBar.delegate=self;
-    //[self.navigationItem setTitleView:self.searchBar];
-    //self.searchController=[[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    //self.searchController.delegate=self;
-    //self.searchController.searchResultsDataSource=self;
     [self.searchBar setShowsCancelButton:NO];
-    //self.tableView.tableHeaderView=searchBar;
-    //[self.searchController setDisplaysSearchBarInNavigationBar:YES];
-    //self.searchController.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(search:)];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self getData];
 }
 
@@ -75,11 +53,12 @@
 {
     self.navigationItem.title=nil;
     [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.searchBar] animated:YES];
-    //[self.searchController setActive:YES animated:YES];
     [self.searchBar becomeFirstResponder];
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch:)];
-
+    self.isSearching=YES;
+    [self.tableView reloadData];
 }
+
 - (void)cancelSearch:(id)sender
 {
     [self.searchBar resignFirstResponder];
@@ -88,12 +67,48 @@
     self.navigationItem.title=@"Offers";
     self.navigationItem.rightBarButtonItem = searchButton;
     self.searchBar.text=nil;
+    self.isSearching=NO;
+    self.searchData=nil;
+    [self.tableView reloadData];
 }
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    self.isSearching=YES;
+    [self.tableView reloadData];
+}
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self doSearch:searchText];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self doSearch:searchBar.text];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    self.isSearching=NO;
+    self.searchData=nil;
+    [self.tableView reloadData];
+}
+
+-(void) doSearch:(NSString*)text
+{
+    self.isSearching=YES;
+    self.searchData=[self.data filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains[cd] %@",text]];
+    [self.tableView reloadData];
+}
+
 - (void) refreshTarget
 {
-    
-    [self getData];
-    
+    if(!self.isSearching)
+    {
+        [self getData];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -175,7 +190,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.data count];
+    if(self.isSearching)
+    {
+        return [self.searchData count];
+    }
+    else
+    {
+        return [self.data count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -185,62 +207,19 @@
    if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault   reuseIdentifier:CellIdentifier];
     }
-    NSDictionary *tempDictionary= [[self.data objectAtIndex:indexPath.row] objectForKey:@"fields"];
+    NSDictionary *tempDictionary;
     
+    if(self.isSearching)
+    {
+        tempDictionary= [[self.data objectAtIndex:indexPath.row] objectForKey:@"fields"];
+   }
+   else
+   {
+        tempDictionary= [[self.searchData objectAtIndex:indexPath.row] objectForKey:@"fields"];
+   }
     cell.textLabel.text = [tempDictionary objectForKey:@"title"];
 
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
