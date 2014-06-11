@@ -46,7 +46,6 @@
     
     [self presentViewController:activityController animated:YES completion:nil];
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -54,13 +53,17 @@
     UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Jets.jpg"]];
     [self.view addSubview:iv];
    
-    UIToolbar * tb=[[UIToolbar alloc] initWithFrame:self.view.bounds];
-    tb.barStyle=UIBarStyleBlackTranslucent;
-
-    [self.view addSubview:tb];
-   [self.view sendSubviewToBack:tb];
+    
+  
+   self.blurView=[[UIToolbar alloc] initWithFrame:self.view.bounds];
+    self.blurView.barStyle=UIBarStyleBlackTranslucent;
+    
+    
+    [self.view addSubview:self.blurView];
+   [self.view sendSubviewToBack:self.blurView];
     [self.view sendSubviewToBack:iv];
-   
+    
+    
         self.titleLabel.text=self.offer.title;
         self.descriptionTextView.text=self.offer.description;
         self.businessLabel.text=self.offer.business.name;

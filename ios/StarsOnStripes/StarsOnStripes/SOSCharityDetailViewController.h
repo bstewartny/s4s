@@ -16,7 +16,7 @@
 
 @property(nonatomic,strong) IBOutlet UITextView * descriptionTextView;
 @property(nonatomic,strong) SOSCharity * charity;
-
+@property(nonatomic,strong) UIToolbar * blurView;
 - (id) initWithCharity:(SOSCharity*)charity;
 
 @end

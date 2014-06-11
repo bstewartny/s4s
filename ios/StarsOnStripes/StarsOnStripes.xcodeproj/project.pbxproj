@@ -19,6 +19,8 @@
 		B02F9EB8194256F90088F0CA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B02F9EA0194256F90088F0CA /* UIKit.framework */; };
 		B02F9EC0194256F90088F0CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B02F9EBE194256F90088F0CA /* InfoPlist.strings */; };
 		B02F9EC2194256F90088F0CA /* StarsOnStripesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B02F9EC1194256F90088F0CA /* StarsOnStripesTests.m */; };
+		B044FBB61947CE5A0026309A /* SOSLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B044FBB41947CE5A0026309A /* SOSLoginViewController.m */; };
+		B044FBB71947CE5A0026309A /* SOSLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B044FBB51947CE5A0026309A /* SOSLoginViewController.xib */; };
 		B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D101944FC51003511CE /* SOSDataViewController.m */; };
 		B0B30D171944FFF3003511CE /* SOSOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D161944FFF3003511CE /* SOSOffer.m */; };
 		B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D191944FFFF003511CE /* SOSJob.m */; };
@@ -103,6 +105,9 @@
 		B02F9EBD194256F90088F0CA /* StarsOnStripesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StarsOnStripesTests-Info.plist"; sourceTree = "<group>"; };
 		B02F9EBF194256F90088F0CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B02F9EC1194256F90088F0CA /* StarsOnStripesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarsOnStripesTests.m; sourceTree = "<group>"; };
+		B044FBB31947CE5A0026309A /* SOSLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSLoginViewController.h; sourceTree = "<group>"; };
+		B044FBB41947CE5A0026309A /* SOSLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSLoginViewController.m; sourceTree = "<group>"; };
+		B044FBB51947CE5A0026309A /* SOSLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSLoginViewController.xib; sourceTree = "<group>"; };
 		B0B30D0F1944FC51003511CE /* SOSDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSDataViewController.h; sourceTree = "<group>"; };
 		B0B30D101944FC51003511CE /* SOSDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSDataViewController.m; sourceTree = "<group>"; };
 		B0B30D151944FFF3003511CE /* SOSOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOffer.h; sourceTree = "<group>"; };
@@ -353,6 +358,9 @@
 				B0B30D3419462F38003511CE /* SOSPlaceViewController.h */,
 				B0B30D3519462F38003511CE /* SOSPlaceViewController.m */,
 				B0B30D3619462F38003511CE /* SOSPlaceViewController.xib */,
+				B044FBB31947CE5A0026309A /* SOSLoginViewController.h */,
+				B044FBB41947CE5A0026309A /* SOSLoginViewController.m */,
+				B044FBB51947CE5A0026309A /* SOSLoginViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -471,6 +479,7 @@
 				B0B30D4B19464D43003511CE /* Office_Chair@2x.png in Resources */,
 				B0B30D6F194775AA003511CE /* FemaleSoldier@2x.jpg in Resources */,
 				B0B30D7A194785ED003511CE /* purple-army.png in Resources */,
+				B044FBB71947CE5A0026309A /* SOSLoginViewController.xib in Resources */,
 				B0B30D6919476099003511CE /* Army-Sniper.jpg in Resources */,
 				B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */,
 				B0B30D4019464BEF003511CE /* Anchor@2x.png in Resources */,
@@ -520,6 +529,7 @@
 				B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */,
 				B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */,
 				B02F9EAD194256F90088F0CA /* SOSAppDelegate.m in Sources */,
+				B044FBB61947CE5A0026309A /* SOSLoginViewController.m in Sources */,
 				B0D4A3BE1943884F00FAA159 /* SOSCharityViewController.m in Sources */,
 				B0B30D171944FFF3003511CE /* SOSOffer.m in Sources */,
 				B0D4A3B81943883000FAA159 /* SOSOffersViewController.m in Sources */,

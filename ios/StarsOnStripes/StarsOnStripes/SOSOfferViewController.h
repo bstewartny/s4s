@@ -17,7 +17,7 @@
 @property(nonatomic,strong) IBOutlet UILabel * urlLabel;
 @property(nonatomic,strong) IBOutlet UITextView * descriptionTextView;
 @property(nonatomic,strong) SOSOffer * offer;
-
+@property(nonatomic,strong) UIToolbar * blurView;
 - (id) initWithOffer:(SOSOffer*)offer;
 
 - (IBAction)share:(id)sender;

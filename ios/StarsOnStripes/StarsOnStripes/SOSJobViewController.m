@@ -62,6 +62,7 @@
                                  MKLaunchOptionsDirectionsModeKey, nil];
     [MKMapItem openMapsWithItems: items launchOptions: options];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -70,12 +71,13 @@
     UIImageView * iv=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"NavyFleet.jpg"]];
     [self.view addSubview:iv];
    
-    UIToolbar * tb=[[UIToolbar alloc] initWithFrame:self.view.bounds];
-    tb.barStyle=UIBarStyleBlackTranslucent;
-
-    [self.view addSubview:tb];
-   [self.view sendSubviewToBack:tb];
-    [self.view sendSubviewToBack:iv];
+   self.blurView=[[UIToolbar alloc] initWithFrame:self.view.bounds];
+    self.blurView.barStyle=UIBarStyleBlackTranslucent;
+    
+    
+    [self.view addSubview:self.blurView];
+   [self.view sendSubviewToBack:self.blurView];
+       [self.view sendSubviewToBack:iv];
     
     // Do any additional setup after loading the view from its nib.
     self.titleLabel.text=self.job.title;

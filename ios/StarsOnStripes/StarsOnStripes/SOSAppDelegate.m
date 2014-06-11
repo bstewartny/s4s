@@ -12,7 +12,7 @@
 #import "SOSJobsViewController.h"
 #import "SOSCharityViewController.h"
 #import "SOSPlacesViewController.h"
-
+#import "SOSLoginViewController.h"
 
 @implementation SOSAppDelegate
 
@@ -54,6 +54,12 @@
     return YES;
 }
 
+- (void) showLoginForm
+{
+    SOSLoginViewController * loginController=[[SOSLoginViewController alloc] initWithNibName:@"SOSLoginViewController" bundle:nil];
+    
+    [self.window.rootViewController presentViewController:loginController animated:YES completion:^(void){}];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

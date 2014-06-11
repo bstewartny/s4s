@@ -14,5 +14,5 @@
 @property (strong, nonatomic) UIWindow *window;
 
 - (CLLocationCoordinate2D) currentCoordinate;
-
+- (void) showLoginForm;
 @end

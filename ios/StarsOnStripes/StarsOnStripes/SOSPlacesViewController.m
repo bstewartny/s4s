@@ -60,11 +60,12 @@
 
 - (void)refresh:(id)sender
 {
-    [self clearPlaces];
-    CLLocationCoordinate2D startCoord = [((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
-    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(startCoord, 2500, 2500)];
-    [self.mapView setRegion:adjustedRegion animated:YES];
-    [self getData];
+    [((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) showLoginForm];
+    //[self clearPlaces];
+    //CLLocationCoordinate2D startCoord = [((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
+    //MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(startCoord, 2500, 2500)];
+    //[self.mapView setRegion:adjustedRegion animated:YES];
+    //[self getData];
 }
 
 - (void)search:(id)sender

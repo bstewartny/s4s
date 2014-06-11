@@ -22,7 +22,7 @@
 
 @property(nonatomic,strong) IBOutlet UITextView * descriptionTextView;
 @property(nonatomic,strong) SOSJob * job;
-
+@property(nonatomic,strong) UIToolbar * blurView;
 - (id) initWithJob:(SOSJob*)job;
 - (IBAction)share:(id)sender;
 - (IBAction)getDirections:(id)sender;
