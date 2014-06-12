@@ -23,9 +23,18 @@
     return self;
 }
 - (IBAction)signUp:(id)sender
-{}
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (IBAction)statusChange:(id)sender
-{}
+{
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -26,6 +26,7 @@
 
 - (IBAction)signIn:(id)sender{
     NSLog(@"signIn");
+   [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)signUp:(id)sender{
     NSLog(@"signUp");
@@ -98,9 +99,23 @@
     UIToolbar * toolbar=[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 24)];
     toolbar.barStyle=UIBarStyleBlackTranslucent;
 
-    UIBarButtonItem * forgotPassword=[[UIBarButtonItem alloc] initWithCustomView:self.forgotPassword];
+    UIButton * bn=[UIButton buttonWithType:UIButtonTypeSystem];
+    
+    [bn setTitle:@"Forgot password?" forState:UIControlStateNormal];
+    [[bn titleLabel] setFont:[UIFont systemFontOfSize:15.0]];
+    [bn sizeToFit];
+    [bn addTarget:self action:@selector(forgotPassword:) forControlEvents:UIControlEventTouchUpInside];
+   
+    bn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
+    UIBarButtonItem * forgotPassword=[[UIBarButtonItem alloc] initWithCustomView:bn];
     UIBarButtonItem * seperator=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem * signUp=[[UIBarButtonItem alloc] initWithCustomView:self.signUp];
+    bn=[UIButton buttonWithType:UIButtonTypeSystem];
+    [bn setTitle:@"Register" forState:UIControlStateNormal];
+    [[bn titleLabel] setFont:[UIFont systemFontOfSize:15.0]];
+    [bn sizeToFit];
+    [bn addTarget:self action:@selector(signUp:) forControlEvents:UIControlEventTouchUpInside];
+    bn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem * signUp=[[UIBarButtonItem alloc] initWithCustomView:bn];
     
     toolbar.items=@[signUp,seperator,forgotPassword];
     return toolbar;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SOSRegisterViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource>
+@interface SOSRegisterViewController : UIViewController<UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 @property(nonatomic,strong) IBOutlet UITextField * username;
 @property(nonatomic,strong) IBOutlet UITextField * password;
 @property(nonatomic,strong) IBOutlet UITextField * confirmPassword;
