@@ -15,4 +15,5 @@
 
 - (CLLocationCoordinate2D) currentCoordinate;
 - (void) showLoginForm;
+- (void) showRegisterForm;
 @end

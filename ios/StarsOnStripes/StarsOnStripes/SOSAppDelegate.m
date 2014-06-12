@@ -13,6 +13,7 @@
 #import "SOSCharityViewController.h"
 #import "SOSPlacesViewController.h"
 #import "SOSLoginViewController.h"
+#import "SOSRegisterViewController.h"
 
 @implementation SOSAppDelegate
 
@@ -52,6 +53,15 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (void) showRegisterForm
+{
+    [self.window.rootViewController dismissViewControllerAnimated:NO completion:^(void){}];
+    
+    SOSRegisterViewController * loginController=[[SOSRegisterViewController alloc] initWithNibName:@"SOSRegisterViewController" bundle:nil];
+    
+    [self.window.rootViewController presentViewController:loginController animated:YES completion:^(void){}];
 }
 
 - (void) showLoginForm
