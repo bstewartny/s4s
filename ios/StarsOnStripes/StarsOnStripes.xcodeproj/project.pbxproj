@@ -23,6 +23,9 @@
 		B044FBB71947CE5A0026309A /* SOSLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B044FBB51947CE5A0026309A /* SOSLoginViewController.xib */; };
 		B044FBBB1949F25D0026309A /* SOSRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B044FBB91949F25D0026309A /* SOSRegisterViewController.m */; };
 		B044FBBC1949F25D0026309A /* SOSRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B044FBBA1949F25D0026309A /* SOSRegisterViewController.xib */; };
+		B044FBBE194A4F4C0026309A /* Contact.png in Resources */ = {isa = PBXBuildFile; fileRef = B044FBBD194A4F4C0026309A /* Contact.png */; };
+		B044FBC0194A4F770026309A /* Contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B044FBBF194A4F770026309A /* Contact@2x.png */; };
+		B044FBC3194A50D20026309A /* SOSProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B044FBC2194A50D20026309A /* SOSProfileViewController.m */; };
 		B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D101944FC51003511CE /* SOSDataViewController.m */; };
 		B0B30D171944FFF3003511CE /* SOSOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D161944FFF3003511CE /* SOSOffer.m */; };
 		B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D191944FFFF003511CE /* SOSJob.m */; };
@@ -113,6 +116,10 @@
 		B044FBB81949F25D0026309A /* SOSRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSRegisterViewController.h; sourceTree = "<group>"; };
 		B044FBB91949F25D0026309A /* SOSRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSRegisterViewController.m; sourceTree = "<group>"; };
 		B044FBBA1949F25D0026309A /* SOSRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SOSRegisterViewController.xib; sourceTree = "<group>"; };
+		B044FBBD194A4F4C0026309A /* Contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Contact.png; sourceTree = "<group>"; };
+		B044FBBF194A4F770026309A /* Contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Contact@2x.png"; sourceTree = "<group>"; };
+		B044FBC1194A50D20026309A /* SOSProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSProfileViewController.h; sourceTree = "<group>"; };
+		B044FBC2194A50D20026309A /* SOSProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSProfileViewController.m; sourceTree = "<group>"; };
 		B0B30D0F1944FC51003511CE /* SOSDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSDataViewController.h; sourceTree = "<group>"; };
 		B0B30D101944FC51003511CE /* SOSDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSDataViewController.m; sourceTree = "<group>"; };
 		B0B30D151944FFF3003511CE /* SOSOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOffer.h; sourceTree = "<group>"; };
@@ -301,6 +308,8 @@
 		B0B30D3919464B6C003511CE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B044FBBD194A4F4C0026309A /* Contact.png */,
+				B044FBBF194A4F770026309A /* Contact@2x.png */,
 				B0B30D5419476099003511CE /* Carrier.jpg */,
 				B0B30D5519476099003511CE /* Tank.jpg */,
 				B0B30D5619476099003511CE /* TransportPlanes.jpg */,
@@ -369,6 +378,8 @@
 				B044FBB81949F25D0026309A /* SOSRegisterViewController.h */,
 				B044FBB91949F25D0026309A /* SOSRegisterViewController.m */,
 				B044FBBA1949F25D0026309A /* SOSRegisterViewController.xib */,
+				B044FBC1194A50D20026309A /* SOSProfileViewController.h */,
+				B044FBC2194A50D20026309A /* SOSProfileViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -492,9 +503,11 @@
 				B0B30D3319462BB6003511CE /* SOSCharityDetailViewController.xib in Resources */,
 				B0B30D4019464BEF003511CE /* Anchor@2x.png in Resources */,
 				B0B30D4D19464D4D003511CE /* Office_Chair.png in Resources */,
+				B044FBBE194A4F4C0026309A /* Contact.png in Resources */,
 				B0B30D6519476099003511CE /* IwoJima.jpg in Resources */,
 				B0B30D4919464CE9003511CE /* Favorites@2x.png in Resources */,
 				B0B30D6719476099003511CE /* Jets.jpg in Resources */,
+				B044FBC0194A4F770026309A /* Contact@2x.png in Resources */,
 				B0B30D4719464CE0003511CE /* Favorites.png in Resources */,
 				B0B30D78194781B7003511CE /* army.png in Resources */,
 				B0B30D6219476099003511CE /* NavyFleet.jpg in Resources */,
@@ -552,6 +565,7 @@
 				B0D4A3BB1943884100FAA159 /* SOSJobsViewController.m in Sources */,
 				B0D4A3B51943881100FAA159 /* SOSPlacesViewController.m in Sources */,
 				B0B30D3719462F38003511CE /* SOSPlaceViewController.m in Sources */,
+				B044FBC3194A50D20026309A /* SOSProfileViewController.m in Sources */,
 				B0B30D20194601B0003511CE /* SOSPlaceAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

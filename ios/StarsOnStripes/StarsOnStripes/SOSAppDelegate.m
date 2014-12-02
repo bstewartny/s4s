@@ -14,6 +14,7 @@
 #import "SOSPlacesViewController.h"
 #import "SOSLoginViewController.h"
 #import "SOSRegisterViewController.h"
+#import "SOSProfileViewController.h"
 
 @implementation SOSAppDelegate
 
@@ -43,9 +44,13 @@
     [charityTable setTitle:@"Charities"];
     UINavigationController * charityView=[[UINavigationController alloc] initWithRootViewController:charityTable];
     charityView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Charity" image:[UIImage imageNamed:@"Favorites.png"] tag:0];
+   
+    SOSProfileViewController * profileTable=[[SOSProfileViewController alloc] initWithStyle:UITableViewStylePlain];
+    [profileTable setTitle:@"Your Profile"];
+    UINavigationController * profileView=[[UINavigationController alloc] initWithRootViewController:profileTable];
+    profileView.tabBarItem=[[UITabBarItem alloc] initWithTitle:@"Profile" image:[UIImage imageNamed:@"Contact.png"] tag:0];
     
-    rootController.viewControllers=@[mapsView,offersView,jobsView,charityView ];
-    
+    rootController.viewControllers=@[mapsView,offersView,jobsView,charityView,profileView];
     [self.window setRootViewController:rootController];
 
     self.window.backgroundColor = [UIColor whiteColor];
