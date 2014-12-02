@@ -17,7 +17,7 @@
     if(self)
     {
         self.title=[[json objectForKey:@"fields"] stringForKey:@"title"];
-        self.description=[[json objectForKey:@"fields" ]stringForKey:@"description"];
+        self.offerDescription=[[json objectForKey:@"fields" ]stringForKey:@"description"];
     }
     return self;
 }

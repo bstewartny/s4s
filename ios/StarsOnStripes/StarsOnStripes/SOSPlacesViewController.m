@@ -14,6 +14,7 @@
 #import "SOSPlaceAnnotation.h"
 #import "SOSPlaceViewController.h"
 #import "ProgressHUD.h"
+#import "SOSUrlBuilder.h"
 
 @interface SOSPlacesViewController ()
 
@@ -113,20 +114,19 @@
     [self renderPlaces:self.data];
 }
 
-- (NSString*) dataUrl
+- (NSURL*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
-    NSString *urlAsString = [NSString stringWithFormat:@"http://www.starsonstripes.com/vetbiz/api/places/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000];
-    NSLog(@"url: %@",urlAsString);
-    return urlAsString;
+    
+    return [SOSUrlBuilder buildUrlWithCommand:[NSString stringWithFormat:@"places/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000]];
+
 }
 
 - (void) getData
 {
-    NSURL *url = [[NSURL alloc] initWithString:[self dataUrl]];
     [ProgressHUD show:@"Loading..."];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:[self dataUrl]] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         dispatch_async(dispatch_get_main_queue(), ^{
             [ProgressHUD dismiss];

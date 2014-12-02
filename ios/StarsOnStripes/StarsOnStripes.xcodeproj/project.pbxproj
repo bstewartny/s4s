@@ -26,6 +26,7 @@
 		B044FBBE194A4F4C0026309A /* Contact.png in Resources */ = {isa = PBXBuildFile; fileRef = B044FBBD194A4F4C0026309A /* Contact.png */; };
 		B044FBC0194A4F770026309A /* Contact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B044FBBF194A4F770026309A /* Contact@2x.png */; };
 		B044FBC3194A50D20026309A /* SOSProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B044FBC2194A50D20026309A /* SOSProfileViewController.m */; };
+		B07C55AA1A2E013700C3A0F8 /* SOSUrlBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B07C55A91A2E013700C3A0F8 /* SOSUrlBuilder.m */; };
 		B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D101944FC51003511CE /* SOSDataViewController.m */; };
 		B0B30D171944FFF3003511CE /* SOSOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D161944FFF3003511CE /* SOSOffer.m */; };
 		B0B30D1A1944FFFF003511CE /* SOSJob.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B30D191944FFFF003511CE /* SOSJob.m */; };
@@ -120,6 +121,8 @@
 		B044FBBF194A4F770026309A /* Contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Contact@2x.png"; sourceTree = "<group>"; };
 		B044FBC1194A50D20026309A /* SOSProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSProfileViewController.h; sourceTree = "<group>"; };
 		B044FBC2194A50D20026309A /* SOSProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSProfileViewController.m; sourceTree = "<group>"; };
+		B07C55A81A2E013700C3A0F8 /* SOSUrlBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSUrlBuilder.h; sourceTree = "<group>"; };
+		B07C55A91A2E013700C3A0F8 /* SOSUrlBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSUrlBuilder.m; sourceTree = "<group>"; };
 		B0B30D0F1944FC51003511CE /* SOSDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSDataViewController.h; sourceTree = "<group>"; };
 		B0B30D101944FC51003511CE /* SOSDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOSDataViewController.m; sourceTree = "<group>"; };
 		B0B30D151944FFF3003511CE /* SOSOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOSOffer.h; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 				B0B30D73194779FD003511CE /* ProgressHUD.m */,
 				B0B30D27194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.h */,
 				B0B30D28194625F0003511CE /* NSDictionary+NSDictionary_NSNullHandling.m */,
+				B07C55A81A2E013700C3A0F8 /* SOSUrlBuilder.h */,
+				B07C55A91A2E013700C3A0F8 /* SOSUrlBuilder.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 				B0B30D74194779FD003511CE /* ProgressHUD.m in Sources */,
 				B0B30D2D194628E9003511CE /* SOSJobViewController.m in Sources */,
 				B0B30D1D1945000E003511CE /* SOSCharity.m in Sources */,
+				B07C55AA1A2E013700C3A0F8 /* SOSUrlBuilder.m in Sources */,
 				B0B30D111944FC51003511CE /* SOSDataViewController.m in Sources */,
 				B02F9EAD194256F90088F0CA /* SOSAppDelegate.m in Sources */,
 				B044FBB61947CE5A0026309A /* SOSLoginViewController.m in Sources */,
@@ -685,6 +691,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StarsOnStripes/StarsOnStripes-Prefix.pch";
 				INFOPLIST_FILE = "StarsOnStripes/StarsOnStripes-Info.plist";
@@ -699,6 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: robert stewart (4KX3933V48)";
+				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StarsOnStripes/StarsOnStripes-Prefix.pch";
 				INFOPLIST_FILE = "StarsOnStripes/StarsOnStripes-Info.plist";

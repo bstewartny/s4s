@@ -16,7 +16,7 @@
     if(self)
     {
         self.title=[[json objectForKey:@"fields"] objectForKey:@"title"];
-        self.description=[[json objectForKey:@"fields" ]objectForKey:@"description"];
+        self.jobDescription=[[json objectForKey:@"fields" ]objectForKey:@"description"];
         self.category=[[json objectForKey:@"fields" ]objectForKey:@"category"];
         self.contact_link=[[json objectForKey:@"fields" ]objectForKey:@"contact_link"];
         self.contact_email=[[json objectForKey:@"fields" ]objectForKey:@"contact_email"];

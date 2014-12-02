@@ -45,7 +45,7 @@
    [self.view sendSubviewToBack:tb];
     [self.view sendSubviewToBack:iv];
     self.nameLabel.text=self.charity.name;
-    self.descriptionTextView.text=self.charity.description;
+    self.descriptionTextView.text=self.charity.charityDescription;
     self.pointsLabel.text=[NSString stringWithFormat:@"%d",self.charity.donated_points];
 }
 

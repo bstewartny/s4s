@@ -12,6 +12,7 @@
 #import "SOSOfferViewController.h"
 #import "SOSOffer.h"
 #import "NSDictionary+NSDictionary_NSNullHandling.h"
+#import "SOSUrlBuilder.h"
 
 @interface SOSOffersViewController ()
 
@@ -31,12 +32,12 @@
 {
     return @"Jets.jpg";
 }
-- (NSString*) dataUrl
+- (NSURL*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
-    NSString *urlAsString = [NSString stringWithFormat:@"http://www.starsonstripes.com/vetbiz/api/offers/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000];
-    NSLog(@"url: %@",urlAsString);
-    return urlAsString;
+    
+    return [SOSUrlBuilder buildUrlWithCommand:[NSString stringWithFormat:@"offers/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000]];
+
 }
 - (id) objectFromJson:(NSDictionary *)json
 {

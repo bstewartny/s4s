@@ -62,7 +62,7 @@
     self.addressLabel.text=self.place.address;
     self.phoneLabel.text=self.place.phone;
     self.urlLabel.text=self.place.url;
-    self.descriptionTextView.text=self.place.description;
+    self.descriptionTextView.text=self.place.placeDescription;
 }
 
 - (void)didReceiveMemoryWarning

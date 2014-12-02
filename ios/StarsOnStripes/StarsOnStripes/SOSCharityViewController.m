@@ -11,6 +11,7 @@
 #import "SOSAppDelegate.h"
 #import "SOSCharity.h"
 #import "SOSCharityDetailViewController.h"
+#import "SOSUrlBuilder.h"
 
 @interface SOSCharityViewController ()
 
@@ -35,12 +36,12 @@
 {
     return @"FemaleSoldier.jpg";
 }
-- (NSString*) dataUrl
+- (NSURL*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
-    NSString *urlAsString = [NSString stringWithFormat:@"http://www.starsonstripes.com/vetbiz/api/charities/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000];
-    NSLog(@"url: %@",urlAsString);
-    return urlAsString;
+    
+    return [SOSUrlBuilder buildUrlWithCommand:[NSString stringWithFormat:@"charities/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000]];
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

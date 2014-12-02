@@ -12,7 +12,7 @@
 @interface SOSOffer : NSObject
 
 @property(nonatomic,strong) NSString * title;
-@property(nonatomic,strong) NSString * description;
+@property(nonatomic,strong) NSString * offerDescription;
 @property(nonatomic,strong) SOSPlace * business;
 
 

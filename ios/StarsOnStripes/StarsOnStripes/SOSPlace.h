@@ -15,7 +15,7 @@
 @property(nonatomic) double longitude;
 
 @property(nonatomic,strong) NSString * category;
-@property(nonatomic,strong) NSString * description;
+@property(nonatomic,strong) NSString * placeDescription;
 @property(nonatomic,strong) NSString * address;
 @property(nonatomic,strong) NSString * phone;
 @property(nonatomic,strong) NSString * email;

@@ -11,6 +11,7 @@
 #import "SOSAppDelegate.h"
 #import "SOSJob.h"
 #import "SOSJobViewController.h"
+#import "SOSUrlBuilder.h"
 
 @interface SOSJobsViewController ()
 
@@ -31,12 +32,12 @@
 {
     return [[SOSJob alloc] initFromJson:json];
 }
-- (NSString*) dataUrl
+- (NSURL*) dataUrl
 {
     CLLocationCoordinate2D coordinate=[((SOSAppDelegate*)[[UIApplication sharedApplication] delegate]) currentCoordinate];
-    NSString *urlAsString = [NSString stringWithFormat:@"http://www.starsonstripes.com/vetbiz/api/jobs/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000];
-    NSLog(@"url: %@",urlAsString);
-    return urlAsString;
+    
+    return [SOSUrlBuilder buildUrlWithCommand:[NSString stringWithFormat:@"jobs/?lat=%f&lon=%f&radius=%d", coordinate.latitude, coordinate.longitude, 50000000]];
+
 }
 - (NSString*) backgroundImage
 {

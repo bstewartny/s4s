@@ -36,7 +36,7 @@
 {
     NSMutableArray *sharingItems = [NSMutableArray new];
 
-    NSString * offerMessage=[NSString stringWithFormat:@"<html><body>Here is a great offer from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.offer.business.name,self.offer.business.address,self.offer.title,self.offer.description];
+    NSString * offerMessage=[NSString stringWithFormat:@"<html><body>Here is a great offer from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.offer.business.name,self.offer.business.address,self.offer.title,self.offer.offerDescription];
     
     [sharingItems addObject:offerMessage];
 
@@ -65,7 +65,7 @@
     
     
         self.titleLabel.text=self.offer.title;
-        self.descriptionTextView.text=self.offer.description;
+        self.descriptionTextView.text=self.offer.offerDescription;
         self.businessLabel.text=self.offer.business.name;
         self.addressLabel.text=self.offer.business.address;
         self.urlLabel.text=self.offer.business.url;

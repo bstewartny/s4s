@@ -36,7 +36,7 @@
 {
     NSMutableArray *sharingItems = [NSMutableArray new];
 
-    NSString * jobMessage=[NSString stringWithFormat:@"<html><body>Here is a great job from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.job.business.name,self.job.business.address,self.job.title,self.job.description];
+    NSString * jobMessage=[NSString stringWithFormat:@"<html><body>Here is a great job from <a href=\"http://www.starsonstripes.com\">StarsOnStripes</a>:<br><h2>%@</h2>%@<br><h3>%@</h3>%@</body></html>",self.job.business.name,self.job.business.address,self.job.title,self.job.jobDescription];
     
     [sharingItems addObject:jobMessage];
 
@@ -81,7 +81,7 @@
     
     // Do any additional setup after loading the view from its nib.
     self.titleLabel.text=self.job.title;
-    self.descriptionTextView.text=self.job.description;
+    self.descriptionTextView.text=self.job.jobDescription;
     self.addressLabel.text=self.job.business.address;
     self.businessLabel.text=self.job.business.name;
     self.emailLabel.text=self.job.contact_email;
